@@ -93,29 +93,39 @@ def request_ok():
             latestUnitPrice = r["latestUnitPrice"]
             winRate = r["winRate"]
             yieldRate = r["yieldRate"]
-
-            if transactionAction == "BUY":
-                timeArray = time.localtime(int(investmentTime) / 1000)
-                otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
-                arr.append("购买时间：" + otherStyleTime + "\n\r")
-                arr.append("名称：" + tokenSymbol + "\n\r")
-                arr.append("合约地址：\n\r```" + tokenAddress + "```\n\r")
-                arr.append("方式：" + transactionAction + "\n\r")
-                arr.append("购买金额：" + orderPrice + "\n\r")
-                arr.append("购买价格：" + orderUnitPrice + "\n\r")
-                arr.append("当前价格：" + latestUnitPrice + "\n\r")
-                arr.append("图片地址：<" + tokenLogo + ">\n\r")
-                arr.append("看线：<" + "https://dexscreener.com/solana/" + tokenAddress + ">\n\r")
-                arr.append("7日内收益：" + winRate + "%\n\r")
-                arr.append("7日内收益率：" + yieldRate + "%\n\r")
-                # node = request_ok()
-                note_str = "".join(arr)
-                print(note_str)
-                date_str = datetime.datetime.now().strftime('%H:%M')
-                send_markdown(token_dd, date_str, note_str, True)
-                time.sleep(1)
-                arr = []
-    send_msg(token_dd)
+            userAddress = r["userAddress"]
+            # 获取当前时间
+            date = datetime.datetime.now()
+            timestamp = int(date.timestamp())
+            print(timestamp)
+            print(int(investmentTime) / 1000)
+            diff = 60 * 10 * 1000
+            if (timestamp - int(investmentTime) / 1000) <= diff:
+                if transactionAction == "BUY":
+                    timeArray = time.localtime(int(investmentTime) / 1000)
+                    otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
+                    arr.append("温馨提示各位：")
+                    arr.append(str(timestamp - int(investmentTime) / 1000))
+                    arr.append("秒之前，购买时间：" + otherStyleTime + "\n\r")
+                    arr.append("名称：" + tokenSymbol + "\n\r")
+                    arr.append("合约地址：\n\r```" + tokenAddress + "```\n\r")
+                    arr.append("方式：" + transactionAction + "\n\r")
+                    arr.append("购买金额：" + orderPrice + "\n\r")
+                    arr.append("购买价格：" + orderUnitPrice + "\n\r")
+                    arr.append("当前价格：" + latestUnitPrice + "\n\r")
+                    arr.append("图片地址：<" + tokenLogo + ">\n\r")
+                    arr.append("看线：<" + "https://dexscreener.com/solana/" + tokenAddress + ">\n\r")
+                    arr.append("聪明钱地址：" + userAddress + "\n\r")
+                    arr.append("7日内收益：" + winRate + "%\n\r")
+                    arr.append("7日内收益率：" + yieldRate + "%\n\r")
+                    # node = request_ok()
+                    note_str = "".join(arr)
+                    print(note_str)
+                    date_str = datetime.datetime.now().strftime('%H:%M')
+                    send_markdown(token_dd, date_str, note_str, True)
+                    time.sleep(1)
+                    arr = []
+        send_msg(token_dd)
 
 
 if __name__ == '__main__':
