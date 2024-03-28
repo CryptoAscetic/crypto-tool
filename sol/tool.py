@@ -15,16 +15,41 @@ def send_msg(token_dd, date_str, msg, at_all=False):
     """
     url = 'https://oapi.dingtalk.com/robot/send?access_token=' + token_dd
     headers = {'Content-Type': 'application/json;charset=utf-8'}
-    content_str = "{0}定时推送：\n\n{1}\n".format(date_str, msg)
+    content_str = "{0}-钱包金狗推送：\n\n{1}\n".format(date_str, msg)
 
     data = {
         "msgtype": "text",
         "text": {
             "content": content_str
         },
+
         # "at": {
         #     "isAtAll": at_all
         # },
+    }
+    res = requests.post(url, data=json.dumps(data), headers=headers)  # 直接一句post就可以实现通过机器人在群聊里发消息
+    print(res.text)
+
+
+def send_markdown(token_dd, date_str, msg, at_all=False):
+    """
+    通过钉钉机器人发送内容
+    @param date_str:
+    @param msg:
+    @param at_all:
+    @return:
+    """
+    url = 'https://oapi.dingtalk.com/robot/send?access_token=' + token_dd
+    headers = {'Content-Type': 'application/json;charset=utf-8'}
+    content_str = "{0}-钱包金狗推送：\n\n{1}\n".format(date_str, msg)
+
+    data = {
+        "msgtype": "markdown",
+        "markdown": {
+            "title": date_str + "sol",
+            "text": msg
+        },
+
     }
     res = requests.post(url, data=json.dumps(data), headers=headers)  # 直接一句post就可以实现通过机器人在群聊里发消息
     print(res.text)
@@ -55,6 +80,7 @@ def request_ok():
     }
     response = requests.get(url, headers=headers)
     print("Status code:", response.status_code)
+    token_dd = ''
     if response.status_code == 200:
         result = response.json()
         res = result['data']['result']
@@ -68,23 +94,29 @@ def request_ok():
             tokenAddress = r["tokenAddress"]
             orderPrice = r["orderPrice"]
             investmentTime = r["investmentTime"]
-            arr.append("方式：" + transactionAction + "\n\r")
-            arr.append("Token：" + tokenSymbol + "\n\r")
-            arr.append("logo：" + tokenLogo + "\n\r")
-            arr.append("合约地址：" + tokenAddress + "\n\r")
-            arr.append("聪明钱购买金额：" + orderPrice + "\n\r")
-            timeArray = time.localtime(int(investmentTime) / 1000)
-            otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
-            arr.append("购买时间：" + otherStyleTime + "\n\r")
-            arr.append("--------------------------------------\n\r")
-        return arr
+            orderUnitPrice = r["orderUnitPrice"]
+            latestUnitPrice = r["latestUnitPrice"]
+
+            if transactionAction == "BUY":
+                timeArray = time.localtime(int(investmentTime) / 1000)
+                otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
+                arr.append("购买时间：" + otherStyleTime + "\n\r")
+                arr.append("名称：" + tokenSymbol + "\n\r")
+                arr.append("合约地址：\n\r```" + tokenAddress + "```\n\r")
+                arr.append("方式：" + transactionAction + "\n\r")
+                arr.append("购买金额：" + orderPrice + "\n\r")
+                arr.append("购买价格：" + orderUnitPrice + "\n\r")
+                arr.append("当前价格：" + latestUnitPrice + "\n\r")
+                arr.append("图片地址：<" + tokenLogo + ">\n\r")
+                arr.append("看线：<" + "https://dexscreener.com/solana/" + tokenAddress + ">\n\r")
+                # node = request_ok()
+                note_str = "".join(arr)
+                print(note_str)
+                date_str = datetime.datetime.now().strftime('%H:%M')
+                send_markdown(token_dd, date_str, note_str, True)
+                time.sleep(6)
+                arr = []
 
 
 if __name__ == '__main__':
-    node = request_ok()
-    str1 = "".join(node)
-    print(str1)
-    token_dd = ''
-    note_str = "SOL-深度学习聪明钱包\n\r" + str1
-    date_str = datetime.datetime.now().strftime('%H:%M')
-    send_msg(token_dd, date_str, note_str, True)
+    request_ok()
