@@ -5,7 +5,7 @@ import time
 import requests
 
 
-def send_msg(token_dd, date_str, msg, at_all=False):
+def send_msg(token_dd):
     """
     通过钉钉机器人发送内容
     @param date_str:
@@ -15,7 +15,7 @@ def send_msg(token_dd, date_str, msg, at_all=False):
     """
     url = 'https://oapi.dingtalk.com/robot/send?access_token=' + token_dd
     headers = {'Content-Type': 'application/json;charset=utf-8'}
-    content_str = "{0}-钱包金狗推送：\n\n{1}\n".format(date_str, msg)
+    content_str = "【系统提醒】sol聪明钱，本次已经扫描完毕！"
 
     data = {
         "msgtype": "text",
@@ -96,6 +96,8 @@ def request_ok():
             investmentTime = r["investmentTime"]
             orderUnitPrice = r["orderUnitPrice"]
             latestUnitPrice = r["latestUnitPrice"]
+            winRate = r["winRate"]
+            yieldRate = r["yieldRate"]
 
             if transactionAction == "BUY":
                 timeArray = time.localtime(int(investmentTime) / 1000)
@@ -109,13 +111,16 @@ def request_ok():
                 arr.append("当前价格：" + latestUnitPrice + "\n\r")
                 arr.append("图片地址：<" + tokenLogo + ">\n\r")
                 arr.append("看线：<" + "https://dexscreener.com/solana/" + tokenAddress + ">\n\r")
+                arr.append("7日内收益：" + winRate + "%\n\r")
+                arr.append("7日内收益率：" + yieldRate + "%\n\r")
                 # node = request_ok()
                 note_str = "".join(arr)
                 print(note_str)
                 date_str = datetime.datetime.now().strftime('%H:%M')
                 send_markdown(token_dd, date_str, note_str, True)
-                time.sleep(6)
+                time.sleep(1)
                 arr = []
+    send_msg(token_dd)
 
 
 if __name__ == '__main__':
