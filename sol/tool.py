@@ -16,16 +16,11 @@ def send_msg(token_dd):
     url = 'https://oapi.dingtalk.com/robot/send?access_token=' + token_dd
     headers = {'Content-Type': 'application/json;charset=utf-8'}
     content_str = "【系统提醒】sol聪明钱，本次已经扫描完毕！"
-
     data = {
         "msgtype": "text",
         "text": {
             "content": content_str
         },
-
-        # "at": {
-        #     "isAtAll": at_all
-        # },
     }
     res = requests.post(url, data=json.dumps(data), headers=headers)  # 直接一句post就可以实现通过机器人在群聊里发消息
     print(res.text)
