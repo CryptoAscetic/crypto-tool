@@ -15,7 +15,7 @@ def send_msg(token_dd):
     """
     url = 'https://oapi.dingtalk.com/robot/send?access_token=' + token_dd
     headers = {'Content-Type': 'application/json;charset=utf-8'}
-    content_str = "【系统提醒】sol聪明钱买入记录，本次已经扫描完毕，系统会每20分钟检测一次！"
+    content_str = "【系统提醒】sol聪明钱卖出记录，本次已经扫描完毕，系统会每20分钟检测一次！"
     data = {
         "msgtype": "text",
         "text": {
@@ -101,12 +101,12 @@ def request_ok():
             print(int(investmentTime) / 1000)
             diff = 60 * 10 * 1000
             if (timestamp - int(investmentTime) / 1000) <= diff:
-                if transactionAction == "BUY":
+                if transactionAction == "SELL":
                     timeArray = time.localtime(int(investmentTime) / 1000)
                     otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
                     arr.append("温馨提示各位：")
                     arr.append(str(timestamp - int(investmentTime) / 1000))
-                    arr.append("秒之前，购买时间：" + otherStyleTime + "\n\r")
+                    arr.append("秒之前，卖出时间：" + otherStyleTime + "\n\r")
                     arr.append("名称：" + tokenSymbol + "\n\r")
                     arr.append("合约地址：\n\r```" + tokenAddress + "```\n\r")
                     arr.append("方式：" + transactionAction + "\n\r")
