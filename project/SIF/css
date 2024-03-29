@@ -1,0 +1,42 @@
+﻿@font-face {
+  font-family: 'Vollkorn';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(s/vollkorn/v22/0ybgGDoxxrvAnPhYGzMlQLzuMasz6Df2MHGeHmmZ.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Vollkorn';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(s/vollkorn/v22/0ybgGDoxxrvAnPhYGzMlQLzuMasz6Df2AnGeHmmZ.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Vollkorn';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(s/vollkorn/v22/0ybgGDoxxrvAnPhYGzMlQLzuMasz6Df27naeHmmZ.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Vollkorn';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(s/vollkorn/v22/0ybgGDoxxrvAnPhYGzMlQLzuMasz6Df213aeHmmZ.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Vollkorn';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url(s/vollkorn/v22/0ybgGDoxxrvAnPhYGzMlQLzuMasz6Df2sHaeHmmZ.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Vollkorn';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url(s/vollkorn/v22/0ybgGDoxxrvAnPhYGzMlQLzuMasz6Df2mXaeHmmZ.ttf) format('truetype');
+}
