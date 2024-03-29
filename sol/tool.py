@@ -1,8 +1,46 @@
 import datetime
+import datetime as dt
 import json
 import time
 
 import requests
+
+
+# 获取当前时间呈现到毫秒级别并转换为时间戳
+def get_current_time_ms_to_timestamp():
+    return int(time.time() * 1000)
+
+
+# 获取当前时间呈现到当天的0时0分0秒000毫秒并转换为时间戳
+def get_current_time_day_to_timestamp():
+    # 获取当日0时0分0秒000毫秒
+    today_0 = dt.datetime.combine(dt.date.today(), dt.time.min)
+    # 转换为时间戳
+    today_0_timestamp = int(time.mktime(today_0.timetuple())) * 1000
+    return today_0_timestamp
+
+
+# 获取当前时间呈现到毫秒级别
+def get_current_time_ms():
+    return dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
+
+
+# 获取当前时间呈现到秒级别
+def get_current_time_s():
+    return dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+
+# 将毫秒级别的时间戳转换为时间格式
+def timestamp_to_time(timestamp):
+    return dt.datetime.fromtimestamp(timestamp / 1000).strftime('%Y-%m-%d %H:%M:%S')
+
+
+# 获取当前月份的首日
+def get_current_month_first_day():
+    return dt.datetime.strptime(dt.datetime.now().strftime('%Y-%m') + '-01', '%Y-%m-%d')
+
+
+now_time = timestamp_to_time(get_current_time_ms_to_timestamp() + 8 * 60 * 1000)
 
 
 def send_msg(token_dd):
@@ -15,7 +53,7 @@ def send_msg(token_dd):
     """
     url = 'https://oapi.dingtalk.com/robot/send?access_token=' + token_dd
     headers = {'Content-Type': 'application/json;charset=utf-8'}
-    content_str = "【购买系统提醒】sol聪明钱买入记录，本次已经扫描完毕，系统会每20分钟检测一次！"
+    content_str = now_time + "【-系统提醒】sol聪明钱买入记录，本次已经扫描完毕，系统会每20分钟检测一次！"
     data = {
         "msgtype": "text",
         "text": {
@@ -26,7 +64,7 @@ def send_msg(token_dd):
     print(res.text)
 
 
-def send_markdown(token_dd, date_str, msg, at_all=False):
+def send_markdown(token_dd, msg, at_all=False):
     """
     通过钉钉机器人发送内容
     @param date_str:
@@ -36,15 +74,12 @@ def send_markdown(token_dd, date_str, msg, at_all=False):
     """
     url = 'https://oapi.dingtalk.com/robot/send?access_token=' + token_dd
     headers = {'Content-Type': 'application/json;charset=utf-8'}
-    content_str = "{0}-钱包金狗推送：\n\n{1}\n".format(date_str, msg)
-
     data = {
         "msgtype": "markdown",
         "markdown": {
-            "title": date_str + "sol",
+            "title": now_time + "sol",
             "text": msg
         },
-
     }
     res = requests.post(url, data=json.dumps(data), headers=headers)  # 直接一句post就可以实现通过机器人在群聊里发消息
     print(res.text)
@@ -104,9 +139,9 @@ def request_ok():
                 if transactionAction == "BUY":
                     timeArray = time.localtime(int(investmentTime) / 1000)
                     otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
-                    arr.append("【聪明钱购买了】温馨提示各位：")
-                    arr.append(str(timestamp - int(investmentTime) / 1000))
-                    arr.append("秒之前，购买时间：" + otherStyleTime + "\n\r")
+                    arr.append(now_time + "【聪明钱购买了】温馨提示各位：")
+                    arr.append(str((timestamp - int(investmentTime) / 1000) / 60))
+                    arr.append("分钟之前，购买时间：" + otherStyleTime + "\n\r")
                     arr.append("名称：" + tokenSymbol + "\n\r")
                     arr.append("合约地址：\n\r```" + tokenAddress + "```\n\r")
                     arr.append("方式：" + transactionAction + "\n\r")
@@ -121,8 +156,30 @@ def request_ok():
                     # node = request_ok()
                     note_str = "".join(arr)
                     print(note_str)
-                    date_str = datetime.datetime.now().strftime('%H:%M')
-                    send_markdown(token_dd, date_str, note_str, True)
+                    send_markdown(token_dd, note_str, True)
+                    time.sleep(1)
+                    arr = []
+                else:
+                    timeArray = time.localtime(int(investmentTime) / 1000)
+                    otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
+                    arr.append(now_time + "【聪明钱卖出了】温馨提示各位：")
+                    arr.append(str((timestamp - int(investmentTime) / 1000) / 60))
+                    arr.append("分钟之前，卖出时间：" + otherStyleTime + "\n\r")
+                    arr.append("名称：" + tokenSymbol + "\n\r")
+                    arr.append("合约地址：\n\r```" + tokenAddress + "```\n\r")
+                    arr.append("方式：" + transactionAction + "\n\r")
+                    arr.append("购买金额：" + orderPrice + "\n\r")
+                    arr.append("购买价格：" + orderUnitPrice + "\n\r")
+                    arr.append("当前价格：" + latestUnitPrice + "\n\r")
+                    arr.append("![图片地址：](" + tokenLogo + ")\n\r")
+                    arr.append("看线：<" + "https://dexscreener.com/solana/" + tokenAddress + ">\n\r")
+                    arr.append("聪明钱地址：" + userAddress + "\n\r")
+                    arr.append("7日内收益：" + winRate + "%\n\r")
+                    arr.append("7日内收益率：" + yieldRate + "%\n\r")
+                    # node = request_ok()
+                    note_str = "".join(arr)
+                    print(note_str)
+                    send_markdown(token_dd, note_str, True)
                     time.sleep(1)
                     arr = []
         send_msg(token_dd)
