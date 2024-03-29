@@ -3,7 +3,26 @@ import datetime as dt
 import json
 import time
 
+import pytz
 import requests
+
+token_dd = 'a2e2cd49e7ca093d67a4223ed32c59804965edc184697d9fc55cf7c830b7b501'
+# 创建一个 datetime 对象，表示当前时间
+now = datetime.datetime.now()
+
+# 创建一个 pytz 时区对象，表示中国时区
+china_tz = pytz.timezone('Asia/Shanghai')
+
+# 使用时区对象将 datetime 对象转换为中国时区时间
+china_time = china_tz.localize(now)
+
+# 将中国时区时间转换为纽约时区时间
+new_york_tz = pytz.timezone('America/New_York')
+new_york_time = china_time.astimezone(new_york_tz)
+
+# 输出中国时区时间和纽约时区时间
+print('中国时间：', str(china_time))
+print('纽约时间：', new_york_time)
 
 
 # 获取当前时间呈现到毫秒级别并转换为时间戳
@@ -40,20 +59,14 @@ def get_current_month_first_day():
     return dt.datetime.strptime(dt.datetime.now().strftime('%Y-%m') + '-01', '%Y-%m-%d')
 
 
-now_time = timestamp_to_time(get_current_time_ms_to_timestamp() + 8 * 60 * 1000)
-
-
-def send_msg(token_dd):
+def send_msg():
     """
     通过钉钉机器人发送内容
-    @param date_str:
-    @param msg:
-    @param at_all:
     @return:
     """
     url = 'https://oapi.dingtalk.com/robot/send?access_token=' + token_dd
     headers = {'Content-Type': 'application/json;charset=utf-8'}
-    content_str = now_time + "-【系统提醒】sol聪明钱买入记录，本次已经扫描完毕，系统会每20分钟检测一次！"
+    content_str = str(china_time) + "-【系统提醒】sol聪明钱买入记录，本次已经扫描完毕，系统会每20分钟检测一次！"
     data = {
         "msgtype": "text",
         "text": {
@@ -64,12 +77,10 @@ def send_msg(token_dd):
     print(res.text)
 
 
-def send_markdown_system(token_dd, msg, at_all=False):
+def send_markdown_system(msg):
     """
     通过钉钉机器人发送内容
-    @param date_str:
     @param msg:
-    @param at_all:
     @return:
     """
     url = 'https://oapi.dingtalk.com/robot/send?access_token=' + token_dd
@@ -84,12 +95,12 @@ def send_markdown_system(token_dd, msg, at_all=False):
     }
     res = requests.post(url, data=json.dumps(data), headers=headers)  # 直接一句post就可以实现通过机器人在群聊里发消息
     print(res.text)
-def send_markdown(token_dd, msg, at_all=False):
+
+
+def send_markdown(msg):
     """
     通过钉钉机器人发送内容
-    @param date_str:
     @param msg:
-    @param at_all:
     @return:
     """
     url = 'https://oapi.dingtalk.com/robot/send?access_token=' + token_dd
@@ -97,7 +108,7 @@ def send_markdown(token_dd, msg, at_all=False):
     data = {
         "msgtype": "markdown",
         "markdown": {
-            "title": now_time + "sol",
+            "title": str(china_time) + "sol",
             "text": msg
         },
     }
@@ -130,7 +141,6 @@ def request_ok():
     }
     response = requests.get(url, headers=headers)
     print("Status code:", response.status_code)
-    token_dd = 'a2e2cd49e7ca093d67a4223ed32c59804965edc184697d9fc55cf7c830b7b501'
     if response.status_code == 200:
         result = response.json()
         res = result['data']['result']
@@ -160,7 +170,7 @@ def request_ok():
                 if transactionAction == "BUY":
                     timeArray = time.localtime(int(investmentTime) / 1000)
                     otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
-                    arr.append(now_time + "-【聪明钱购买了】温馨提示各位：")
+                    arr.append(str(china_time) + "-【聪明钱购买了】温馨提示各位：")
                     arr.append(str((timestamp - int(investmentTime) / 1000) / 60))
                     arr.append("分钟之前，购买时间：" + otherStyleTime + "\n\r")
                     arr.append("名称：" + tokenSymbol + "\n\r")
@@ -177,13 +187,13 @@ def request_ok():
                     # node = request_ok()
                     note_str = "".join(arr)
                     print(note_str)
-                    send_markdown(token_dd, note_str, True)
+                    send_markdown(token_dd)
                     time.sleep(1)
                     arr = []
                 else:
                     timeArray = time.localtime(int(investmentTime) / 1000)
                     otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
-                    arr.append(now_time + "-【聪明钱卖出了】温馨提示各位：")
+                    arr.append(str(china_time) + "-【聪明钱卖出了】温馨提示各位：")
                     arr.append(str((timestamp - int(investmentTime) / 1000) / 60))
                     arr.append("分钟之前，卖出时间：" + otherStyleTime + "\n\r")
                     arr.append("名称：" + tokenSymbol + "\n\r")
@@ -200,10 +210,10 @@ def request_ok():
                     # node = request_ok()
                     note_str = "".join(arr)
                     print(note_str)
-                    send_markdown(token_dd, note_str, True)
+                    send_markdown(token_dd)
                     time.sleep(1)
                     arr = []
-        send_msg(token_dd)
+        send_msg()
 
 
 if __name__ == '__main__':
