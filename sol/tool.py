@@ -1,28 +1,35 @@
-import datetime
 import datetime as dt
 import json
 import time
+from datetime import timezone, timedelta, datetime
 
-import pytz
 import requests
 
 token_dd = 'a2e2cd49e7ca093d67a4223ed32c59804965edc184697d9fc55cf7c830b7b501'
-# 创建一个 datetime 对象，表示当前时间
-now = datetime.datetime.now()
 
-# 创建一个 pytz 时区对象，表示中国时区
-china_tz = pytz.timezone('Asia/Shanghai')
+beijing = timezone(timedelta(hours=8))
+print(f'1、北京时区为：{beijing}')
 
-# 使用时区对象将 datetime 对象转换为中国时区时间
-china_time = china_tz.localize(now)
+Tokyo = timezone(timedelta(hours=9))
+print(f'2、东京时区为：{Tokyo}')
 
-# 将中国时区时间转换为纽约时区时间
-new_york_tz = pytz.timezone('America/New_York')
-new_york_time = china_time.astimezone(new_york_tz)
+New_York = timezone(timedelta(hours=-4))
+print(f'3、纽约时区为：{New_York}')
 
-# 输出中国时区时间和纽约时区时间
-print('中国时间：', str(china_time))
-print('纽约时间：', new_york_time)
+utc = timezone.utc
+print(f'4、世界标准时区为：{utc}')
+
+utc_time = datetime.utcnow()
+print(f'UTC时间为：{utc_time}')
+print(f'本地时间为：{datetime.now()}')
+
+china_time = utc_time.astimezone(beijing)
+time_tokyo = utc_time.astimezone(Tokyo)
+time_newyork = utc_time.astimezone(New_York)
+
+print('1、更改时区为北京后的时间：', china_time)
+print('2、更改时区为东京后的时间：', time_tokyo)
+print('3、更改时区为纽约后的时间：', time_newyork)
 
 
 # 获取当前时间呈现到毫秒级别并转换为时间戳
@@ -160,10 +167,8 @@ def request_ok():
             yieldRate = r["yieldRate"]
             userAddress = r["userAddress"]
             # 获取当前时间
-            date = datetime.datetime.now()
+            date = datetime.now()
             timestamp = int(date.timestamp())
-            print(timestamp)
-            print(int(investmentTime) / 1000)
             # 对比的时间8分钟的购买
             diff = 60 * 8
             if (timestamp - int(investmentTime) / 1000) <= diff:
