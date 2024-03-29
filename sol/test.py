@@ -15,6 +15,9 @@ china_time = china_tz.localize(now)
 new_york_tz = pytz.timezone('America/New_York')
 new_york_time = china_time.astimezone(new_york_tz)
 
+chinese_time1 = china_time.astimezone(china_tz)
+
 # 输出中国时区时间和纽约时区时间
-print('中国时间：', str(china_time))
+print('中国时间：', str(chinese_time1))
 print('纽约时间：', new_york_time)
+# print(pytz.all_timezones)

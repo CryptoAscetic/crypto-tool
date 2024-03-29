@@ -187,7 +187,7 @@ def request_ok():
                     # node = request_ok()
                     note_str = "".join(arr)
                     print(note_str)
-                    send_markdown(token_dd)
+                    send_markdown(note_str)
                     time.sleep(1)
                     arr = []
                 else:
@@ -210,7 +210,7 @@ def request_ok():
                     # node = request_ok()
                     note_str = "".join(arr)
                     print(note_str)
-                    send_markdown(token_dd)
+                    send_markdown(note_str)
                     time.sleep(1)
                     arr = []
         send_msg()
