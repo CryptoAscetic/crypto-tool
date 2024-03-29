@@ -1,23 +1,25 @@
-import datetime
+from datetime import timezone, timedelta, datetime
 
-import pytz
+beijing = timezone(timedelta(hours=8))
+print(f'1、北京时区为：{beijing}')
 
-# 创建一个 datetime 对象，表示当前时间
-now = datetime.datetime.now()
+Tokyo = timezone(timedelta(hours=9))
+print(f'2、东京时区为：{Tokyo}')
 
-# 创建一个 pytz 时区对象，表示中国时区
-china_tz = pytz.timezone('Asia/Shanghai')
+New_York = timezone(timedelta(hours=-4))
+print(f'3、纽约时区为：{New_York}')
 
-# 使用时区对象将 datetime 对象转换为中国时区时间
-china_time = china_tz.localize(now)
+utc = timezone.utc
+print(f'4、世界标准时区为：{utc}')
 
-# 将中国时区时间转换为纽约时区时间
-new_york_tz = pytz.timezone('America/New_York')
-new_york_time = china_time.astimezone(new_york_tz)
+utc_time = datetime.utcnow()
+print(f'UTC时间为：{utc_time}')
+print(f'本地时间为：{datetime.now()}')
 
-chinese_time1 = china_time.astimezone(china_tz)
+time_beijing = utc_time.astimezone(beijing)
+time_tokyo = utc_time.astimezone(Tokyo)
+time_newyork = utc_time.astimezone(New_York)
 
-# 输出中国时区时间和纽约时区时间
-print('中国时间：', str(chinese_time1))
-print('纽约时间：', new_york_time)
-# print(pytz.all_timezones)
+print('1、更改时区为北京后的时间：', time_beijing)
+print('2、更改时区为东京后的时间：', time_tokyo)
+print('3、更改时区为纽约后的时间：', time_newyork)
