@@ -84,7 +84,7 @@ def send_msg():
     print(res.text)
 
 
-def send_markdown_system(msg):
+def send_markdown_system():
     """
     通过钉钉机器人发送内容
     @param msg:
@@ -92,12 +92,18 @@ def send_markdown_system(msg):
     """
     url = 'https://oapi.dingtalk.com/robot/send?access_token=' + token_dd
     headers = {'Content-Type': 'application/json;charset=utf-8'}
-
+    msg = ["#### 冲狗必读：\n\r ```", "\n 1.所有项目都是土狗，千万不能贪多，不能格局;\n",
+           "2.不要在一个狗上贪恋爱，该放手就放手;\n",
+           "3.加仓要慢慢加，不能一口吃个胖子;\n", "4.看好的项目一定留一个底仓；\n",
+           "5.高倍项目10-30倍一定要出一大部分，否则跌下来就后悔了;\n",
+           "6.拿到一个Token先观察，不着急买，看一下项目方，自己做个初步判断上的仓位;\n",
+           "7.要以小博大，不能以大博小，否则你将很快出局;\n", "8.如果使用机器人冲，赚钱了立即卖，不要后悔,好狗很多;\n",
+           "9.机会是跌出来的，不是冲出来的\n\r"]
     data = {
         "msgtype": "markdown",
         "markdown": {
-            "title": "",
-            "text": msg
+            "title": str(china_time) + "sol",
+            "text": "".join(msg)
         },
     }
     res = requests.post(url, data=json.dumps(data), headers=headers)  # 直接一句post就可以实现通过机器人在群聊里发消息
@@ -218,6 +224,8 @@ def request_ok():
                     send_markdown(note_str)
                     time.sleep(1)
                     arr = []
+        send_markdown_system()
+        time.sleep(60)
         send_msg()
 
 
