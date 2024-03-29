@@ -53,7 +53,7 @@ def send_msg(token_dd):
     """
     url = 'https://oapi.dingtalk.com/robot/send?access_token=' + token_dd
     headers = {'Content-Type': 'application/json;charset=utf-8'}
-    content_str = now_time + "【-系统提醒】sol聪明钱买入记录，本次已经扫描完毕，系统会每20分钟检测一次！"
+    content_str = now_time + "-【系统提醒】sol聪明钱买入记录，本次已经扫描完毕，系统会每20分钟检测一次！"
     data = {
         "msgtype": "text",
         "text": {
@@ -64,6 +64,26 @@ def send_msg(token_dd):
     print(res.text)
 
 
+def send_markdown_system(token_dd, msg, at_all=False):
+    """
+    通过钉钉机器人发送内容
+    @param date_str:
+    @param msg:
+    @param at_all:
+    @return:
+    """
+    url = 'https://oapi.dingtalk.com/robot/send?access_token=' + token_dd
+    headers = {'Content-Type': 'application/json;charset=utf-8'}
+
+    data = {
+        "msgtype": "markdown",
+        "markdown": {
+            "title": "",
+            "text": msg
+        },
+    }
+    res = requests.post(url, data=json.dumps(data), headers=headers)  # 直接一句post就可以实现通过机器人在群聊里发消息
+    print(res.text)
 def send_markdown(token_dd, msg, at_all=False):
     """
     通过钉钉机器人发送内容
@@ -134,12 +154,13 @@ def request_ok():
             timestamp = int(date.timestamp())
             print(timestamp)
             print(int(investmentTime) / 1000)
-            diff = 60 * 10
+            # 对比的时间8分钟的购买
+            diff = 60 * 8
             if (timestamp - int(investmentTime) / 1000) <= diff:
                 if transactionAction == "BUY":
                     timeArray = time.localtime(int(investmentTime) / 1000)
                     otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
-                    arr.append(now_time + "【聪明钱购买了】温馨提示各位：")
+                    arr.append(now_time + "-【聪明钱购买了】温馨提示各位：")
                     arr.append(str((timestamp - int(investmentTime) / 1000) / 60))
                     arr.append("分钟之前，购买时间：" + otherStyleTime + "\n\r")
                     arr.append("名称：" + tokenSymbol + "\n\r")
@@ -162,7 +183,7 @@ def request_ok():
                 else:
                     timeArray = time.localtime(int(investmentTime) / 1000)
                     otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
-                    arr.append(now_time + "【聪明钱卖出了】温馨提示各位：")
+                    arr.append(now_time + "-【聪明钱卖出了】温馨提示各位：")
                     arr.append(str((timestamp - int(investmentTime) / 1000) / 60))
                     arr.append("分钟之前，卖出时间：" + otherStyleTime + "\n\r")
                     arr.append("名称：" + tokenSymbol + "\n\r")
