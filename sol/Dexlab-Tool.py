@@ -190,12 +190,15 @@ def request_ok():
             # 对比的时间8分钟的购买
             diff = 60 * 8
             if (timestamp - int(block_time)) <= diff:
-                if action_type == "CREATE_TOKEN":
+                if action_type == "CREATE_TOKEN" or action_type == "SET_AUTHORITY":
                     timeArray = time.localtime(int(block_time))
                     otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
-                    arr.append(str(china_time) + "-【科学家创建合约了】温馨提示各位：")
+                    if action_type == "CREATE_TOKEN":
+                        arr.append(str(china_time) + "-【科学家创建合约了】温馨提示各位：")
+                    else:
+                        arr.append(str(china_time) + "-【科学家创把合约放弃权限】温馨提示各位：")
                     arr.append(str((timestamp - int(block_time)) / 60))
-                    arr.append("分钟之前，创建时间：" + otherStyleTime + "\n\r")
+                    arr.append("分钟之前，操作时间：" + otherStyleTime + "\n\r")
                     arr.append("合约地址：" + mint_address + "\n\r")
                     arr.append("合约名称：" + token_symbol + "\n\r")
                     arr.append("创建者地址：" + signer_address + "\n\r")
@@ -211,33 +214,37 @@ def request_ok():
                     note_str = "".join(arr)
                     print(note_str)
                     send_markdown(note_str)
+                    time.sleep(2.5)
                     send_markdown_address(mint_address)
-                    time.sleep(3)
                     arr = []
                     # send_markdown_system()
                 else:
-                    timeArray = time.localtime(int(block_time))
-                    otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
-                    arr.append(str(china_time) + "-【科学家设置权限】温馨提示各位：")
-                    arr.append(str((timestamp - int(block_time)) / 60))
-                    arr.append("分钟之前，设置权限：：" + otherStyleTime + "\n\r")
-                    arr.append("合约地址：" + mint_address + "\n\r")
-                    arr.append("创建者地址：" + signer_address + "\n\r")
-                    arr.append("方式：" + action_type + "\n\r")
-                    arr.append("看线交易：<" + "https://dexscreener.com/solana/" + mint_address + ">\n\r")
-                    arr.append("查看合约：<" + "https://www.dexlab.space/mintinglab/spl-token/" + mint_address + ">\n\r")
-                    arr.append("查看创建交易信息：<" + "https://solscan.io/tx/" + signature + ">\n\r")
-                    arr.append(
-                        "查看科学家账号余额：<" + "https://solscan.io/account/CxTPegHTuaF4aRVZxiSmvuvewzAwGCs1LqoKmpsZadDt"
-                        + signer_address + ">\n\r")
+                    if len(token_symbol) != 0:
+                        timeArray = time.localtime(int(block_time))
+                        otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
+                        arr.append(str(china_time) + "-【科学家设置权限】温馨提示各位：")
+                        arr.append(str((timestamp - int(block_time)) / 60))
+                        arr.append("分钟之前，烧池子：：" + otherStyleTime + "\n\r")
+                        arr.append("合约地址：" + mint_address + "\n\r")
+                        arr.append("合约名称：" + token_symbol + "\n\r")
+                        arr.append("创建者地址：" + signer_address + "\n\r")
+                        arr.append("方式：" + action_type + "\n\r")
+                        arr.append("![图片地址：](" + token_symbol_image + ")\n\r")
+                        arr.append("看线交易：<" + "https://dexscreener.com/solana/" + mint_address + ">\n\r")
+                        arr.append(
+                            "查看合约：<" + "https://www.dexlab.space/mintinglab/spl-token/" + mint_address + ">\n\r")
+                        arr.append("查看创建交易信息：<" + "https://solscan.io/tx/" + signature + ">\n\r")
+                        arr.append(
+                            "查看科学家账号余额：<" + "https://solscan.io/account/CxTPegHTuaF4aRVZxiSmvuvewzAwGCs1LqoKmpsZadDt"
+                            + signer_address + ">\n\r")
 
-                    note_str = "".join(arr)
-                    print(note_str)
-                    send_markdown(note_str)
-                    send_markdown_address(mint_address)
-                    time.sleep(3)
-                    arr = []
-        time.sleep(60)
+                        note_str = "".join(arr)
+                        print(note_str)
+                        send_markdown(note_str)
+                        time.sleep(2.5)
+                        send_markdown_address(mint_address)
+                        arr = []
+        time.sleep(30)
         send_msg()
 
 
