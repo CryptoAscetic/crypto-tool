@@ -214,7 +214,7 @@ def request_ok():
                     note_str = "".join(arr)
                     print(note_str)
                     send_markdown(note_str)
-                    time.sleep(2.5)
+                    time.sleep(4)
                     send_markdown_address(mint_address)
                     arr = []
                     # send_markdown_system()
@@ -241,7 +241,7 @@ def request_ok():
                         note_str = "".join(arr)
                         print(note_str)
                         send_markdown(note_str)
-                        time.sleep(2.5)
+                        time.sleep(4)
                         send_markdown_address(mint_address)
                         arr = []
         time.sleep(30)
