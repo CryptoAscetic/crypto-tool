@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*
 import datetime as dt
 import json
 import time
@@ -73,7 +74,7 @@ def send_msg():
     """
     url = 'https://oapi.dingtalk.com/robot/send?access_token=' + token_dd
     headers = {'Content-Type': 'application/json;charset=utf-8'}
-    content_str = str(china_time) + "-【系统提醒】sol聪明钱买入记录，本次已经扫描完毕，系统会每20分钟检测一次！"
+    content_str = str(china_time) + "-【系统提醒】sol聪明钱买卖记录，本次已经扫描完毕，系统会每20分钟检测一次！"
     data = {
         "msgtype": "text",
         "text": {
@@ -123,6 +124,26 @@ def send_markdown(msg):
         "markdown": {
             "title": str(china_time) + "sol",
             "text": msg
+        },
+    }
+    res = requests.post(url, data=json.dumps(data), headers=headers)  # 直接一句post就可以实现通过机器人在群聊里发消息
+    print(res.text)
+
+
+def send_markdown_address(address):
+    """
+    通过钉钉机器人发送内容
+    @param msg:
+    @return:
+    """
+    url = 'https://oapi.dingtalk.com/robot/send?access_token=' + token_dd
+    headers = {'Content-Type': 'application/json;charset=utf-8'}
+
+    data = {
+        "msgtype": "markdown",
+        "markdown": {
+            "title": str(china_time) + "sol-直接复制粘贴",
+            "text": address
         },
     }
     res = requests.post(url, data=json.dumps(data), headers=headers)  # 直接一句post就可以实现通过机器人在群聊里发消息
@@ -202,6 +223,7 @@ def request_ok():
                     print(note_str)
                     send_markdown(note_str)
                     time.sleep(1)
+                    send_markdown_address(tokenAddress)
                     arr = []
                 else:
                     timeArray = time.localtime(int(investmentTime) / 1000)
@@ -226,9 +248,10 @@ def request_ok():
                     note_str = "".join(arr)
                     print(note_str)
                     send_markdown(note_str)
+                    send_markdown_address(tokenAddress)
                     time.sleep(1)
                     arr = []
-                if float(orderPrice) > 500.0:
+                if float(orderPrice) > 600.0:
                     send_markdown_system()
         time.sleep(60)
         send_msg()
