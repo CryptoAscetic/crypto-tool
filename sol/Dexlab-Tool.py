@@ -201,6 +201,7 @@ def request_ok():
                     arr.append("创建者地址：" + signer_address + "\n\r")
                     arr.append("方式：" + action_type + "\n\r")
                     arr.append("![图片地址：](" + token_symbol_image + ")\n\r")
+                    arr.append("图片地址：<" + token_symbol_image + ">\n\r")
                     arr.append("看线交易：<" + "https://dexscreener.com/solana/" + mint_address + ">\n\r")
                     arr.append("查看合约：<" + "https://www.dexlab.space/mintinglab/spl-token/" + mint_address + ">\n\r")
                     arr.append("查看创建交易信息：<" + "https://solscan.io/tx/" + signature + ">\n\r")
