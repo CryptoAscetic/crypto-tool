@@ -150,6 +150,10 @@ def send_markdown_address(address):
     print(res.text)
 
 
+def str_to_float(str):
+    return float(str)
+
+
 def request_ok():
     url = f"https://www.okx.com/priapi/v1/invest/activity/smart-money/list?pageNo=1&t=1711533530879"
     headers = {
@@ -193,11 +197,14 @@ def request_ok():
             winRate = r["winRate"]
             yieldRate = r["yieldRate"]
             userAddress = r["userAddress"]
+            # 涨幅 = ((当前价格 - 初始价格) / 初始价格) * 100
+            increaseInPrice = (str_to_float(latestUnitPrice) - str_to_float(orderUnitPrice) / str_to_float(
+                orderUnitPrice)) * 100
             # 获取当前时间
             date = datetime.now()
             timestamp = int(date.timestamp())
             # 对比的时间8分钟的购买
-            diff = 60 * 8
+            diff = 60 * 50
             if (timestamp - int(investmentTime) / 1000) <= diff:
                 if transactionAction == "BUY":
                     timeArray = time.localtime(int(investmentTime) / 1000)
@@ -211,8 +218,8 @@ def request_ok():
                     arr.append("购买金额：" + orderPrice + "$\n\r")
                     arr.append("购买价格：" + orderUnitPrice + "$\n\r")
                     arr.append("当前价格：" + latestUnitPrice + "$\n\r")
+                    arr.append("涨幅：" + str(increaseInPrice) + "%\n\r")
                     arr.append("![图片地址：](" + tokenLogo + ")\n\r")
-                    arr.append("图片地址：<" + tokenLogo + ">\n\r")
                     arr.append("看线：<" + "https://dexscreener.com/solana/" + tokenAddress + ">\n\r")
                     arr.append("聪明钱地址：" + userAddress + "\n\r")
                     arr.append("7日内收益：" + winRate + "%\n\r")
@@ -237,8 +244,8 @@ def request_ok():
                     arr.append("购买金额：" + orderPrice + "$\n\r")
                     arr.append("购买价格：" + orderUnitPrice + "$\n\r")
                     arr.append("当前价格：" + latestUnitPrice + "$\n\r")
+                    arr.append("涨幅：" + str(increaseInPrice) + "%\n\r")
                     arr.append("![图片地址：](" + tokenLogo + ")\n\r")
-                    arr.append("图片地址：<" + tokenLogo + ">\n\r")
                     arr.append("看线：<" + "https://dexscreener.com/solana/" + tokenAddress + ">\n\r")
                     arr.append("聪明钱地址：" + userAddress + "\n\r")
                     arr.append("7日内收益：" + winRate + "%\n\r")
