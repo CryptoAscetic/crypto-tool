@@ -201,7 +201,7 @@ def request_ok():
             date = datetime.now()
             timestamp = int(date.timestamp())
             # 对比的时间8分钟的购买
-            diff = 60 * 100
+            diff = 60 * 8
             if (timestamp - int(investmentTime) / 1000) <= diff:
                 if transactionAction == "BUY":
                     timeArray = time.localtime(int(investmentTime) / 1000)
