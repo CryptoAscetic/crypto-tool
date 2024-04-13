@@ -6,7 +6,8 @@ from datetime import timezone, timedelta, datetime
 
 import requests
 
-token_dd = 'a2e2cd49e7ca093d67a4223ed32c59804965edc184697d9fc55cf7c830b7b501'
+# token_dd = 'a2e2cd49e7ca093d67a4223ed32c59804965edc184697d9fc55cf7c830b7b501'
+token_dd = 'a9aab412b508bb619859974fc7fb202668b436574a992efc69b3aef3e14650e9'
 
 beijing = timezone(timedelta(hours=8))
 print(f'1、北京时区为：{beijing}')
