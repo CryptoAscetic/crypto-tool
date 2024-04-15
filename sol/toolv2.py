@@ -152,7 +152,8 @@ def send_markdown_address(address):
 
 
 def request_ok():
-    url = f"https://www.okx.com/priapi/v1/invest/activity/smart-money/list?pageNo=1&t=1711533530879"
+    url = (f"https://www.okx.com/priapi/v1/invest/activity/smart-money/token/page?pageNo=1&pageSize=10&duration=3"
+           f"&order=tokenTradingTime&t=1713151873646")
     headers = {
         "accept": "application/json",
         "accept-language": "zh,zh-CN;q=0.9",
@@ -181,32 +182,6 @@ def request_ok():
         res = result['data']['result']
         # print(res)
         arr = []
-
-        # tokenSymbol: "jeng-un",
-        # tokenLogo: "https://static.coinall.ltd/cdn/web3/currency/token/501-CeBcyntfm6GnejmXK1831muF8XNiiNtTkmrkgVM4TYen.png/type=png_350_0",
-        # tokenAddress: "CeBcyntfm6GnejmXK1831muF8XNiiNtTkmrkgVM4TYen",
-        # chainId: "501",
-        # securityRenameFlag: false,
-        # securityMintFlag: false,
-        # tokenFDV: "59287.935115814070000000",
-        # tokenLiquidity: "5229.680000000000000000",
-        # tradeVolume5: "67643.555549000000000000",
-        # tradeVolume60: "86601.826126000000000000",
-        # tradeVolume1440: "86601.826126000000000000",
-        # tokenTradingTime: "1713152097000",
-        # tokenCreateTime: "1713152040000",
-        # tokenPriceChange5: "39.134375993327714246",
-        # tokenPriceChange60: "39.134375993327714246",
-        # tokenPriceChange1440: "39.134375993327714246",
-        # smartMoneyCount: 1,
-        # latestOrderPrice: "74.345000000000000000",
-        # smartMoneyBuyCount: "1",
-        # smartMoneyBuyAmount: "74.345000000000000000",
-        # smartMoneySellCount: "0",
-        # smartMoneySellAmount: "0E-18",
-        # transactionAction: "BUY",
-        # total: null
-
         for r in res:  # 第二个实例
             # print(r)购买价格：0.007505822758914676$
             #
@@ -215,39 +190,26 @@ def request_ok():
             tokenSymbol = r["tokenSymbol"]
             tokenLogo = r["tokenLogo"]
             tokenAddress = r["tokenAddress"]
-            orderPrice = r["orderPrice"]
-            investmentTime = r["investmentTime"]
-            orderUnitPrice = r["orderUnitPrice"]
-            latestUnitPrice = r["latestUnitPrice"]
-            winRate = r["winRate"]
-            yieldRate = r["yieldRate"]
-            userAddress = r["userAddress"]
-            # 涨幅 = ((当前价格 - 初始价格) / 初始价格) * 100
-            increaseInPrice = (float(latestUnitPrice) - float(orderUnitPrice)) / float(latestUnitPrice) * 100
+            tokenTradingTime = r["tokenTradingTime"]
+            smartMoneyBuyAmount = r["tokenTradingTime"]
+
             # 获取当前时间
             date = datetime.now()
             timestamp = int(date.timestamp())
             # 对比的时间8分钟的购买
             diff = 60 * 6
-            if (timestamp - int(investmentTime) / 1000) <= diff:
+            if (timestamp - int(tokenTradingTime) / 1000) <= diff:
                 if transactionAction == "BUY":
-                    timeArray = time.localtime(int(investmentTime) / 1000)
+                    timeArray = time.localtime(int(tokenTradingTime) / 1000)
                     otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
                     arr.append(str(china_time) + "-【聪明钱购买了】温馨提示各位：")
-                    arr.append(str((timestamp - int(investmentTime) / 1000) / 60))
+                    arr.append(str((timestamp - int(tokenTradingTime) / 1000) / 60))
                     arr.append("分钟之前，购买时间：" + otherStyleTime + "\n\r")
                     arr.append("名称：" + tokenSymbol + "\n\r")
                     arr.append("合约地址：\n\r```" + tokenAddress + "```\n\r")
                     arr.append("方式：" + transactionAction + "\n\r")
-                    arr.append("购买金额：" + orderPrice + "$\n\r")
-                    arr.append("购买价格：" + orderUnitPrice + "$\n\r")
-                    arr.append("当前价格：" + latestUnitPrice + "$\n\r")
-                    arr.append("涨幅：" + str(increaseInPrice) + "%\n\r")
                     arr.append("![图片地址：](" + tokenLogo + ")\n\r")
                     arr.append("看线：<" + "https://dexscreener.com/solana/" + tokenAddress + ">\n\r")
-                    arr.append("聪明钱地址：" + userAddress + "\n\r")
-                    arr.append("7日内收益：" + winRate + "%\n\r")
-                    arr.append("7日内收益率：" + yieldRate + "%\n\r")
                     arr.append("查看合约：<" + "https://www.dexlab.space/mintinglab/spl-token/" + tokenAddress + ">\n\r")
                     # node = request_ok()
                     note_str = "".join(arr)
@@ -257,23 +219,16 @@ def request_ok():
                     send_markdown_address(tokenAddress)
                     arr = []
                 else:
-                    timeArray = time.localtime(int(investmentTime) / 1000)
+                    timeArray = time.localtime(int(tokenTradingTime) / 1000)
                     otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
                     arr.append(str(china_time) + "-【聪明钱卖出了】温馨提示各位：")
-                    arr.append(str((timestamp - int(investmentTime) / 1000) / 60))
+                    arr.append(str((timestamp - int(tokenTradingTime) / 1000) / 60))
                     arr.append("分钟之前，卖出时间：" + otherStyleTime + "\n\r")
                     arr.append("名称：" + tokenSymbol + "\n\r")
                     arr.append("合约地址：\n\r```" + tokenAddress + "```\n\r")
                     arr.append("方式：" + transactionAction + "\n\r")
-                    arr.append("购买金额：" + orderPrice + "$\n\r")
-                    arr.append("购买价格：" + orderUnitPrice + "$\n\r")
-                    arr.append("当前价格：" + latestUnitPrice + "$\n\r")
-                    arr.append("涨幅：" + str(increaseInPrice) + "%\n\r")
                     arr.append("![图片地址：](" + tokenLogo + ")\n\r")
                     arr.append("看线：<" + "https://dexscreener.com/solana/" + tokenAddress + ">\n\r")
-                    arr.append("聪明钱地址：" + userAddress + "\n\r")
-                    arr.append("7日内收益：" + winRate + "%\n\r")
-                    arr.append("7日内收益率：" + yieldRate + "%\n\r")
                     arr.append("查看合约：<" + "https://www.dexlab.space/mintinglab/spl-token/" + tokenAddress + ">\n\r")
                     # node = request_ok()
                     note_str = "".join(arr)
@@ -282,7 +237,7 @@ def request_ok():
                     send_markdown_address(tokenAddress)
                     time.sleep(1)
                     arr = []
-                if float(orderPrice) > 600.0:
+                if float(smartMoneyBuyAmount) > 600.0:
                     send_markdown_system()
         time.sleep(60)
         send_msg()
