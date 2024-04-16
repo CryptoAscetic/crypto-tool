@@ -195,6 +195,10 @@ def request_ok():
             tokenAddress = r["tokenAddress"]
             tokenTradingTime = r["tokenTradingTime"]
             smartMoneyBuyAmount = r["smartMoneyBuyAmount"]
+            latestOrderPrice = r["latestOrderPrice"]
+            tradeVolume5 = r["tradeVolume5"]
+            tradeVolume60 = r["tradeVolume60"]
+            tradeVolume1440 = r["tradeVolume1440"]
 
             # 获取当前时间
             date = datetime.now()
@@ -228,6 +232,10 @@ def request_ok():
                     arr.append("分钟之前，购买时间：" + otherStyleTime + "\n\r")
                     arr.append("池子大小：" + tokenFDV + "\n\r")
                     arr.append("名称：" + tokenSymbol + "\n\r")
+                    arr.append("订单金额：" + latestOrderPrice + "$\n\r")
+                    arr.append("5分钟交易额：" + tradeVolume5 + "$\n\r")
+                    arr.append("60分钟交易额：" + tradeVolume60 + "$\n\r")
+                    arr.append("1个小时交易额：" + tradeVolume1440 + "$\n\r")
                     arr.append("合约地址：\n\r```" + tokenAddress + "```\n\r")
                     arr.append("方式：" + transactionAction + "\n\r")
                     arr.append("![图片地址：](" + tokenLogo + ")\n\r")
@@ -266,6 +274,10 @@ def request_ok():
                     arr.append("分钟之前，卖出时间：" + otherStyleTime + "\n\r")
                     arr.append("池子大小：" + tokenFDV + "\n\r")
                     arr.append("名称：" + tokenSymbol + "\n\r")
+                    arr.append("订单金额：" + latestOrderPrice + "$\n\r")
+                    arr.append("5分钟交易额：" + tradeVolume5 + "$\n\r")
+                    arr.append("60分钟交易额：" + tradeVolume60 + "$\n\r")
+                    arr.append("1个小时交易额：" + tradeVolume1440 + "$\n\r")
                     arr.append("合约地址：\n\r```" + tokenAddress + "```\n\r")
                     arr.append("方式：" + transactionAction + "\n\r")
                     arr.append("![图片地址：](" + tokenLogo + ")\n\r")
