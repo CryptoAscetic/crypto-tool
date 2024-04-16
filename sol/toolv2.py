@@ -194,7 +194,7 @@ def request_ok():
             tokenFDV = r["tokenFDV"]
             tokenAddress = r["tokenAddress"]
             tokenTradingTime = r["tokenTradingTime"]
-            smartMoneyBuyAmount = r["tokenTradingTime"]
+            smartMoneyBuyAmount = r["smartMoneyBuyAmount"]
 
             # 获取当前时间
             date = datetime.now()
@@ -216,7 +216,7 @@ def request_ok():
                             userWalletAddress = s["userWalletAddress"]
                             winRate = s["winRate"]
                             yieldRate = s["yieldRate"]
-                            userAddr.append("：" + userWalletAddress + "\n\r")
+                            userAddr.append("" + userWalletAddress + "\n\r")
                             userAddr.append("7日内收益：" + winRate + "%\n\r")
                             userAddr.append("7日内收益率：" + yieldRate + "%\n\r")
 
@@ -242,6 +242,23 @@ def request_ok():
                     send_markdown_address(tokenAddress)
                     arr = []
                 else:
+                    get_token = (f"https://www.okx.com/priapi/v1/invest/activity/smart-money/token/holding/list"
+                                 f"?pageNo=1&pageSize=50&tokenAddress={tokenAddress}&chainId=501&t=1713227607507")
+
+                    response = requests.get(get_token, headers=headers)
+                    print("Status code:", response.status_code)
+                    userAddr = []
+                    if response.status_code == 200:
+                        result = response.json()
+                        res = result['data']['result']
+                        for s in res:  # 第二个实例
+                            userWalletAddress = s["userWalletAddress"]
+                            winRate = s["winRate"]
+                            yieldRate = s["yieldRate"]
+                            userAddr.append("" + userWalletAddress + "\n\r")
+                            userAddr.append("7日内收益：" + winRate + "%\n\r")
+                            userAddr.append("7日内收益率：" + yieldRate + "%\n\r")
+                    userList = "".join(userAddr)
                     timeArray = time.localtime(int(tokenTradingTime) / 1000)
                     otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
                     arr.append(str(china_time) + "-【聪明钱卖出了】温馨提示各位：")
