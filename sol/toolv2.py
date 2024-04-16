@@ -152,8 +152,10 @@ def send_markdown_address(address):
 
 
 def request_ok():
+    # 获取所有的数据
     url = (f"https://www.okx.com/priapi/v1/invest/activity/smart-money/token/page?pageNo=1&pageSize=10&duration=3"
            f"&order=tokenTradingTime&t=1713151873646")
+
     headers = {
         "accept": "application/json",
         "accept-language": "zh,zh-CN;q=0.9",
@@ -189,6 +191,7 @@ def request_ok():
             transactionAction = r["transactionAction"]
             tokenSymbol = r["tokenSymbol"]
             tokenLogo = r["tokenLogo"]
+            tokenFDV = r["tokenFDV"]
             tokenAddress = r["tokenAddress"]
             tokenTradingTime = r["tokenTradingTime"]
             smartMoneyBuyAmount = r["tokenTradingTime"]
@@ -200,22 +203,42 @@ def request_ok():
             diff = 60 * 6
             if (timestamp - int(tokenTradingTime) / 1000) <= diff:
                 if transactionAction == "BUY":
+                    get_token = (f"https://www.okx.com/priapi/v1/invest/activity/smart-money/token/holding/list"
+                                 f"?pageNo=1&pageSize=50&tokenAddress={tokenAddress}&chainId=501&t=1713227607507")
+
+                    response = requests.get(get_token, headers=headers)
+                    print("Status code:", response.status_code)
+                    userAddr = []
+                    if response.status_code == 200:
+                        result = response.json()
+                        res = result['data']['result']
+                        for s in res:  # 第二个实例
+                            userWalletAddress = s["userWalletAddress"]
+                            winRate = s["winRate"]
+                            yieldRate = s["yieldRate"]
+                            userAddr.append("：" + userWalletAddress + "\n\r")
+                            userAddr.append("7日内收益：" + winRate + "%\n\r")
+                            userAddr.append("7日内收益率：" + yieldRate + "%\n\r")
+
+                    userList = "".join(userAddr)
                     timeArray = time.localtime(int(tokenTradingTime) / 1000)
                     otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
                     arr.append(str(china_time) + "-【聪明钱购买了】温馨提示各位：")
                     arr.append(str((timestamp - int(tokenTradingTime) / 1000) / 60))
                     arr.append("分钟之前，购买时间：" + otherStyleTime + "\n\r")
+                    arr.append("池子大小：" + tokenFDV + "\n\r")
                     arr.append("名称：" + tokenSymbol + "\n\r")
                     arr.append("合约地址：\n\r```" + tokenAddress + "```\n\r")
                     arr.append("方式：" + transactionAction + "\n\r")
                     arr.append("![图片地址：](" + tokenLogo + ")\n\r")
                     arr.append("看线：<" + "https://dexscreener.com/solana/" + tokenAddress + ">\n\r")
                     arr.append("查看合约：<" + "https://www.dexlab.space/mintinglab/spl-token/" + tokenAddress + ">\n\r")
+                    arr.append("记录：" + userList + "\n\r")
                     # node = request_ok()
                     note_str = "".join(arr)
                     print(note_str)
                     send_markdown(note_str)
-                    time.sleep(1)
+                    time.sleep(5)
                     send_markdown_address(tokenAddress)
                     arr = []
                 else:
@@ -224,6 +247,7 @@ def request_ok():
                     arr.append(str(china_time) + "-【聪明钱卖出了】温馨提示各位：")
                     arr.append(str((timestamp - int(tokenTradingTime) / 1000) / 60))
                     arr.append("分钟之前，卖出时间：" + otherStyleTime + "\n\r")
+                    arr.append("池子大小：" + tokenFDV + "\n\r")
                     arr.append("名称：" + tokenSymbol + "\n\r")
                     arr.append("合约地址：\n\r```" + tokenAddress + "```\n\r")
                     arr.append("方式：" + transactionAction + "\n\r")
@@ -235,7 +259,7 @@ def request_ok():
                     print(note_str)
                     send_markdown(note_str)
                     send_markdown_address(tokenAddress)
-                    time.sleep(1)
+                    time.sleep(5)
                     arr = []
                 if float(smartMoneyBuyAmount) > 600.0:
                     send_markdown_system()
