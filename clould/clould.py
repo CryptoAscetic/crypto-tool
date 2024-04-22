@@ -1,5 +1,8 @@
+import datetime
+
 import numpy as np
 from plyfile import PlyData
+from scipy.spatial.distance import cdist
 
 
 # 在Python中，对比两个PLY格式的点云文件可以通过读取文件、
@@ -19,27 +22,40 @@ def compare_ply_point_clouds(ply_path1, ply_path2):
     points1 = np.vstack((point_cloud1['vertex']['x'], point_cloud1['vertex']['y'], point_cloud1['vertex']['z'])).T
     points2 = np.vstack((point_cloud2['vertex']['x'], point_cloud2['vertex']['y'], point_cloud2['vertex']['z'])).T
 
+    # points3 = trimesh.load_mesh(ply_path1)
+    # points4 = trimesh.load_mesh(ply_path2)
+    # print(points3)
+    # print(points4)
+
     print("点云1" + str(len(points1)))
     print("点云1" + str(len(points2)))
     # 计算两个点云的中心点
-    center1 = np.mean(points1, axis=0)
-    center2 = np.mean(points2, axis=0)
+    # center1 = np.mean(points1, axis=0)
+    # center2 = np.mean(points2, axis=0)
 
     # 计算点云之间的距离
-    distance_threshold = 0.05  # 设定一个阈值，用于判断点是否相似
-    dist1_to_2 = np.linalg.norm(center1 - center2)
-    print(f"两点云中心之间的距离为: {dist1_to_2}")
+    distance_threshold = 5  # 设定一个阈值，用于判断点是否相似
+    # dist1_to_2 = np.linalg.norm(center1 - center2)
+    # print(f"两点云中心之间的距离为: {dist1_to_2}")
 
     # 计算匹配点和独特点的数量
     matching_points = 0
     unique_points1 = 0
     unique_points2 = 0
 
+    start_time = datetime.datetime.now()
+    print(start_time)
     for point1 in points1:
-        for point2 in points2:
-            if np.linalg.norm(point1 - point2) < distance_threshold:
-                matching_points += 1
-                break
+        _result = cdist([point1], points2, 'euclidean')
+
+        # _result2 = np.linalg.norm(point1 - points2[0])
+        result1 = _result[_result < distance_threshold]
+        print(result1)
+        if result1.size > 0:
+            matching_points += 1
+
+    end_time = datetime.datetime.now()
+    print(start_time, end_time)
     print("遍历处理数据")
     if matching_points > 0:
         unique_points1 = points1.shape[0] - matching_points

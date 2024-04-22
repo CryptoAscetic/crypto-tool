@@ -199,12 +199,14 @@ def request_ok():
             tradeVolume5 = r["tradeVolume5"]
             tradeVolume60 = r["tradeVolume60"]
             tradeVolume1440 = r["tradeVolume1440"]
+            smartMoneyCount = r["smartMoneyCount"]
+            smartMoneySellCount = r["smartMoneySellCount"]
 
             # 获取当前时间
             date = datetime.now()
             timestamp = int(date.timestamp())
             # 对比的时间8分钟的购买
-            diff = 60 * 6
+            diff = 60 * 60
             if (timestamp - int(tokenTradingTime) / 1000) <= diff:
                 if transactionAction == "BUY":
                     get_token = (f"https://www.okx.com/priapi/v1/invest/activity/smart-money/token/holding/list"
@@ -230,9 +232,11 @@ def request_ok():
                     arr.append(str(china_time) + "-【聪明钱购买了】温馨提示各位：")
                     arr.append(str((timestamp - int(tokenTradingTime) / 1000) / 60))
                     arr.append("分钟之前，购买时间：" + otherStyleTime + "\n\r")
+                    arr.append("当前有：" + str(smartMoneyBuyAmount) + "个聪明钱买入\n\r")
+                    arr.append("当前有：" + str(smartMoneyCount) + "个聪明钱操作\n\r")
                     arr.append("池子大小：" + tokenFDV + "\n\r")
                     arr.append("名称：" + tokenSymbol + "\n\r")
-                    arr.append("订单金额：" + latestOrderPrice + "$\n\r")
+                    arr.append("购买订单金额：" + latestOrderPrice + "$\n\r")
                     arr.append("5分钟交易额：" + tradeVolume5 + "$\n\r")
                     arr.append("60分钟交易额：" + tradeVolume60 + "$\n\r")
                     arr.append("1个小时交易额：" + tradeVolume1440 + "$\n\r")
@@ -272,9 +276,11 @@ def request_ok():
                     arr.append(str(china_time) + "-【聪明钱卖出了】温馨提示各位：")
                     arr.append(str((timestamp - int(tokenTradingTime) / 1000) / 60))
                     arr.append("分钟之前，卖出时间：" + otherStyleTime + "\n\r")
+                    arr.append("当前有：" + str(smartMoneyCount) + "个聪明钱操作\n\r")
+                    arr.append("当前有：" + str(smartMoneySellCount) + "个聪明钱卖出\n\r")
                     arr.append("池子大小：" + tokenFDV + "\n\r")
                     arr.append("名称：" + tokenSymbol + "\n\r")
-                    arr.append("订单金额：" + latestOrderPrice + "$\n\r")
+                    arr.append("卖出订单金额：" + latestOrderPrice + "$\n\r")
                     arr.append("5分钟交易额：" + tradeVolume5 + "$\n\r")
                     arr.append("60分钟交易额：" + tradeVolume60 + "$\n\r")
                     arr.append("1个小时交易额：" + tradeVolume1440 + "$\n\r")
