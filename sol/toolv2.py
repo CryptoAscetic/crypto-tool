@@ -206,7 +206,7 @@ def request_ok():
             date = datetime.now()
             timestamp = int(date.timestamp())
             # 对比的时间8分钟的购买
-            diff = 60 * 60
+            diff = 60 * 6
             if (timestamp - int(tokenTradingTime) / 1000) <= diff:
                 if transactionAction == "BUY":
                     get_token = (f"https://www.okx.com/priapi/v1/invest/activity/smart-money/token/holding/list"
