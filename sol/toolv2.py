@@ -201,6 +201,7 @@ def request_ok():
             tradeVolume1440 = r["tradeVolume1440"]
             smartMoneyCount = r["smartMoneyCount"]
             smartMoneySellCount = r["smartMoneySellCount"]
+            smartMoneyBuyCount = r["smartMoneyBuyCount"]
 
             # 获取当前时间
             date = datetime.now()
@@ -232,7 +233,7 @@ def request_ok():
                     arr.append(str(china_time) + "-【聪明钱购买了】温馨提示各位：")
                     arr.append(str((timestamp - int(tokenTradingTime) / 1000) / 60))
                     arr.append("分钟之前，购买时间：" + otherStyleTime + "\n\r")
-                    arr.append("当前有：" + str(smartMoneyBuyAmount) + "个聪明钱买入\n\r")
+                    arr.append("当前有：" + str(smartMoneyBuyCount) + "个聪明钱买入\n\r")
                     arr.append("当前有：" + str(smartMoneyCount) + "个聪明钱操作\n\r")
                     arr.append("池子大小：" + tokenFDV + "\n\r")
                     arr.append("名称：" + tokenSymbol + "\n\r")
@@ -245,6 +246,7 @@ def request_ok():
                     arr.append("![图片地址：](" + tokenLogo + ")\n\r")
                     arr.append("看线：<" + "https://dexscreener.com/solana/" + tokenAddress + ">\n\r")
                     arr.append("查看合约：<" + "https://www.dexlab.space/mintinglab/spl-token/" + tokenAddress + ">\n\r")
+                    arr.append("检查合约：<" + "https://gmgn.ai/sol/token/" + tokenAddress + ">\n\r")
                     arr.append("记录：" + userList + "\n\r")
                     # node = request_ok()
                     note_str = "".join(arr)
@@ -289,6 +291,7 @@ def request_ok():
                     arr.append("![图片地址：](" + tokenLogo + ")\n\r")
                     arr.append("看线：<" + "https://dexscreener.com/solana/" + tokenAddress + ">\n\r")
                     arr.append("查看合约：<" + "https://www.dexlab.space/mintinglab/spl-token/" + tokenAddress + ">\n\r")
+                    arr.append("检查合约：<" + "https://gmgn.ai/sol/token/" + tokenAddress + ">\n\r")
                     # node = request_ok()
                     note_str = "".join(arr)
                     print(note_str)
