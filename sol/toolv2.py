@@ -207,7 +207,7 @@ def request_ok():
             date = datetime.now()
             timestamp = int(date.timestamp())
             # 对比的时间8分钟的购买
-            diff = 60 * 6
+            diff = 60 * 600
             if (timestamp - int(tokenTradingTime) / 1000) <= diff:
                 if transactionAction == "BUY":
                     get_token = (f"https://www.okx.com/priapi/v1/invest/activity/smart-money/token/holding/list"
@@ -232,7 +232,7 @@ def request_ok():
                     otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
                     arr.append(str(china_time) + "-【聪明钱购买了】温馨提示各位：")
                     arr.append(str((timestamp - int(tokenTradingTime) / 1000) / 60))
-                    arr.append("分钟之前，购买时间：" + otherStyleTime + "\n\r")
+                    arr.append("分钟之前，购买" + "\n\r")
                     arr.append("当前有：" + str(smartMoneyBuyCount) + "个聪明钱买入\n\r")
                     arr.append("当前有：" + str(smartMoneyCount) + "个聪明钱操作\n\r")
                     arr.append("池子大小：" + tokenFDV + "\n\r")
@@ -240,14 +240,18 @@ def request_ok():
                     arr.append("购买订单金额：" + latestOrderPrice + "$\n\r")
                     arr.append("5分钟交易额：" + tradeVolume5 + "$\n\r")
                     arr.append("60分钟交易额：" + tradeVolume60 + "$\n\r")
-                    arr.append("1个小时交易额：" + tradeVolume1440 + "$\n\r")
+                    arr.append("24个小时交易额：" + tradeVolume1440 + "$\n\r")
                     arr.append("合约地址：\n\r```" + tokenAddress + "```\n\r")
                     arr.append("方式：" + transactionAction + "\n\r")
                     arr.append("![图片地址：](" + tokenLogo + ")\n\r")
-                    arr.append("看线：<" + "https://dexscreener.com/solana/" + tokenAddress + ">\n\r")
-                    arr.append("查看合约：<" + "https://www.dexlab.space/mintinglab/spl-token/" + tokenAddress + ">\n\r")
+                    # arr.append("看线：<" + "https://dexscreener.com/solana/" + tokenAddress + ">\n\r")
+                    # arr.append("查看合约：<" + "https://www.dexlab.space/mintinglab/spl-token/" + tokenAddress + ">\n\r")
                     arr.append("检查合约：<" + "https://gmgn.ai/sol/token/" + tokenAddress + ">\n\r")
-                    arr.append("记录：" + userList + "\n\r")
+                    arr.append(
+                        "推特搜索：<" + "https://twitter.com/search?q=%24" + tokenSymbol + "&src=typed_query>\n\r")
+                    arr.append(
+                        "推特合约搜索：<" + "https://twitter.com/search?q=%24" + tokenAddress + "&src=typed_query>\n\r")
+                    # arr.append("记录：" + userList + "\n\r")
                     # node = request_ok()
                     note_str = "".join(arr)
                     print(note_str)
@@ -277,21 +281,25 @@ def request_ok():
                     otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
                     arr.append(str(china_time) + "-【聪明钱卖出了】温馨提示各位：")
                     arr.append(str((timestamp - int(tokenTradingTime) / 1000) / 60))
-                    arr.append("分钟之前，卖出时间：" + otherStyleTime + "\n\r")
+                    arr.append("分钟之前，卖出" + "\n\r")
                     arr.append("当前有：" + str(smartMoneyCount) + "个聪明钱操作\n\r")
                     arr.append("当前有：" + str(smartMoneySellCount) + "个聪明钱卖出\n\r")
-                    arr.append("池子大小：" + tokenFDV + "\n\r")
+                    arr.append("池子大小：" + tokenFDV + "$\n\r")
                     arr.append("名称：" + tokenSymbol + "\n\r")
                     arr.append("卖出订单金额：" + latestOrderPrice + "$\n\r")
                     arr.append("5分钟交易额：" + tradeVolume5 + "$\n\r")
                     arr.append("60分钟交易额：" + tradeVolume60 + "$\n\r")
-                    arr.append("1个小时交易额：" + tradeVolume1440 + "$\n\r")
+                    arr.append("24个小时交易额：" + tradeVolume1440 + "$\n\r")
                     arr.append("合约地址：\n\r```" + tokenAddress + "```\n\r")
                     arr.append("方式：" + transactionAction + "\n\r")
                     arr.append("![图片地址：](" + tokenLogo + ")\n\r")
-                    arr.append("看线：<" + "https://dexscreener.com/solana/" + tokenAddress + ">\n\r")
-                    arr.append("查看合约：<" + "https://www.dexlab.space/mintinglab/spl-token/" + tokenAddress + ">\n\r")
+                    # arr.append("看线：<" + "https://dexscreener.com/solana/" + tokenAddress + ">\n\r")
+                    # arr.append("查看合约：<" + "https://www.dexlab.space/mintinglab/spl-token/" + tokenAddress + ">\n\r")
                     arr.append("检查合约：<" + "https://gmgn.ai/sol/token/" + tokenAddress + ">\n\r")
+                    arr.append(
+                        "推特搜索：<" + "https://twitter.com/search?q=%24" + tokenSymbol + "&src=typed_query>\n\r")
+                    arr.append(
+                        "推特合约搜索：<" + "https://twitter.com/search?q=%24" + tokenAddress + "&src=typed_query>\n\r")
                     # node = request_ok()
                     note_str = "".join(arr)
                     print(note_str)
