@@ -235,7 +235,7 @@ def request_ok():
                     arr.append("分钟之前，购买" + "\n\r")
                     arr.append("当前有：" + str(smartMoneyBuyCount) + "个聪明钱买入\n\r")
                     arr.append("当前有：" + str(smartMoneyCount) + "个聪明钱操作\n\r")
-                    arr.append("池子大小：" + tokenFDV + "\n\r")
+                    arr.append("池子大小：" + tokenFDV + "$\n\r")
                     arr.append("名称：" + tokenSymbol + "\n\r")
                     arr.append("购买订单金额：" + latestOrderPrice + "$\n\r")
                     arr.append("5分钟交易额：" + tradeVolume5 + "$\n\r")
