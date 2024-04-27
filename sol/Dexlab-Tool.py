@@ -67,6 +67,7 @@ def get_current_month_first_day():
     return dt.datetime.strptime(dt.datetime.now().strftime('%Y-%m') + '-01', '%Y-%m-%d')
 
 
+# 系统检测提示
 def send_msg():
     """
     通过钉钉机器人发送内容
@@ -85,6 +86,7 @@ def send_msg():
     print(res.text)
 
 
+# 大于600的提示
 def send_markdown_system():
     """
     通过钉钉机器人发送内容
@@ -111,6 +113,7 @@ def send_markdown_system():
     print(res.text)
 
 
+# 地址
 def send_markdown_address(address):
     """
     通过钉钉机器人发送内容
@@ -131,6 +134,7 @@ def send_markdown_address(address):
     print(res.text)
 
 
+#  核心内容
 def send_markdown(msg):
     """
     通过钉钉机器人发送内容
@@ -145,6 +149,11 @@ def send_markdown(msg):
             "title": str(china_time) + "sol",
             "text": msg
         },
+        "at": {
+            "atUserIds": [
+                "CryptoAscetic"
+            ],
+        }
     }
     res = requests.post(url, data=json.dumps(data), headers=headers)  # 直接一句post就可以实现通过机器人在群聊里发消息
     print(res.text)

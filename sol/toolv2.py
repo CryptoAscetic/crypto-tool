@@ -8,6 +8,8 @@ import requests
 
 # token_dd = 'a2e2cd49e7ca093d67a4223ed32c59804965edc184697d9fc55cf7c830b7b501'
 token_dd = 'a9aab412b508bb619859974fc7fb202668b436574a992efc69b3aef3e14650e9'
+# 分钟
+TIME = 6
 
 beijing = timezone(timedelta(hours=8))
 print(f'1、北京时区为：{beijing}')
@@ -131,7 +133,7 @@ def send_markdown(msg):
     print(res.text)
 
 
-def send_markdown_address(address):
+def send_markdown_address(address, type):
     """
     通过钉钉机器人发送内容
     @param msg:
@@ -140,14 +142,28 @@ def send_markdown_address(address):
     url = 'https://oapi.dingtalk.com/robot/send?access_token=' + token_dd
     headers = {'Content-Type': 'application/json;charset=utf-8'}
 
-    data = {
+    buy_data = {
         "msgtype": "markdown",
         "markdown": {
             "title": str(china_time) + "sol-直接复制粘贴",
             "text": address
         },
     }
-    res = requests.post(url, data=json.dumps(data), headers=headers)  # 直接一句post就可以实现通过机器人在群聊里发消息
+
+    sell_data = {
+        "at": {
+            "isAtAll": True
+        },
+        "msgtype": "markdown",
+        "markdown": {
+            "title": str(china_time) + "sol-直接复制粘贴",
+            "text": address
+        },
+    }
+    if type == "BUY":
+        res = requests.post(url, data=json.dumps(buy_data), headers=headers)  # 直接一句post就可以实现通过机器人在群聊里发消息
+    else:
+        res = requests.post(url, data=json.dumps(sell_data), headers=headers)  # 直接一句post就可以实现通过机器人在群聊里发消息
     print(res.text)
 
 
@@ -207,7 +223,7 @@ def request_ok():
             date = datetime.now()
             timestamp = int(date.timestamp())
             # 对比的时间8分钟的购买
-            diff = 60 * 6
+            diff = 60 * TIME
             if (timestamp - int(tokenTradingTime) / 1000) <= diff:
                 if transactionAction == "BUY":
                     get_token = (f"https://www.okx.com/priapi/v1/invest/activity/smart-money/token/holding/list"
@@ -258,7 +274,7 @@ def request_ok():
                     print(note_str)
                     send_markdown(note_str)
                     time.sleep(5)
-                    send_markdown_address(tokenAddress)
+                    send_markdown_address(tokenAddress, "BUY")
                     arr = []
                 else:
                     get_token = (f"https://www.okx.com/priapi/v1/invest/activity/smart-money/token/holding/list"
@@ -307,7 +323,7 @@ def request_ok():
                     note_str = "".join(arr)
                     print(note_str)
                     send_markdown(note_str)
-                    send_markdown_address(tokenAddress)
+                    send_markdown_address(tokenAddress, "SELL")
                     time.sleep(5)
                     arr = []
                 if float(smartMoneyBuyAmount) > 600.0:
@@ -316,6 +332,7 @@ def request_ok():
         send_msg()
 
 
+# 获取token基本信息
 def get_token_info(token, arr):
     url = f"https://gmgn.ai/defi/quotation/v1/tokens/sol/" + token
     headers = {
@@ -363,7 +380,7 @@ def get_token_info(token, arr):
             if telegram is None:
                 pass
             else:
-                arr.append("官网地址：<" + telegram + ">\n\r")
+                arr.append("电报：<" + telegram + ">\n\r")
         arr.append("当前价格：" + str(price) + "$\n\r")
         arr.append("1分钟前价格：" + str(price_1m) + "$\n\r")
         arr.append("5分钟前价格：" + str(price_5m) + "$\n\r")
