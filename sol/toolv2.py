@@ -142,7 +142,7 @@ def send_markdown_address(address, type):
     url = 'https://oapi.dingtalk.com/robot/send?access_token=' + token_dd
     headers = {'Content-Type': 'application/json;charset=utf-8'}
 
-    buy_data = {
+    sell_data = {
         "msgtype": "markdown",
         "markdown": {
             "title": str(china_time) + "sol-直接复制粘贴",
@@ -150,7 +150,7 @@ def send_markdown_address(address, type):
         },
     }
 
-    sell_data = {
+    buy_data = {
         "at": {
             "isAtAll": True
         },
