@@ -21,12 +21,11 @@ def get_token_info(token):
 
     }
     response = requests.get(url, headers=headers)
+    arr = []
     print("Status code:", response.status_code)
     if response.status_code == 200:
         result = response.json()
         res = result['data']['token']
-        print(res)
-        arr = []
         price = res['price']
         price_1m = res['price_1m']
         price_5m = res['price_5m']
@@ -56,11 +55,11 @@ def get_token_info(token):
             if telegram is None:
                 pass
             else:
-                arr.append("官网地址：<" + telegram + ">\n\r")
+                arr.append("电报：<" + telegram + ">\n\r")
         arr.append("当前价格：" + str(price) + "$\n\r")
         arr.append("1分钟前价格：" + str(price_1m) + "$\n\r")
         arr.append("5分钟前价格：" + str(price_5m) + "$\n\r")
-        arr.append("1小时前价格：" + str(price_1h) + "$\n\r")
+        arr.append("24小时前价格：" + str(price_1h) + "$\n\r")
         arr.append("池子是否燃烧：" + burn_status + "\n\r")
         arr.append("池子燃烧比率：" + str(burn_ratio) + "%\n\r")
         arr.append("合约创建者余额：" + str(creator_balance) + " Sol\n\r")
@@ -70,7 +69,7 @@ def get_token_info(token):
         if rug_ratio is None:
             pass
         else:
-            arr.append("dev逃跑比例：" + str(rug_ratio) + "%\n\r")
+            arr.append("dev逃跑比例：" + str(rug_ratio) + "\n\r")
         if rug_ratio is None:
             pass
         else:
@@ -88,4 +87,4 @@ if __name__ == '__main__':
     # 招财猫
     # get_token_info("25hAyBQfoDhfWx9ay6rarbgvWGwDdNqcHsXS3jQ3mTDJ")
 
-    get_token_info("CcKGCMM795aVAvYiNpfXLHU4zw6YJbDcUGPRio1uZF26")
+    get_token_info("D8F1FvrUhwg8WBjMqABopFYo13WwymGnVhsL3d7dRexP")

@@ -262,10 +262,10 @@ def request_ok():
                     # arr.append("查看合约：<" + "https://www.dexlab.space/mintinglab/spl-token/" + tokenAddress + ">\n\r")
                     # arr.append("检查合约：<" + "https://gmgn.ai/sol/token/" + tokenAddress + ">\n\r")
                     arr = get_token_info(tokenAddress, arr)
-                    arr.append(
-                        "推特搜索：<" + "https://twitter.com/search?q=%24" + tokenSymbol + "&src=typed_query>\n\r")
-                    arr.append(
-                        "推特合约搜索：<" + "https://twitter.com/search?q=%24" + tokenAddress + "&src=typed_query>\n\r")
+                    # arr.append(
+                    #     "推特搜索：<" + "https://twitter.com/search?q=%24" + tokenSymbol + "&src=typed_query>\n\r")
+                    # arr.append(
+                    #     "推特合约搜索：<" + "https://twitter.com/search?q=%24" + tokenAddress + "&src=typed_query>\n\r")
                     arr.append("合约地址：\n\r```" + tokenAddress + "```\n\r")
                     # arr.append("记录：" + userList + "\n\r")
                     # node = request_ok()
@@ -313,10 +313,10 @@ def request_ok():
                     # arr.append("查看合约：<" + "https://www.dexlab.space/mintinglab/spl-token/" + tokenAddress + ">\n\r")
                     # arr.append("检查合约：<" + "https://gmgn.ai/sol/token/" + tokenAddress + ">\n\r")
                     arr = get_token_info(tokenAddress, arr)
-                    arr.append(
-                        "推特搜索：<" + "https://twitter.com/search?q=%24" + tokenSymbol + "&src=typed_query>\n\r")
-                    arr.append(
-                        "推特合约搜索：<" + "https://twitter.com/search?q=%24" + tokenAddress + "&src=typed_query>\n\r")
+                    # arr.append(
+                    #     "推特搜索：<" + "https://twitter.com/search?q=%24" + tokenSymbol + "&src=typed_query>\n\r")
+                    # arr.append(
+                    #     "推特合约搜索：<" + "https://twitter.com/search?q=%24" + tokenAddress + "&src=typed_query>\n\r")
                     arr.append("合约地址：\n\r```" + tokenAddress + "```\n\r")
                     # node = request_ok()
 
@@ -384,21 +384,26 @@ def get_token_info(token, arr):
             if telegram is None:
                 pass
             else:
-                arr.append("官网地址：<" + telegram + ">\n\r")
+                arr.append("电报：<" + telegram + ">\n\r")
         arr.append("当前价格：" + str(price) + "$\n\r")
         arr.append("1分钟前价格：" + str(price_1m) + "$\n\r")
         arr.append("5分钟前价格：" + str(price_5m) + "$\n\r")
-        arr.append("1小时前价格：" + str(price_1h) + "$\n\r")
+        arr.append("24小时前价格：" + str(price_1h) + "$\n\r")
         arr.append("池子是否燃烧：" + burn_status + "\n\r")
         arr.append("池子燃烧比率：" + str(burn_ratio) + "%\n\r")
         arr.append("合约创建者余额：" + str(creator_balance) + " Sol\n\r")
         arr.append("合约持有人数：" + str(holder_count) + "\n\r")
         arr.append("池子sol数：" + str(quote_reserve) + " Sol\n\r")
         arr.append("火热等级：" + str(hot_level) + " \n\r")
+
+        if hot_level >= 2:
+            arr.append("【建议买2s】 \n\r")
+        else:
+            arr.append("【观察一下，不建议直接上】 \n\r")
         if rug_ratio is None:
             pass
         else:
-            arr.append("dev逃跑比例：" + str(rug_ratio) + "%\n\r")
+            arr.append("dev逃跑比例：" + str(rug_ratio) + "\n\r")
         if rug_ratio is None:
             pass
         else:
