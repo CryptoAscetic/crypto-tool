@@ -4,7 +4,8 @@ import requests
 
 
 def get_token_info(token):
-    url = f"https://gmgn.ai/defi/quotation/v1/tokens/sol/" + token
+    url = f"https://gmgn.ai/defi/quotation/v1/pairs/sol/new_pairs?limit=50&orderby=open_timestamp&direction=desc" \
+          f"&filters\[\]=not_honeypot&filters\[\]=not_risk "
     headers = {
         "authority": "gmgn.ai",
         "accept": "application/json, text/plain, */*'",
@@ -94,4 +95,4 @@ if __name__ == '__main__':
     # 招财猫
     # get_token_info("25hAyBQfoDhfWx9ay6rarbgvWGwDdNqcHsXS3jQ3mTDJ")
 
-    get_token_info("89KX9c3rNoW5sVnwMQvPPFgYKxpABupCSqXUtB1CW5J2")
+    get_token_info("DWjVPqEX4fPFQ47Xb7EegpGhgWzRviYfPoEWPnxz2CRd")
