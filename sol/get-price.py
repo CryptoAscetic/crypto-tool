@@ -66,6 +66,11 @@ def get_token_info(token):
         arr.append("合约持有人数：" + str(holder_count) + "\n\r")
         arr.append("池子sol数：" + str(quote_reserve) + " Sol\n\r")
         arr.append("火热等级：" + str(hot_level) + " \n\r")
+
+        if hot_level >= 2:
+            arr.append("【建议买2s】 \n\r")
+        else:
+            arr.append("【观察一下，不建议直接上】 \n\r")
         if rug_ratio is None:
             pass
         else:
