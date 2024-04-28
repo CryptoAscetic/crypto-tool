@@ -355,7 +355,6 @@ def get_token_info(token, arr):
     if response.status_code == 200:
         result = response.json()
         res = result['data']['token']
-        arr = []
         price = res['price']
         price_1m = res['price_1m']
         price_5m = res['price_5m']
