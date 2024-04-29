@@ -72,17 +72,6 @@ def get_token_info(token):
         arr.append("合约持有人数：" + str(holder_count) + "\n\r")
         arr.append("火热等级：" + str(hot_level) + " \n\r")
         arr.append("名称：" + str(symbol) + " \n\r")
-        if float(quote_reserve) > 300.0:
-            if hot_level == 1:
-                arr.append("【☆温馨提示：建议买1s☆】 \n\r")
-            elif hot_level == 2:
-                arr.append("【☆温馨提示：建议买2s☆】 \n\r")
-            elif hot_level >= 3:
-                arr.append("【☆温馨提示：建议买3s☆】 \n\r")
-            else:
-                arr.append("【☆温馨提示，建议先观察☆】 \n\r")
-        else:
-            arr.append("【☆温馨提示，池子不足300s，小心☆】 \n\r")
         if rug_ratio is None:
             pass
         else:
@@ -95,6 +84,17 @@ def get_token_info(token):
             pass
         else:
             arr.append("跑路的土狗数：" + str(holder_rugged_num) + "\n\r")
+        if float(quote_reserve) > 300.0:
+            if hot_level == 1:
+                arr.append("【☆温馨提示：建议买1s☆】 \n\r")
+            elif hot_level == 2:
+                arr.append("【☆温馨提示：建议买2s☆】 \n\r")
+            elif hot_level >= 3:
+                arr.append("【☆温馨提示：建议买3s☆】 \n\r")
+            else:
+                arr.append("【☆温馨提示，建议先观察☆】 \n\r")
+        else:
+            arr.append("【☆温馨提示，池子不足300s，小心☆】 \n\r")
 
         arr.append("合约地址：" + token)
 
@@ -106,4 +106,4 @@ if __name__ == '__main__':
     # 招财猫
     # get_token_info("25hAyBQfoDhfWx9ay6rarbgvWGwDdNqcHsXS3jQ3mTDJ")
 
-    get_token_info("2DNLKitnzsAVaGiNbUkaBotz6EYqTkwrWcqA6zkcuREB")
+    get_token_info("BLEBG5HNqwWNP3NkgrVSw6f1eoFRt41AWDvBKZFPFzL1")

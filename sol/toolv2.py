@@ -9,7 +9,7 @@ import requests
 # token_dd = 'a2e2cd49e7ca093d67a4223ed32c59804965edc184697d9fc55cf7c830b7b501'
 token_dd = 'a9aab412b508bb619859974fc7fb202668b436574a992efc69b3aef3e14650e9'
 # 分钟
-TIME = 16
+TIME = 30
 
 beijing = timezone(timedelta(hours=8))
 print(f'1、北京时区为：{beijing}')
@@ -201,9 +201,6 @@ def request_ok():
         # print(res)
         arr = []
         for r in res:  # 第二个实例
-            # print(r)购买价格：0.007505822758914676$
-            #
-            # 当前价格：0.010367274834483426$
             transactionAction = r["transactionAction"]
             tokenSymbol = r["tokenSymbol"]
             tokenLogo = r["tokenLogo"]
@@ -245,7 +242,7 @@ def request_ok():
                     userList = "".join(userAddr)
                     timeArray = time.localtime(int(tokenTradingTime) / 1000)
                     otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
-                    arr.append("![图片地址：](" + tokenLogo + ")\n\r")
+                    # arr.append("![图片地址：](" + tokenLogo + ")\n\r")
                     arr.append(str(china_time) + "-【买入】温馨提示各位：")
                     arr.append(str((timestamp - int(tokenTradingTime) / 1000) / 60))
                     arr.append("分钟之前，购买" + "\n\r")
@@ -296,7 +293,13 @@ def request_ok():
                     userList = "".join(userAddr)
                     timeArray = time.localtime(int(tokenTradingTime) / 1000)
                     otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
-                    arr.append("![图片地址：](" + tokenLogo + ")\n\r")
+                    # arr.append("![图片地址：](" + tokenLogo + ")\n\r")
+
+                    # arr.append("方式：" + transactionAction + "\n\r")
+                    # arr.append("看线：<" + "https://dexscreener.com/solana/" + tokenAddress + ">\n\r")
+                    # arr.append("查看合约：<" + "https://www.dexlab.space/mintinglab/spl-token/" + tokenAddress + ">\n\r")
+                    # arr.append("检查合约：<" + "https://gmgn.ai/sol/token/" + tokenAddress + ">\n\r")
+                    arr = get_token_info(tokenAddress, arr)
                     arr.append(str(china_time) + "-\n\r【卖出】温馨提示各位：")
                     arr.append(str((timestamp - int(tokenTradingTime) / 1000) / 60))
                     arr.append("分钟之前，卖出" + "\n\r")
@@ -308,11 +311,6 @@ def request_ok():
                     arr.append("5分钟交易额：" + tradeVolume5 + "$\n\r")
                     arr.append("60分钟交易额：" + tradeVolume60 + "$\n\r")
                     arr.append("24个小时交易额：" + tradeVolume1440 + "$\n\r")
-                    # arr.append("方式：" + transactionAction + "\n\r")
-                    # arr.append("看线：<" + "https://dexscreener.com/solana/" + tokenAddress + ">\n\r")
-                    # arr.append("查看合约：<" + "https://www.dexlab.space/mintinglab/spl-token/" + tokenAddress + ">\n\r")
-                    # arr.append("检查合约：<" + "https://gmgn.ai/sol/token/" + tokenAddress + ">\n\r")
-                    arr = get_token_info(tokenAddress, arr)
                     # arr.append(
                     #     "推特搜索：<" + "https://twitter.com/search?q=%24" + tokenSymbol + "&src=typed_query>\n\r")
                     # arr.append(
@@ -328,8 +326,8 @@ def request_ok():
                     arr = []
                 if float(smartMoneyBuyAmount) > 600.0:
                     send_markdown_system()
-        time.sleep(60)
-        send_msg()
+        # time.sleep(60)
+        # send_msg()
 
 
 # 获取token基本信息
@@ -361,12 +359,10 @@ def get_token_info(token, arr):
         price_1h = res['price_1h']
         holder_count = res['holder_count']
         symbol = res['symbol']
+        logo = res['logo']
         # 检查键'a'是否存在
         key_to_check = 'pool_info'
         quote_reserve = ""
-        if key_to_check in res:
-            quote_reserve = res["pool_info"]["quote_reserve"]
-            arr.append("当前池子：" + str(quote_reserve) + " Sol\n\r")
         burn_status = res['burn_status']
         creator_balance = res["creator_balance"]
         social_links = res["social_links"]
@@ -401,17 +397,6 @@ def get_token_info(token, arr):
         arr.append("合约持有人数：" + str(holder_count) + "\n\r")
         arr.append("火热等级：" + str(hot_level) + " \n\r")
         arr.append("名称：" + str(symbol) + " \n\r")
-        if float(quote_reserve) > 300.0:
-            if hot_level == 1:
-                arr.append("【☆温馨提示：建议买1s☆】 \n\r")
-            elif hot_level == 2:
-                arr.append("【☆温馨提示：建议买2s☆】 \n\r")
-            elif hot_level >= 3:
-                arr.append("【☆温馨提示：建议买3s☆】 \n\r")
-            else:
-                arr.append("【☆温馨提示，建议先观察☆】 \n\r")
-        else:
-            arr.append("【☆温馨提示，池子不足300s，小心☆】 \n\r")
         if rug_ratio is None:
             pass
         else:
@@ -424,9 +409,24 @@ def get_token_info(token, arr):
             pass
         else:
             arr.append("跑路的土狗数：" + str(holder_rugged_num) + "\n\r")
-
+        if key_to_check in res:
+            quote_reserve = res["pool_info"]["quote_reserve"]
+            arr.append("当前池子：" + str(quote_reserve) + " Sol\n\r")
+        if float(quote_reserve) > 300.0:
+            if hot_level == 1:
+                arr.append("【☆温馨提示：建议买1s☆】 \n\r")
+            elif hot_level == 2:
+                arr.append("【☆温馨提示：建议买2s☆】 \n\r")
+            elif hot_level >= 3:
+                arr.append("【☆温馨提示：建议买3s☆】 \n\r")
+            else:
+                arr.append("【☆温馨提示，建议先观察☆】 \n\r")
+        else:
+            arr.append("【☆温馨提示，池子不足300s，小心☆】 \n\r")
+        arr.append("![图片地址：](" + logo + ")\n\r")
+        print(arr)
         return arr
 
 
-if __name__ == '__main__':
-    request_ok()
+# if __name__ == '__main__':
+#     request_ok()
