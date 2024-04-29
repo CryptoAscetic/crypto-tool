@@ -317,7 +317,7 @@ def request_ok():
                     #     "推特搜索：<" + "https://twitter.com/search?q=%24" + tokenSymbol + "&src=typed_query>\n\r")
                     # arr.append(
                     #     "推特合约搜索：<" + "https://twitter.com/search?q=%24" + tokenAddress + "&src=typed_query>\n\r")
-                    # arr.append("合约地址：\n\r```" + tokenAddress + "```\n\r")
+                    arr.append("合约地址：\n\r```" + tokenAddress + "```\n\r")
                     # node = request_ok()
 
                     note_str = "".join(arr)
