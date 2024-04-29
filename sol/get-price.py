@@ -34,10 +34,10 @@ def get_token_info(token):
         symbol = res['symbol']
         # 检查键'a'是否存在
         key_to_check = 'pool_info'
+        quote_reserve = ""
         if key_to_check in res:
             quote_reserve = res["pool_info"]["quote_reserve"]
-            arr.append("池子sol数：" + str(quote_reserve) + " Sol\n\r")
-
+            arr.append("当前池子：" + str(quote_reserve) + " Sol\n\r")
         burn_status = res['burn_status']
         creator_balance = res["creator_balance"]
         social_links = res["social_links"]
@@ -72,15 +72,17 @@ def get_token_info(token):
         arr.append("合约持有人数：" + str(holder_count) + "\n\r")
         arr.append("火热等级：" + str(hot_level) + " \n\r")
         arr.append("名称：" + str(symbol) + " \n\r")
-
-        if hot_level == 1:
-            arr.append("【☆温馨提示：建议买1s☆】 \n\r")
-        elif hot_level == 2:
-            arr.append("【☆温馨提示：建议买2s☆】 \n\r")
-        elif hot_level >= 3:
-            arr.append("【☆温馨提示：建议买3s☆】 \n\r")
+        if float(quote_reserve) > 300.0:
+            if hot_level == 1:
+                arr.append("【☆温馨提示：建议买1s☆】 \n\r")
+            elif hot_level == 2:
+                arr.append("【☆温馨提示：建议买2s☆】 \n\r")
+            elif hot_level >= 3:
+                arr.append("【☆温馨提示：建议买3s☆】 \n\r")
+            else:
+                arr.append("【☆温馨提示，建议先观察☆】 \n\r")
         else:
-            arr.append("【☆温馨提示，建议先观察☆】 \n\r")
+            arr.append("【☆温馨提示，池子不足300s，小心☆】 \n\r")
         if rug_ratio is None:
             pass
         else:
@@ -104,4 +106,4 @@ if __name__ == '__main__':
     # 招财猫
     get_token_info("25hAyBQfoDhfWx9ay6rarbgvWGwDdNqcHsXS3jQ3mTDJ")
 
-    # get_token_info("mDBNSUv8LZzktDAGpDJVRWSfCpCjgeDeHYkeHtz97ka")
+    # get_token_info("ByeE7xQ7e7p31J8nfaQGijMjtqTENCJfyPYvSA6EM1Bf")
