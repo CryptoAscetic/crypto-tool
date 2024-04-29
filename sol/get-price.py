@@ -104,6 +104,6 @@ def get_token_info(token):
 
 if __name__ == '__main__':
     # 招财猫
-    get_token_info("25hAyBQfoDhfWx9ay6rarbgvWGwDdNqcHsXS3jQ3mTDJ")
+    # get_token_info("25hAyBQfoDhfWx9ay6rarbgvWGwDdNqcHsXS3jQ3mTDJ")
 
-    # get_token_info("ByeE7xQ7e7p31J8nfaQGijMjtqTENCJfyPYvSA6EM1Bf")
+    get_token_info("2DNLKitnzsAVaGiNbUkaBotz6EYqTkwrWcqA6zkcuREB")

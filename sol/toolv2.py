@@ -9,7 +9,7 @@ import requests
 # token_dd = 'a2e2cd49e7ca093d67a4223ed32c59804965edc184697d9fc55cf7c830b7b501'
 token_dd = 'a9aab412b508bb619859974fc7fb202668b436574a992efc69b3aef3e14650e9'
 # 分钟
-TIME = 6
+TIME = 16
 
 beijing = timezone(timedelta(hours=8))
 print(f'1、北京时区为：{beijing}')
@@ -317,7 +317,7 @@ def request_ok():
                     #     "推特搜索：<" + "https://twitter.com/search?q=%24" + tokenSymbol + "&src=typed_query>\n\r")
                     # arr.append(
                     #     "推特合约搜索：<" + "https://twitter.com/search?q=%24" + tokenAddress + "&src=typed_query>\n\r")
-                    arr.append("合约地址：\n\r```" + tokenAddress + "```\n\r")
+                    # arr.append("合约地址：\n\r```" + tokenAddress + "```\n\r")
                     # node = request_ok()
 
                     note_str = "".join(arr)
@@ -354,79 +354,77 @@ def get_token_info(token, arr):
     print("Status code:", response.status_code)
     if response.status_code == 200:
         result = response.json()
-    res = result['data']['token']
-    price = res['price']
-    price_1m = res['price_1m']
-    price_5m = res['price_5m']
-    price_1h = res['price_1h']
-    holder_count = res['holder_count']
-    symbol = res['symbol']
-    # 检查键'a'是否存在
-    key_to_check = 'pool_info'
-    quote_reserve = ""
-    if key_to_check in res:
-        quote_reserve = res["pool_info"]["quote_reserve"]
-        arr.append("当前池子：" + str(quote_reserve) + " Sol\n\r")
-    burn_status = res['burn_status']
-    creator_balance = res["creator_balance"]
-    social_links = res["social_links"]
-    rug_ratio = res['rug_ratio']
-    holder_rugged_num = res['holder_rugged_num']
-    holder_token_num = res['holder_token_num']
-    hot_level = res['hot_level']
-    burn_ratio = res['burn_ratio']
-    if len(social_links) > 0:
-        twitter_username = res["social_links"]["twitter_username"]
-        website = res["social_links"]["website"]
-        telegram = res["social_links"]["telegram"]
-        if twitter_username is None:
+        res = result['data']['token']
+        price = res['price']
+        price_1m = res['price_1m']
+        price_5m = res['price_5m']
+        price_1h = res['price_1h']
+        holder_count = res['holder_count']
+        symbol = res['symbol']
+        # 检查键'a'是否存在
+        key_to_check = 'pool_info'
+        quote_reserve = ""
+        if key_to_check in res:
+            quote_reserve = res["pool_info"]["quote_reserve"]
+            arr.append("当前池子：" + str(quote_reserve) + " Sol\n\r")
+        burn_status = res['burn_status']
+        creator_balance = res["creator_balance"]
+        social_links = res["social_links"]
+        rug_ratio = res['rug_ratio']
+        holder_rugged_num = res['holder_rugged_num']
+        holder_token_num = res['holder_token_num']
+        hot_level = res['hot_level']
+        burn_ratio = res['burn_ratio']
+        if len(social_links) > 0:
+            twitter_username = res["social_links"]["twitter_username"]
+            website = res["social_links"]["website"]
+            telegram = res["social_links"]["telegram"]
+            if twitter_username is None:
+                pass
+            else:
+                arr.append("推特：<" + "https://twitter.com/" + twitter_username + ">\n\r")
+            if website is None:
+                pass
+            else:
+                arr.append("官网地址：<" + website + ">\n\r")
+            if telegram is None:
+                pass
+            else:
+                arr.append("电报：<" + telegram + ">\n\r")
+        arr.append("当前价格：" + str(price) + "$\n\r")
+        arr.append("1分钟前价格：" + str(price_1m) + "$\n\r")
+        arr.append("5分钟前价格：" + str(price_5m) + "$\n\r")
+        arr.append("24小时前价格：" + str(price_1h) + "$\n\r")
+        arr.append("池子是否燃烧：" + burn_status + "\n\r")
+        arr.append("池子燃烧比率：" + str(burn_ratio) + "%\n\r")
+        arr.append("合约创建者余额：" + str(creator_balance) + " Sol\n\r")
+        arr.append("合约持有人数：" + str(holder_count) + "\n\r")
+        arr.append("火热等级：" + str(hot_level) + " \n\r")
+        arr.append("名称：" + str(symbol) + " \n\r")
+        if float(quote_reserve) > 300.0:
+            if hot_level == 1:
+                arr.append("【☆温馨提示：建议买1s☆】 \n\r")
+            elif hot_level == 2:
+                arr.append("【☆温馨提示：建议买2s☆】 \n\r")
+            elif hot_level >= 3:
+                arr.append("【☆温馨提示：建议买3s☆】 \n\r")
+            else:
+                arr.append("【☆温馨提示，建议先观察☆】 \n\r")
+        else:
+            arr.append("【☆温馨提示，池子不足300s，小心☆】 \n\r")
+        if rug_ratio is None:
             pass
         else:
-            arr.append("推特：<" + "https://twitter.com/" + twitter_username + ">\n\r")
-        if website is None:
+            arr.append("dev逃跑比例：" + str(rug_ratio * 100) + "%\n\r")
+        if rug_ratio is None:
             pass
         else:
-            arr.append("官网地址：<" + website + ">\n\r")
-        if telegram is None:
+            arr.append("总创建的土狗数：" + str(holder_token_num) + "\n\r")
+        if rug_ratio is None:
             pass
         else:
-            arr.append("电报：<" + telegram + ">\n\r")
-    arr.append("当前价格：" + str(price) + "$\n\r")
-    arr.append("1分钟前价格：" + str(price_1m) + "$\n\r")
-    arr.append("5分钟前价格：" + str(price_5m) + "$\n\r")
-    arr.append("24小时前价格：" + str(price_1h) + "$\n\r")
-    arr.append("池子是否燃烧：" + burn_status + "\n\r")
-    arr.append("池子燃烧比率：" + str(burn_ratio) + "%\n\r")
-    arr.append("合约创建者余额：" + str(creator_balance) + " Sol\n\r")
-    arr.append("合约持有人数：" + str(holder_count) + "\n\r")
-    arr.append("火热等级：" + str(hot_level) + " \n\r")
-    arr.append("名称：" + str(symbol) + " \n\r")
-    if float(quote_reserve) > 300.0:
-        if hot_level == 1:
-            arr.append("【☆温馨提示：建议买1s☆】 \n\r")
-        elif hot_level == 2:
-            arr.append("【☆温馨提示：建议买2s☆】 \n\r")
-        elif hot_level >= 3:
-            arr.append("【☆温馨提示：建议买3s☆】 \n\r")
-        else:
-            arr.append("【☆温馨提示，建议先观察☆】 \n\r")
-    else:
-        arr.append("【☆温馨提示，池子不足300s，小心☆】 \n\r")
-    if rug_ratio is None:
-        pass
-    else:
-        arr.append("dev逃跑比例：" + str(rug_ratio * 100) + "%\n\r")
-    if rug_ratio is None:
-        pass
-    else:
-        arr.append("总创建的土狗数：" + str(holder_token_num) + "\n\r")
-    if rug_ratio is None:
-        pass
-    else:
-        arr.append("跑路的土狗数：" + str(holder_rugged_num) + "\n\r")
+            arr.append("跑路的土狗数：" + str(holder_rugged_num) + "\n\r")
 
-        note_str = "".join(arr)
-        print(note_str)
         return arr
 
 
