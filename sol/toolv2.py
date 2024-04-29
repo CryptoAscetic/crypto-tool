@@ -409,7 +409,7 @@ def get_token_info(token, arr):
         elif hot_level >= 3:
             arr.append("【☆温馨提示：建议买3s☆】 \n\r")
         else:
-            arr.append("【观察一下，不建议直接上】 \n\r")
+            arr.append("【☆温馨提示，建议不买☆】 \n\r")
         if rug_ratio is None:
             pass
         else:
