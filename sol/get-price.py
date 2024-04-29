@@ -77,7 +77,7 @@ def get_token_info(token):
             arr.append("【☆温馨提示：建议买1s☆】 \n\r")
         elif hot_level == 2:
             arr.append("【☆温馨提示：建议买2s☆】 \n\r")
-        elif hot_level == 3:
+        elif hot_level >= 3:
             arr.append("【☆温馨提示：建议买3s☆】 \n\r")
         else:
             arr.append("【观察一下，不建议直接上】 \n\r")
