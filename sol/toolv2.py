@@ -77,7 +77,7 @@ def send_msg():
     """
     url = 'https://oapi.dingtalk.com/robot/send?access_token=' + token_dd
     headers = {'Content-Type': 'application/json;charset=utf-8'}
-    content_str = str(china_time) + "-【系统提醒】sol聪明钱买卖记录，本次已经扫描完毕，系统会每20分钟检测一次！"
+    content_str = str(china_time) + "-【系统提醒】sol聪明钱买卖聪明钱地址，本次已经扫描完毕，系统会每20分钟检测一次！"
     data = {
         "msgtype": "text",
         "text": {
@@ -204,7 +204,6 @@ def request_ok():
             transactionAction = r["transactionAction"]
             tokenSymbol = r["tokenSymbol"]
             tokenLogo = r["tokenLogo"]
-            tokenFDV = r["tokenFDV"]
             tokenAddress = r["tokenAddress"]
             tokenTradingTime = r["tokenTradingTime"]
             smartMoneyBuyAmount = r["smartMoneyBuyAmount"]
@@ -236,36 +235,26 @@ def request_ok():
                             winRate = s["winRate"]
                             yieldRate = s["yieldRate"]
                             userAddr.append("" + userWalletAddress + "\n\r")
-                            userAddr.append("7日内收益：" + winRate + "%\n\r")
-                            userAddr.append("7日内收益率：" + yieldRate + "%\n\r")
+                            userAddr.append("★7日内收益：" + winRate + "%\n\r")
+                            userAddr.append("★7日内收益率：" + yieldRate + "%\n\r")
 
                     userList = "".join(userAddr)
                     timeArray = time.localtime(int(tokenTradingTime) / 1000)
                     otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
-                    # arr.append("![图片地址：](" + tokenLogo + ")\n\r")
-                    arr.append(str(china_time) + "-【买入】温馨提示各位：")
+                    arr.append("![图片地址：](" + tokenLogo + ")\n\r")
+                    arr.append(str(china_time) + "-【买入】：")
                     arr.append(str((timestamp - int(tokenTradingTime) / 1000) / 60))
-                    arr.append("分钟之前，购买" + "\n\r")
+                    arr.append("分钟之前" + "\n\r")
                     arr.append("当前有：" + str(smartMoneyBuyCount) + "个聪明钱买入\n\r")
                     arr.append("当前有：" + str(smartMoneyCount) + "个聪明钱操作\n\r")
-                    arr.append("池子大小：" + tokenFDV + "$\n\r")
                     arr.append("名称：" + tokenSymbol + "\n\r")
-                    arr.append("购买订单金额：" + latestOrderPrice + "$\n\r")
-                    arr.append("5分钟交易额：" + tradeVolume5 + "$\n\r")
+                    arr.append("★购买金额：" + latestOrderPrice + "$\n\r")
+                    arr.append("05分钟交易额：" + tradeVolume5 + "$\n\r")
                     arr.append("60分钟交易额：" + tradeVolume60 + "$\n\r")
-                    arr.append("24个小时交易额：" + tradeVolume1440 + "$\n\r")
-                    # arr.append("方式：" + transactionAction + "\n\r")
-                    # arr.append("看线：<" + "https://dexscreener.com/solana/" + tokenAddress + ">\n\r")
-                    # arr.append("查看合约：<" + "https://www.dexlab.space/mintinglab/spl-token/" + tokenAddress + ">\n\r")
-                    # arr.append("检查合约：<" + "https://gmgn.ai/sol/token/" + tokenAddress + ">\n\r")
+                    arr.append("24小时交易额：" + tradeVolume1440 + "$\n\r")
+                    arr.append("聪明钱地址：" + userList + "\n\r")
                     arr = get_token_info(tokenAddress, arr)
-                    # arr.append(
-                    #     "推特搜索：<" + "https://twitter.com/search?q=%24" + tokenSymbol + "&src=typed_query>\n\r")
-                    # arr.append(
-                    #     "推特合约搜索：<" + "https://twitter.com/search?q=%24" + tokenAddress + "&src=typed_query>\n\r")
                     arr.append("合约地址：\n\r```" + tokenAddress + "```\n\r")
-                    # arr.append("记录：" + userList + "\n\r")
-                    # node = request_ok()
 
                     note_str = "".join(arr)
                     print(note_str)
@@ -293,28 +282,28 @@ def request_ok():
                     userList = "".join(userAddr)
                     timeArray = time.localtime(int(tokenTradingTime) / 1000)
                     otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
-                    # arr.append("![图片地址：](" + tokenLogo + ")\n\r")
+                    arr.append("![图片地址：](" + tokenLogo + ")\n\r")
 
                     # arr.append("方式：" + transactionAction + "\n\r")
                     # arr.append("看线：<" + "https://dexscreener.com/solana/" + tokenAddress + ">\n\r")
                     # arr.append("查看合约：<" + "https://www.dexlab.space/mintinglab/spl-token/" + tokenAddress + ">\n\r")
                     # arr.append("检查合约：<" + "https://gmgn.ai/sol/token/" + tokenAddress + ">\n\r")
-                    arr = get_token_info(tokenAddress, arr)
-                    arr.append(str(china_time) + "-\n\r【卖出】温馨提示各位：")
+
+                    arr.append(str(china_time) + "-\n\r【卖出】：")
                     arr.append(str((timestamp - int(tokenTradingTime) / 1000) / 60))
-                    arr.append("分钟之前，卖出" + "\n\r")
+                    arr.append("分钟之前" + "\n\r")
                     arr.append("当前有：" + str(smartMoneyCount) + "个聪明钱操作\n\r")
                     arr.append("当前有：" + str(smartMoneySellCount) + "个聪明钱卖出\n\r")
-                    arr.append("池子大小：" + tokenFDV + "$\n\r")
                     arr.append("名称：" + tokenSymbol + "\n\r")
                     arr.append("卖出订单金额：" + latestOrderPrice + "$\n\r")
-                    arr.append("5分钟交易额：" + tradeVolume5 + "$\n\r")
+                    arr.append("05分钟交易额：" + tradeVolume5 + "$\n\r")
                     arr.append("60分钟交易额：" + tradeVolume60 + "$\n\r")
-                    arr.append("24个小时交易额：" + tradeVolume1440 + "$\n\r")
+                    arr.append("24小时交易额：" + tradeVolume1440 + "$\n\r")
                     # arr.append(
                     #     "推特搜索：<" + "https://twitter.com/search?q=%24" + tokenSymbol + "&src=typed_query>\n\r")
                     # arr.append(
                     #     "推特合约搜索：<" + "https://twitter.com/search?q=%24" + tokenAddress + "&src=typed_query>\n\r")
+                    arr = get_token_info(tokenAddress, arr)
                     arr.append("合约地址：\n\r```" + tokenAddress + "```\n\r")
                     # node = request_ok()
 
@@ -358,8 +347,7 @@ def get_token_info(token, arr):
         price_5m = res['price_5m']
         price_1h = res['price_1h']
         holder_count = res['holder_count']
-        symbol = res['symbol']
-        logo = res['logo']
+        # logo = res['logo']
         # 检查键'a'是否存在
         key_to_check = 'pool_info'
         quote_reserve = ""
@@ -395,38 +383,37 @@ def get_token_info(token, arr):
         arr.append("池子燃烧比率：" + str(burn_ratio) + "%\n\r")
         arr.append("合约创建者余额：" + str(creator_balance) + " Sol\n\r")
         arr.append("合约持有人数：" + str(holder_count) + "\n\r")
-        arr.append("火热等级：" + str(hot_level) + " \n\r")
-        arr.append("名称：" + str(symbol) + " \n\r")
+        arr.append("★火热等级：" + str(hot_level) + " \n\r")
         if rug_ratio is None:
             pass
         else:
-            arr.append("dev逃跑比例：" + str(rug_ratio * 100) + "%\n\r")
+            arr.append("★dev逃跑比例：" + str(rug_ratio * 100) + "%\n\r")
         if rug_ratio is None:
             pass
         else:
-            arr.append("总创建的土狗数：" + str(holder_token_num) + "\n\r")
+            arr.append("★总创建的土狗数：" + str(holder_token_num) + "\n\r")
         if rug_ratio is None:
             pass
         else:
-            arr.append("跑路的土狗数：" + str(holder_rugged_num) + "\n\r")
+            arr.append("★跑路的土狗数：" + str(holder_rugged_num) + "\n\r")
         if key_to_check in res:
             quote_reserve = res["pool_info"]["quote_reserve"]
-            arr.append("当前池子：" + str(quote_reserve) + " Sol\n\r")
+            arr.append("★当前池子：" + str(quote_reserve) + " Sol\n\r")
         if float(quote_reserve) > 300.0:
             if hot_level == 1:
-                arr.append("【☆温馨提示：建议买1s☆】 \n\r")
+                arr.append("【★温馨提示：建议买1s★】 \n\r")
             elif hot_level == 2:
-                arr.append("【☆温馨提示：建议买2s☆】 \n\r")
+                arr.append("【★温馨提示：建议买2s★】 \n\r")
             elif hot_level >= 3:
-                arr.append("【☆温馨提示：建议买3s☆】 \n\r")
+                arr.append("【★温馨提示：建议买3s★】 \n\r")
             else:
-                arr.append("【☆温馨提示，建议先观察☆】 \n\r")
+                arr.append("【★温馨提示，建议先观察★】 \n\r")
         else:
-            arr.append("【☆温馨提示，池子不足300s，小心☆】 \n\r")
-        arr.append("![图片地址：](" + logo + ")\n\r")
+            arr.append("【★温馨提示，池子不足300s，小心★】 \n\r")
+        # arr.append("![图片地址：](" + logo + ")\n\r")
         print(arr)
         return arr
 
 
-# if __name__ == '__main__':
-#     request_ok()
+if __name__ == '__main__':
+    request_ok()
