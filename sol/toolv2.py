@@ -383,6 +383,7 @@ def get_token_info(token, arr, action):
         arr.append("池子燃烧比率：" + str(burn_ratio) + "%\n\r")
         arr.append("合约创建者余额：" + str(creator_balance) + " Sol\n\r")
         arr.append("合约持有人数：" + str(holder_count) + "\n\r")
+        arr = get_token_rat(token, arr)
         arr.append("★火热等级：" + str(hot_level) + " \n\r")
         if rug_ratio is None:
             pass
@@ -418,6 +419,37 @@ def get_token_info(token, arr, action):
             arr.append("【★温馨提示，跟着跑★】 \n\r")
         # arr.append("![图片地址：](" + logo + ")\n\r")
         print(arr)
+        return arr
+
+
+def get_token_rat(token, arr):
+    url = f"https://gmgn.ai/defi/quotation/v1/tokens/stats/sol/" + token
+    headers = {
+        "authority": "gmgn.ai",
+        "accept": "application/json, text/plain, */*'",
+        "accept-language": "zh,zh-CN;q=0.9",
+        "cache-control": "no-cache",
+        "cookie": "_ga=GA1.1.1538430465.1713834683; _ga_0XM0LYXGC8=GS1.1.1714184467.2.1.1714184492.0.0.0",
+        "pragma": "no-cache",
+        "referer": "https://gmgn.ai/sol/token/" + token,
+        "sec-ch-ua-platform": "Linux",
+        "sec-fetch-dest": "empty",
+        "sec-fetch-mode": "cors",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 "
+                      "Safari/537.36",
+
+    }
+    response = requests.get(url, headers=headers)
+    print("Status code:", response.status_code)
+    if response.status_code == 200:
+        result = response.json()
+        res = result['data']
+
+        top_rat_trader_count = res['top_rat_trader_count']
+        top_rat_trader_amount_percentage = res['top_rat_trader_amount_percentage']
+
+        arr.append("老鼠仓个数：：" + str(top_rat_trader_count) + "\n\r")
+        arr.append("老鼠仓占比：" + str(top_rat_trader_amount_percentage * 100) + " %\n\r")
         return arr
 
 
