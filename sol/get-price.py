@@ -106,4 +106,4 @@ if __name__ == '__main__':
     # 招财猫
     # get_token_info("25hAyBQfoDhfWx9ay6rarbgvWGwDdNqcHsXS3jQ3mTDJ")
 
-    get_token_info("BLEBG5HNqwWNP3NkgrVSw6f1eoFRt41AWDvBKZFPFzL1")
+    get_token_info("7Ern3sT7UaXePTuJkQKca5KoZntwjmKSCrcMLN5wAJ3q")

@@ -253,7 +253,7 @@ def request_ok():
                     arr.append("60分钟交易额：" + tradeVolume60 + "$\n\r")
                     arr.append("24小时交易额：" + tradeVolume1440 + "$\n\r")
                     arr.append("聪明钱地址：" + userList + "\n\r")
-                    arr = get_token_info(tokenAddress, arr)
+                    arr = get_token_info(tokenAddress, arr, "BUY")
                     arr.append("合约地址：\n\r```" + tokenAddress + "```\n\r")
 
                     note_str = "".join(arr)
@@ -303,7 +303,7 @@ def request_ok():
                     #     "推特搜索：<" + "https://twitter.com/search?q=%24" + tokenSymbol + "&src=typed_query>\n\r")
                     # arr.append(
                     #     "推特合约搜索：<" + "https://twitter.com/search?q=%24" + tokenAddress + "&src=typed_query>\n\r")
-                    arr = get_token_info(tokenAddress, arr)
+                    arr = get_token_info(tokenAddress, arr, "SELL")
                     arr.append("合约地址：\n\r```" + tokenAddress + "```\n\r")
                     # node = request_ok()
 
@@ -320,7 +320,7 @@ def request_ok():
 
 
 # 获取token基本信息
-def get_token_info(token, arr):
+def get_token_info(token, arr, action):
     url = f"https://gmgn.ai/defi/quotation/v1/tokens/sol/" + token
     headers = {
         "authority": "gmgn.ai",
@@ -399,17 +399,20 @@ def get_token_info(token, arr):
         if key_to_check in res:
             quote_reserve = res["pool_info"]["quote_reserve"]
             arr.append("★当前池子：" + str(quote_reserve) + " Sol\n\r")
-        if float(quote_reserve) > 300.0:
-            if hot_level == 1:
-                arr.append("【★温馨提示：建议买1s★】 \n\r")
-            elif hot_level == 2:
-                arr.append("【★温馨提示：建议买2s★】 \n\r")
-            elif hot_level >= 3:
-                arr.append("【★温馨提示：建议买3s★】 \n\r")
+        if action == "BUY":
+            if float(quote_reserve) > 300.0:
+                if hot_level == 1:
+                    arr.append("【★温馨提示：建议买1s★】 \n\r")
+                elif hot_level == 2:
+                    arr.append("【★温馨提示：建议买2s★】 \n\r")
+                elif hot_level >= 3:
+                    arr.append("【★温馨提示：建议买3s★】 \n\r")
+                else:
+                    arr.append("【★温馨提示，建议先观察★】 \n\r")
             else:
-                arr.append("【★温馨提示，建议先观察★】 \n\r")
+                arr.append("【★温馨提示，池子不足300s，小心★】 \n\r")
         else:
-            arr.append("【★温馨提示，池子不足300s，小心★】 \n\r")
+            arr.append("【★温馨提示，跟着跑★】 \n\r")
         # arr.append("![图片地址：](" + logo + ")\n\r")
         print(arr)
         return arr
