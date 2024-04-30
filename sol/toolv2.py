@@ -400,17 +400,20 @@ def get_token_info(token, arr, action):
             quote_reserve = res["pool_info"]["quote_reserve"]
             arr.append("★当前池子：" + str(quote_reserve) + " Sol\n\r")
         if action == "BUY":
-            if float(quote_reserve) > 300.0:
-                if hot_level == 1:
-                    arr.append("【★温馨提示：建议买1s★】 \n\r")
-                elif hot_level == 2:
-                    arr.append("【★温馨提示：建议买2s★】 \n\r")
-                elif hot_level >= 3:
-                    arr.append("【★温馨提示：建议买3s★】 \n\r")
+            if rug_ratio is None:
+                if float(quote_reserve) > 300.0:
+                    if hot_level == 1:
+                        arr.append("【★温馨提示：建议买1s★】 \n\r")
+                    elif hot_level == 2:
+                        arr.append("【★温馨提示：建议买2s★】 \n\r")
+                    elif hot_level >= 3:
+                        arr.append("【★温馨提示：建议买3s★】 \n\r")
+                    else:
+                        arr.append("【★温馨提示，建议先观察★】 \n\r")
                 else:
-                    arr.append("【★温馨提示，建议先观察★】 \n\r")
+                    arr.append("【★温馨提示，池子不足300s，小心★】 \n\r")
             else:
-                arr.append("【★温馨提示，池子不足300s，小心★】 \n\r")
+                arr.append("【★温馨提示，随时跑路，跑快点★】 \n\r")
         else:
             arr.append("【★温馨提示，跟着跑★】 \n\r")
         # arr.append("![图片地址：](" + logo + ")\n\r")
