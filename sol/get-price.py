@@ -26,11 +26,18 @@ def get_token_info(token):
     if response.status_code == 200:
         result = response.json()
         res = result['data']['token']
+        print(res)
         price = res['price']
         price_1m = res['price_1m']
         price_5m = res['price_5m']
         price_1h = res['price_1h']
         holder_count = res['holder_count']
+        rugged_tokens = res['rugged_tokens']
+        if len(rugged_tokens) > 0:
+            for r in rugged_tokens:
+                arr.append("狗庄的跑路合约：" + str(r['address']) + "\n\r")
+                arr.append("跑路合约名称：" + str(r['symbol']) + "\n\r")
+
         symbol = res['symbol']
         # 检查键'a'是否存在
         key_to_check = 'pool_info'
@@ -72,6 +79,7 @@ def get_token_info(token):
         arr.append("合约持有人数：" + str(holder_count) + "\n\r")
         arr.append("火热等级：" + str(hot_level) + " \n\r")
         arr.append("名称：" + str(symbol) + " \n\r")
+
         if rug_ratio is None:
             pass
         else:
@@ -106,4 +114,4 @@ if __name__ == '__main__':
     # 招财猫
     # get_token_info("25hAyBQfoDhfWx9ay6rarbgvWGwDdNqcHsXS3jQ3mTDJ")
 
-    get_token_info("7Ern3sT7UaXePTuJkQKca5KoZntwjmKSCrcMLN5wAJ3q")
+    get_token_info("2CTtsmmsaopFkom7giQNTRtqA1SCw6rQMXTE9cmkK5GF")

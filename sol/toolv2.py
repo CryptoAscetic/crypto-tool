@@ -359,6 +359,11 @@ def get_token_info(token, arr, action):
         holder_token_num = res['holder_token_num']
         hot_level = res['hot_level']
         burn_ratio = res['burn_ratio']
+        rugged_tokens = res['rugged_tokens']
+        buys_1m = res['buys_1m']
+        buys_5m = res['buys_5m']
+        sells_1m = res['sells_1m']
+        sells_5m = res['sells_5m']
         if len(social_links) > 0:
             twitter_username = res["social_links"]["twitter_username"]
             website = res["social_links"]["website"]
@@ -379,6 +384,10 @@ def get_token_info(token, arr, action):
         arr.append("1分钟前价格：" + str(price_1m) + "$\n\r")
         arr.append("5分钟前价格：" + str(price_5m) + "$\n\r")
         arr.append("24小时前价格：" + str(price_1h) + "$\n\r")
+        arr.append("1分钟买单次数：" + str(buys_1m) + "次\n\r")
+        arr.append("5分钟买单次数：" + str(buys_5m) + "次\n\r")
+        arr.append("1分钟卖单次数：" + str(sells_1m) + "次\n\r")
+        arr.append("1分钟卖单次数：" + str(sells_5m) + "次\n\r")
         arr.append("池子是否燃烧：" + burn_status + "\n\r")
         arr.append("池子燃烧比率：" + str(burn_ratio) + "%\n\r")
         arr.append("合约创建者余额：" + str(creator_balance) + " Sol\n\r")
@@ -397,6 +406,11 @@ def get_token_info(token, arr, action):
             pass
         else:
             arr.append("★跑路的土狗数：" + str(holder_rugged_num) + "\n\r")
+        # 历史跑路盘
+        if len(rugged_tokens) > 0:
+            for r in rugged_tokens:
+                arr.append("狗庄的跑路合约：" + str(r['address']) + "\n\r")
+                arr.append("跑路合约名称：" + str(r['symbol']) + "\n\r")
         if key_to_check in res:
             quote_reserve = res["pool_info"]["quote_reserve"]
             arr.append("★当前池子：" + str(quote_reserve) + " Sol\n\r")
