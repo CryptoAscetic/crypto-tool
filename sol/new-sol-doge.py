@@ -205,6 +205,7 @@ def get_new_token():
                 send_markdown(note_str)
                 time.sleep(5)
                 send_markdown_address(token, "BUY")
+                time.sleep(3)
 
 
 def get_token_info(token):
