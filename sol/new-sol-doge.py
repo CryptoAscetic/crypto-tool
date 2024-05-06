@@ -8,7 +8,7 @@ import requests
 
 token_dd = '1b22d689b3572c931f39f31bcc4730ce95bbd7f474bc1fb11d61f0ac96a062a9'
 # 分钟
-TIME = 60
+TIME = 6
 
 beijing = timezone(timedelta(hours=8))
 print(f'1、北京时区为：{beijing}')
@@ -201,7 +201,7 @@ def get_new_token():
             if (timestamp - creation_timestamp) <= diff:
                 arr = get_token_info(token)
                 note_str = "".join(arr)
-                print(note_str)
+                # print(note_str)
                 send_markdown(note_str)
                 time.sleep(5)
                 send_markdown_address(token, "BUY")
@@ -230,7 +230,9 @@ def get_token_info(token):
     if response.status_code == 200:
         result = response.json()
         res = result['data']['token']
+        print(res)
         price = res['price']
+        symbol = res['symbol']
         price_1m = res['price_1m']
         price_5m = res['price_5m']
         price_1h = res['price_1h']
@@ -253,6 +255,7 @@ def get_token_info(token):
         sells_1m = res['sells_1m']
         sells_5m = res['sells_5m']
         arr.append("![图片地址：](" + logo + ")\n\r")
+        arr.append("名称：" + symbol + "\n\r")
         if len(social_links) > 0:
             twitter_username = res["social_links"]["twitter_username"]
             website = res["social_links"]["website"]
@@ -298,7 +301,7 @@ def get_token_info(token):
         # 历史跑路盘
         if len(rugged_tokens) > 0:
             for r in rugged_tokens:
-                arr.append("狗庄的跑路合约：" + str(r['address']) + "\n\r")
+                # arr.append("狗庄的跑路合约：" + str(r['address']) + "\n\r")
                 arr.append("跑路合约名称：" + str(r['symbol']) + "\n\r")
         if key_to_check in res:
             quote_reserve = res["pool_info"]["quote_reserve"]
@@ -307,11 +310,11 @@ def get_token_info(token):
         if rug_ratio is None:
             if float(quote_reserve) > 300.0:
                 if hot_level == 1:
-                    arr.append("【★温馨提示：建议买1s★】 \n\r")
+                    arr.append("【★温馨提示：建议买1s,跑快点★】 \n\r")
                 elif hot_level == 2:
-                    arr.append("【★温馨提示：建议买2s★】 \n\r")
+                    arr.append("【★温馨提示：建议买2s,跑快点★】 \n\r")
                 elif hot_level >= 3:
-                    arr.append("【★温馨提示：建议买3s★】 \n\r")
+                    arr.append("【★温馨提示：建议买3s,跑快点★】 \n\r")
                 else:
                     arr.append("【★温馨提示，建议先观察★】 \n\r")
             else:
