@@ -397,7 +397,7 @@ def get_token_info(token, arr, action):
         arr.append("合约创建者余额：" + str(creator_balance) + " Sol\n\r")
         arr.append("合约持有人数：" + str(holder_count) + "\n\r")
         arr = get_token_rat(token, arr)
-        arr.append("★火热等级：" + str(hot_level) + " \n\r")
+
         if rug_ratio is None:
             pass
         else:
@@ -415,6 +415,7 @@ def get_token_info(token, arr, action):
             for r in rugged_tokens:
                 # arr.append("狗庄的跑路合约：" + str(r['address']) + "\n\r")
                 arr.append("跑路合约名称：" + str(r['symbol']) + "\n\r")
+        arr.append("★火热等级：" + str(hot_level) + " \n\r")
         if key_to_check in res:
             quote_reserve = res["pool_info"]["quote_reserve"]
             arr.append("★当前池子：" + str(quote_reserve) + " Sol\n\r")
