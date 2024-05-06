@@ -9,7 +9,7 @@ import requests
 # token_dd = 'a2e2cd49e7ca093d67a4223ed32c59804965edc184697d9fc55cf7c830b7b501'
 token_dd = 'a9aab412b508bb619859974fc7fb202668b436574a992efc69b3aef3e14650e9'
 # 分钟
-TIME = 6
+TIME = 60
 
 beijing = timezone(timedelta(hours=8))
 print(f'1、北京时区为：{beijing}')
@@ -253,14 +253,15 @@ def request_ok():
                     arr.append("60分钟交易额：" + tradeVolume60 + "$\n\r")
                     arr.append("24小时交易额：" + tradeVolume1440 + "$\n\r")
                     arr.append("聪明钱地址：" + userList + "\n\r")
-                    arr = get_token_info(tokenAddress, arr, "BUY")
+                    arr, is_buy = get_token_info(tokenAddress, arr, "BUY")
                     arr.append("合约地址：\n\r```" + tokenAddress + "```\n\r")
 
                     note_str = "".join(arr)
                     print(note_str)
-                    send_markdown(note_str)
-                    time.sleep(5)
-                    send_markdown_address(tokenAddress, "BUY")
+                    if is_buy:
+                        send_markdown(note_str)
+                        time.sleep(5)
+                        send_markdown_address(tokenAddress, "BUY")
                     arr = []
                 else:
                     get_token = (f"https://www.okx.com/priapi/v1/invest/activity/smart-money/token/holding/list"
@@ -303,24 +304,27 @@ def request_ok():
                     #     "推特搜索：<" + "https://twitter.com/search?q=%24" + tokenSymbol + "&src=typed_query>\n\r")
                     # arr.append(
                     #     "推特合约搜索：<" + "https://twitter.com/search?q=%24" + tokenAddress + "&src=typed_query>\n\r")
-                    arr = get_token_info(tokenAddress, arr, "SELL")
+                    arr, is_buy = get_token_info(tokenAddress, arr, "SELL")
                     arr.append("合约地址：\n\r```" + tokenAddress + "```\n\r")
                     # node = request_ok()
 
                     note_str = "".join(arr)
                     print(note_str)
-                    send_markdown(note_str)
-                    send_markdown_address(tokenAddress, "SELL")
-                    time.sleep(5)
+                    if is_buy:
+                        send_markdown(note_str)
+                        send_markdown_address(tokenAddress, "SELL")
+                        time.sleep(5)
+                        if float(smartMoneyBuyAmount) > 600.0:
+                            send_markdown_system()
                     arr = []
-                if float(smartMoneyBuyAmount) > 600.0:
-                    send_markdown_system()
+
         # time.sleep(60)
         # send_msg()
 
 
 # 获取token基本信息
 def get_token_info(token, arr, action):
+    is_buy = False
     url = f"https://gmgn.ai/defi/quotation/v1/tokens/sol/" + token
     headers = {
         "authority": "gmgn.ai",
@@ -409,7 +413,7 @@ def get_token_info(token, arr, action):
         # 历史跑路盘
         if len(rugged_tokens) > 0:
             for r in rugged_tokens:
-                arr.append("狗庄的跑路合约：" + str(r['address']) + "\n\r")
+                # arr.append("狗庄的跑路合约：" + str(r['address']) + "\n\r")
                 arr.append("跑路合约名称：" + str(r['symbol']) + "\n\r")
         if key_to_check in res:
             quote_reserve = res["pool_info"]["quote_reserve"]
@@ -417,6 +421,7 @@ def get_token_info(token, arr, action):
         if action == "BUY":
             if rug_ratio is None:
                 if float(quote_reserve) > 300.0:
+                    is_buy = True
                     if hot_level == 1:
                         arr.append("【★温馨提示：建议买1s★】 \n\r")
                     elif hot_level == 2:
@@ -426,14 +431,17 @@ def get_token_info(token, arr, action):
                     else:
                         arr.append("【★温馨提示，建议先观察★】 \n\r")
                 else:
+                    if float(quote_reserve) > 100.0:
+                        is_buy = False
                     arr.append("【★温馨提示，池子不足300s，小心★】 \n\r")
             else:
-                arr.append("【★温馨提示，随时跑路，跑快点★】 \n\r")
+                arr.append("【★温馨提示，dev有跑路前科★】 \n\r")
         else:
-            arr.append("【★温馨提示，跟着跑★】 \n\r")
+            is_buy = True
+            arr.append("【★温馨提示，聪明钱卖了，跟着卖★】 \n\r")
         # arr.append("![图片地址：](" + logo + ")\n\r")
         print(arr)
-        return arr
+        return arr, is_buy
 
 
 def get_token_rat(token, arr):
