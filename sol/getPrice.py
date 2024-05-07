@@ -61,7 +61,7 @@ class GetPrice:
         if response.status_code == 200:
             result = response.json()
             res = result['data']['token']
-            print(res)
+            # print(res)
             price = res['price']
             price_1m = res['price_1m']
             price_5m = res['price_5m']
