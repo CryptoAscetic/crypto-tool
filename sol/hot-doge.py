@@ -6,10 +6,9 @@ from datetime import timezone, timedelta, datetime
 
 import requests
 
-# token_dd = 'a2e2cd49e7ca093d67a4223ed32c59804965edc184697d9fc55cf7c830b7b501'
-token_dd = 'a9aab412b508bb619859974fc7fb202668b436574a992efc69b3aef3e14650e9'
+token_dd = '1b22d689b3572c931f39f31bcc4730ce95bbd7f474bc1fb11d61f0ac96a062a9'
 # 分钟
-TIME = 6
+TIME = 60
 
 beijing = timezone(timedelta(hours=8))
 print(f'1、北京时区为：{beijing}')
@@ -167,164 +166,49 @@ def send_markdown_address(address, type):
     print(res.text)
 
 
-def request_ok():
-    # 获取所有的数据
-    url = (f"https://www.okx.com/priapi/v1/invest/activity/smart-money/token/page?pageNo=1&pageSize=10&duration=3"
-           f"&order=tokenTradingTime&t=1713151873646")
-
+def get_hot_token():
+    url = f"https://gmgn.ai/defi/quotation/v1/rank/sol/swaps/1h?orderby=swaps&direction=desc"
     headers = {
-        "accept": "application/json",
+        "authority": "gmgn.ai",
+        "accept": "application/json, text/plain, */*'",
         "accept-language": "zh,zh-CN;q=0.9",
-        "app-type": "web",
         "cache-control": "no-cache",
-        "devid": "70c5f320-7c00-449d-95ba-d1d7af318bfc",
-        "platform": "web",
+        "cookie": "_ga=GA1.1.1538430465.1713834683; _ga_0XM0LYXGC8=GS1.1.1714184467.2.1.1714184492.0.0.0",
         "pragma": "no-cache",
-        "sec-ch-ua": "\"Not/A)Brand\";v=\"99\", \"Google Chrome\";v=\"115\", \"Chromium\";v=\"115\"",
-        "sec-ch-ua-mobile": "?0",
-        "sec-ch-ua-platform": "\"Linux\"",
+        "referer": "https://gmgn.ai/?chain=sol",
+        "sec-ch-ua-platform": "Linux",
         "sec-fetch-dest": "empty",
         "sec-fetch-mode": "cors",
-        "sec-fetch-site": "same-origin",
-        "x-cdn": "https://www.okx.com",
-        "x-id-group": "1020115334522480014-c-7",
-        "x-locale": "zh_CN",
-        "x-site-info": "==QfxojI5RXa05WZiwiIMFkQPx0Rfh1SPJiOiUGZvNmIsIyVUJiOi42bpdWZyJye",
-        "x-utc": "8",
-        "x-zkdex-env": "0"
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 "
+                      "Safari/537.36",
+
     }
     response = requests.get(url, headers=headers)
     print("Status code:", response.status_code)
     if response.status_code == 200:
         result = response.json()
-        res = result['data']['result']
-        # print(res)
-        arr = []
-        for r in res:  # 第二个实例
-            transactionAction = r["transactionAction"]
-            tokenSymbol = r["tokenSymbol"]
-            tokenLogo = r["tokenLogo"]
-            tokenAddress = r["tokenAddress"]
-            tokenTradingTime = r["tokenTradingTime"]
-            smartMoneyBuyAmount = r["smartMoneyBuyAmount"]
-            latestOrderPrice = r["latestOrderPrice"]
-            tradeVolume5 = r["tradeVolume5"]
-            tradeVolume60 = r["tradeVolume60"]
-            tradeVolume1440 = r["tradeVolume1440"]
-            smartMoneyCount = r["smartMoneyCount"]
-            smartMoneySellCount = r["smartMoneySellCount"]
-            smartMoneyBuyCount = r["smartMoneyBuyCount"]
-
+        res = result['data']['rank']
+        for r in res:
+            pool_creation_timestamp = r['pool_creation_timestamp']
+            token = r['address']
             # 获取当前时间
             date = datetime.now()
             timestamp = int(date.timestamp())
             # 对比的时间8分钟的购买
             diff = 60 * TIME
-            if (timestamp - int(tokenTradingTime) / 1000) <= diff:
-                if transactionAction == "BUY":
-                    get_token = (f"https://www.okx.com/priapi/v1/invest/activity/smart-money/token/holding/list"
-                                 f"?pageNo=1&pageSize=50&tokenAddress={tokenAddress}&chainId=501&t=1713227607507")
-                    response = requests.get(get_token, headers=headers)
-                    print("Status code:", response.status_code)
-                    userAddr = []
-                    if response.status_code == 200:
-                        result = response.json()
-                        res = result['data']['result']
-                        for s in res:  # 第二个实例
-                            userWalletAddress = s["userWalletAddress"]
-                            winRate = s["winRate"]
-                            yieldRate = s["yieldRate"]
-                            userAddr.append("" + userWalletAddress + "\n\r")
-                            userAddr.append("★7日内收益：" + winRate + "%\n\r")
-                            userAddr.append("★7日内收益率：" + yieldRate + "%\n\r")
-
-                    userList = "".join(userAddr)
-                    timeArray = time.localtime(int(tokenTradingTime) / 1000)
-                    otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
-                    arr.append("![图片地址：](" + tokenLogo + ")\n\r")
-                    arr.append(str(china_time) + "-【买入】：")
-                    arr.append(str((timestamp - int(tokenTradingTime) / 1000) / 60))
-                    arr.append("分钟之前" + "\n\r")
-                    arr.append("当前有：" + str(smartMoneyBuyCount) + "个聪明钱买入\n\r")
-                    arr.append("当前有：" + str(smartMoneyCount) + "个聪明钱操作\n\r")
-                    arr.append("名称：" + tokenSymbol + "\n\r")
-                    arr.append("★购买金额：" + latestOrderPrice + "$\n\r")
-                    arr.append("05分钟交易额：" + tradeVolume5 + "$\n\r")
-                    arr.append("60分钟交易额：" + tradeVolume60 + "$\n\r")
-                    arr.append("24小时交易额：" + tradeVolume1440 + "$\n\r")
-                    arr.append("聪明钱地址：" + userList + "\n\r")
-                    arr, is_buy = get_token_info(tokenAddress, arr, "BUY")
-                    arr.append("合约地址：\n\r```" + tokenAddress + "```\n\r")
-
+            if not pool_creation_timestamp is None:
+                if (timestamp - pool_creation_timestamp) <= diff:
+                    arr, is_buy = get_token_info(token)
                     note_str = "".join(arr)
-                    print(note_str)
                     if is_buy:
+                        print(note_str)
                         send_markdown(note_str)
                         time.sleep(5)
-                        send_markdown_address(tokenAddress, "BUY")
-                    arr = []
-                else:
-                    get_token = (f"https://www.okx.com/priapi/v1/invest/activity/smart-money/token/holding/list"
-                                 f"?pageNo=1&pageSize=50&tokenAddress={tokenAddress}&chainId=501&t=1713227607507")
-
-                    response = requests.get(get_token, headers=headers)
-                    print("Status code:", response.status_code)
-                    userAddr = []
-                    if response.status_code == 200:
-                        result = response.json()
-                        res = result['data']['result']
-                        for s in res:  # 第二个实例
-                            userWalletAddress = s["userWalletAddress"]
-                            winRate = s["winRate"]
-                            yieldRate = s["yieldRate"]
-                            userAddr.append("" + userWalletAddress + "\n\r")
-                            userAddr.append("7日内收益：" + winRate + "%\n\r")
-                            userAddr.append("7日内收益率：" + yieldRate + "%\n\r")
-                    userList = "".join(userAddr)
-                    timeArray = time.localtime(int(tokenTradingTime) / 1000)
-                    otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
-                    arr.append("![图片地址：](" + tokenLogo + ")\n\r")
-
-                    # arr.append("方式：" + transactionAction + "\n\r")
-                    # arr.append("看线：<" + "https://dexscreener.com/solana/" + tokenAddress + ">\n\r")
-                    # arr.append("查看合约：<" + "https://www.dexlab.space/mintinglab/spl-token/" + tokenAddress + ">\n\r")
-                    # arr.append("检查合约：<" + "https://gmgn.ai/sol/token/" + tokenAddress + ">\n\r")
-
-                    arr.append(str(china_time) + "-\n\r【卖出】：")
-                    arr.append(str((timestamp - int(tokenTradingTime) / 1000) / 60))
-                    arr.append("分钟之前" + "\n\r")
-                    arr.append("当前有：" + str(smartMoneyCount) + "个聪明钱操作\n\r")
-                    arr.append("当前有：" + str(smartMoneySellCount) + "个聪明钱卖出\n\r")
-                    arr.append("名称：" + tokenSymbol + "\n\r")
-                    arr.append("卖出订单金额：" + latestOrderPrice + "$\n\r")
-                    arr.append("05分钟交易额：" + tradeVolume5 + "$\n\r")
-                    arr.append("60分钟交易额：" + tradeVolume60 + "$\n\r")
-                    arr.append("24小时交易额：" + tradeVolume1440 + "$\n\r")
-                    # arr.append(
-                    #     "推特搜索：<" + "https://twitter.com/search?q=%24" + tokenSymbol + "&src=typed_query>\n\r")
-                    # arr.append(
-                    #     "推特合约搜索：<" + "https://twitter.com/search?q=%24" + tokenAddress + "&src=typed_query>\n\r")
-                    arr, is_buy = get_token_info(tokenAddress, arr, "SELL")
-                    arr.append("合约地址：\n\r```" + tokenAddress + "```\n\r")
-                    # node = request_ok()
-
-                    note_str = "".join(arr)
-                    print(note_str)
-                    if is_buy:
-                        send_markdown(note_str)
-                        send_markdown_address(tokenAddress, "SELL")
-                        time.sleep(5)
-                        if float(smartMoneyBuyAmount) > 600.0:
-                            send_markdown_system()
-                    arr = []
-
-        # time.sleep(60)
-        # send_msg()
+                        send_markdown_address(token, "BUY")
+                        time.sleep(3)
 
 
-# 获取token基本信息
-def get_token_info(token, arr, action):
-    is_buy = False
+def get_token_info(token):
     url = f"https://gmgn.ai/defi/quotation/v1/tokens/sol/" + token
     headers = {
         "authority": "gmgn.ai",
@@ -342,24 +226,24 @@ def get_token_info(token, arr, action):
 
     }
     response = requests.get(url, headers=headers)
+    arr = []
+    is_buy = False
     print("Status code:", response.status_code)
     if response.status_code == 200:
         result = response.json()
         res = result['data']['token']
         price = res['price']
+        symbol = res['symbol']
         price_1m = res['price_1m']
         price_5m = res['price_5m']
         price_1h = res['price_1h']
         holder_count = res['holder_count']
-        # logo = res['logo']
+        logo = res['logo']
         # 检查键'a'是否存在
         key_to_check = 'pool_info'
-        quote_reserve = "0"
+        quote_reserve = ""
         burn_status = res['burn_status']
-        if 'creator_balance' in res.keys():
-            creator_balance = res["creator_balance"]
-        else:
-            creator_balance = 0
+        creator_balance = res["creator_balance"]
         social_links = res["social_links"]
         rug_ratio = res['rug_ratio']
         holder_rugged_num = res['holder_rugged_num']
@@ -371,6 +255,15 @@ def get_token_info(token, arr, action):
         buys_5m = res['buys_5m']
         sells_1m = res['sells_1m']
         sells_5m = res['sells_5m']
+        arr.append("![图片地址：](" + logo + ")\n\r")
+        arr.append("名称：" + symbol + "\n\r")
+        renounced_mint = res['renounced_mint']
+        if renounced_mint == 1:
+            arr.append("是否停止mint：" + "是" + "\n\r")
+        else:
+            arr.append("是否停止mint：" + "否" + "\n\r")
+        top_10_holder_rate = res['top_10_holder_rate']
+        arr.append("top10持仓占比：" + str(top_10_holder_rate * 100) + "%\n\r")
         if len(social_links) > 0:
             twitter_username = res["social_links"]["twitter_username"]
             website = res["social_links"]["website"]
@@ -400,7 +293,7 @@ def get_token_info(token, arr, action):
         arr.append("合约创建者余额：" + str(creator_balance) + " Sol\n\r")
         arr.append("合约持有人数：" + str(holder_count) + "\n\r")
         arr = get_token_rat(token, arr)
-
+        arr.append("★火热等级：" + str(hot_level) + " \n\r")
         if rug_ratio is None:
             pass
         else:
@@ -418,7 +311,6 @@ def get_token_info(token, arr, action):
             for r in rugged_tokens:
                 # arr.append("狗庄的跑路合约：" + str(r['address']) + "\n\r")
                 arr.append("跑路合约名称：" + str(r['symbol']) + "\n\r")
-        arr.append("★火热等级：" + str(hot_level) + " \n\r")
         if key_to_check in res:
             quote_reserve = res["pool_info"]["quote_reserve"]
             arr.append("★当前池子：" + str(quote_reserve) + " Sol\n\r")
@@ -426,26 +318,22 @@ def get_token_info(token, arr, action):
             is_buy = True
         else:
             is_buy = False
-        if action == "BUY":
-            if rug_ratio is None:
-                if float(quote_reserve) > 300.0:
-                    if hot_level == 1:
-                        arr.append("【★温馨提示：建议买1s★】 \n\r")
-                    elif hot_level == 2:
-                        arr.append("【★温馨提示：建议买2s★】 \n\r")
-                    elif hot_level >= 3:
-                        arr.append("【★温馨提示：建议买3s★】 \n\r")
-                    else:
-                        arr.append("【★温馨提示，建议先观察★】 \n\r")
+        if rug_ratio is None:
+            if float(quote_reserve) > 300.0:
+                if hot_level == 1:
+                    arr.append("【★温馨提示：建议买1s,跑快点★】 \n\r")
+                elif hot_level == 2:
+                    arr.append("【★温馨提示：建议买2s,跑快点★】 \n\r")
+                elif hot_level >= 3:
+                    arr.append("【★温馨提示：建议买3s,跑快点★】 \n\r")
                 else:
-                    arr.append("【★温馨提示，池子不足300s，小心★】 \n\r")
+                    arr.append("【★温馨提示，建议先观察★】 \n\r")
             else:
-                arr.append("【★温馨提示，dev有跑路前科★】 \n\r")
+                arr.append("【★温馨提示，池子不足300s，小心★】 \n\r")
         else:
-            arr.append("【★温馨提示，聪明钱卖了，跟着卖★】 \n\r")
-        # arr.append("![图片地址：](" + logo + ")\n\r")
-        print(arr)
-        return arr, is_buy
+            arr.append("【★温馨提示，随时跑路，跑快点★】 \n\r")
+
+    return arr, is_buy
 
 
 def get_token_rat(token, arr):
@@ -476,8 +364,8 @@ def get_token_rat(token, arr):
 
         arr.append("老鼠仓个数：：" + str(top_rat_trader_count) + "\n\r")
         arr.append("老鼠仓占比：" + str(top_rat_trader_amount_percentage * 100) + " %\n\r")
-        return arr
+    return arr
 
 
 if __name__ == '__main__':
-    request_ok()
+    get_hot_token()

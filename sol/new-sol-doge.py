@@ -241,9 +241,12 @@ def get_token_info(token):
         logo = res['logo']
         # 检查键'a'是否存在
         key_to_check = 'pool_info'
-        quote_reserve = ""
+        quote_reserve = "0"
         burn_status = res['burn_status']
-        creator_balance = res["creator_balance"]
+        if 'creator_balance' in res.keys():
+            creator_balance = res["creator_balance"]
+        else:
+            creator_balance = 0
         social_links = res["social_links"]
         rug_ratio = res['rug_ratio']
         holder_rugged_num = res['holder_rugged_num']
@@ -257,6 +260,13 @@ def get_token_info(token):
         sells_5m = res['sells_5m']
         arr.append("![图片地址：](" + logo + ")\n\r")
         arr.append("名称：" + symbol + "\n\r")
+        renounced_mint = res['renounced_mint']
+        if renounced_mint == 1:
+            arr.append("是否停止mint：" + "是" + "\n\r")
+        else:
+            arr.append("是否停止mint：" + "否" + "\n\r")
+        top_10_holder_rate = res['top_10_holder_rate']
+        arr.append("top10持仓占比：" + str(top_10_holder_rate * 100) + "%\n\r")
         if len(social_links) > 0:
             twitter_username = res["social_links"]["twitter_username"]
             website = res["social_links"]["website"]
