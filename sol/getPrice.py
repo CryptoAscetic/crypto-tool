@@ -61,6 +61,7 @@ class GetPrice:
         if response.status_code == 200:
             result = response.json()
             res = result['data']['token']
+            print(res)
             price = res['price']
             price_1m = res['price_1m']
             price_5m = res['price_5m']
@@ -102,7 +103,9 @@ class GetPrice:
             holder_rugged_num = res['holder_rugged_num']
             holder_token_num = res['holder_token_num']
             hot_level = res['hot_level']
-            burn_ratio = res['burn_ratio']
+            burn_ratio = 0
+            if len(res['burn_ratio']) > 0:
+                burn_ratio = res['burn_ratio']
             if len(social_links) > 0:
                 twitter_username = res["social_links"]["twitter_username"]
                 website = res["social_links"]["website"]
@@ -166,6 +169,6 @@ if __name__ == '__main__':
     arr = []
     # 招财猫
     # get_token_info("25hAyBQfoDhfWx9ay6rarbgvWGwDdNqcHsXS3jQ3mTDJ")
-    arr, is_buy = GetPrice.get_token_info("9GVzyBGLDvM8hebjHWuGHAKEyXwebFdrTdUFfrgQ9QUj", arr)
+    arr, is_buy = GetPrice.get_token_info("3cgCssP69FCNoNN3aexYdaZBKmPhPFQMF9JX59sDr8Tx", arr)
     note_str = "".join(arr)
     print(note_str)
