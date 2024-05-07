@@ -187,6 +187,7 @@ def get_hot_token():
     }
     response = requests.get(url, headers=headers)
     print("Status code:", response.status_code)
+    arr = []
     if response.status_code == 200:
         result = response.json()
         res = result['data']['rank']
@@ -200,14 +201,14 @@ def get_hot_token():
             diff = 60 * TIME
             if not pool_creation_timestamp is None:
                 if (timestamp - pool_creation_timestamp) <= diff:
-                    arr, is_buy = GetPrice.get_token_info(token)
+                    arr, is_buy = GetPrice.get_token_info(token, arr)
                     note_str = "".join(arr)
                     if is_buy:
                         print(note_str)
-                        send_markdown(note_str)
-                        time.sleep(5)
-                        send_markdown_address(token, "BUY")
-                        time.sleep(3)
+                        # send_markdown(note_str)
+                        # time.sleep(5)
+                        # send_markdown_address(token, "BUY")
+                        # time.sleep(3)
 
 
 if __name__ == '__main__':

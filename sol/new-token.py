@@ -6,7 +6,7 @@ from datetime import timezone, timedelta, datetime
 
 import requests
 
-token_dd = '1b22d689b3572c931f39f31bcc4730ce95bbd7f474bc1fb11d61f0ac96a062a9'
+token_dd = '2fb4e8566e1348bf837cd8527798b8f4461287a2403bda7d15f9903ee8592909'
 # 分钟
 TIME = 6
 
