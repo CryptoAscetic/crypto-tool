@@ -32,13 +32,14 @@ class GetPrice:
             top_rat_trader_count = res['top_rat_trader_count']
             top_rat_trader_amount_percentage = res['top_rat_trader_amount_percentage']
 
-            arr.append("老鼠仓个数：：" + str(top_rat_trader_count) + "\n\r")
-            arr.append("老鼠仓占比：" + str(top_rat_trader_amount_percentage * 100) + " %\n\r")
+            arr.append("老鼠仓个数：：" + str(top_rat_trader_count) + "个\n\r")
+            arr.append("老鼠仓占比：" + str(round(float(top_rat_trader_amount_percentage * 100), 2)) + " %\n\r")
 
         return arr
 
     @staticmethod
     def get_token_info(token, arr):
+        global is_buy
         url = f"https://gmgn.ai/defi/quotation/v1/tokens/sol/" + token
         headers = {
             "authority": "gmgn.ai",
@@ -56,7 +57,6 @@ class GetPrice:
 
         }
         response = requests.get(url, headers=headers)
-
         print("Status code:", response.status_code)
         if response.status_code == 200:
             result = response.json()
@@ -66,6 +66,8 @@ class GetPrice:
             price_1m = res['price_1m']
             price_5m = res['price_5m']
             price_1h = res['price_1h']
+            price_6h = res['price_6h']
+            price_24h = res['price_24h']
             symbol = res['symbol']
             logo = res['logo']
             arr.append("![图片地址：](" + logo + ")\n\r")
@@ -76,21 +78,17 @@ class GetPrice:
             else:
                 arr.append("是否停止mint：" + "否,别上了" + "\n\r")
             top_10_holder_rate = res['top_10_holder_rate']
-            arr.append("top10持仓占比：" + str(top_10_holder_rate * 100) + "%\n\r")
+            arr.append("top10持仓占比：" + str(round(top_10_holder_rate * 100, 2)) + "%\n\r")
             holder_count = res['holder_count']
             rugged_tokens = res['rugged_tokens']
             if len(rugged_tokens) > 0:
                 for r in rugged_tokens:
-                    arr.append("狗庄的跑路合约：" + str(r['address']) + "\n\r")
+                    # arr.append("狗庄的跑路合约：" + str(r['address']) + "\n\r")
                     arr.append("跑路合约名称：" + str(r['symbol']) + "\n\r")
-
-            symbol = res['symbol']
             # 检查键'a'是否存在
             key_to_check = 'pool_info'
-            quote_reserve = ""
-            if key_to_check in res:
-                quote_reserve = res["pool_info"]["quote_reserve"]
-                arr.append("当前池子：" + str(quote_reserve) + " Sol\n\r")
+            quote_reserve = 0
+
             if float(quote_reserve) > 100.0:
                 is_buy = True
             else:
@@ -122,20 +120,25 @@ class GetPrice:
                     pass
                 else:
                     arr.append("电报：<" + telegram + ">\n\r")
-            arr.append("当前价格：" + str(price) + "$\n\r")
-            arr.append("1分钟前价格：" + str(price_1m) + "$\n\r")
-            arr.append("5分钟前价格：" + str(price_5m) + "$\n\r")
-            arr.append("24小时前价格：" + str(price_1h) + "$\n\r")
+            arr.append("当前价格：" + str('{:.10f}'.format(price)) + " $ \n\r")
+            arr.append("1分钟前价格：" + str('{:.10f}'.format(price_1m)) + " $ \n\r")
+            arr.append("5分钟前价格：" + str('{:.10f}'.format(price_5m)) + " $ \n\r")
+            arr.append("1小时前价格：" + str('{:.10f}'.format(price_1h)) + " $ \n\r")
+            arr.append("6小时前价格：" + str('{:.10f}'.format(price_6h)) + " $ \n\r")
+            arr.append("24小时前价格：" + str('{:.10f}'.format(price_24h)) + " $ \n\r")
             arr.append("池子是否燃烧：" + burn_status + "\n\r")
-            arr.append("池子燃烧比率：" + str(burn_ratio) + "%\n\r")
+            arr.append("池子燃烧比率：" + str(float(burn_ratio) * 100) + "%\n\r")
             arr = GetPrice.get_token_rat(token, arr)
-            arr.append("合约创建者余额：" + str(creator_balance) + " Sol\n\r")
+            arr.append("合约创建者余额：" + str(round(creator_balance, 2)) + " Sol\n\r")
             arr.append("合约持有人数：" + str(holder_count) + "\n\r")
             arr.append("火热等级：" + str(hot_level) + " \n\r")
+            if key_to_check in res:
+                quote_reserve = res["pool_info"]["quote_reserve"]
+                arr.append("当前池子：" + str(round(float(quote_reserve), 0)) + " Sol\n\r")
             if rug_ratio is None:
                 pass
             else:
-                arr.append("dev逃跑比例：" + str(rug_ratio * 100) + "%\n\r")
+                arr.append("dev逃跑比例：" + str(round(rug_ratio * 100, 2)) + "%\n\r")
             if rug_ratio is None:
                 pass
             else:
@@ -155,15 +158,15 @@ class GetPrice:
                     arr.append("【☆温馨提示，如果合约安全建议先观察☆】 \n\r")
             else:
                 arr.append("【☆温馨提示，池子不足300s，小心☆】 \n\r")
-
             arr.append("合约地址：" + token)
-            return arr, is_buy
+
+        return arr, is_buy
 
 
 if __name__ == '__main__':
     arr = []
     # 招财猫
     # get_token_info("25hAyBQfoDhfWx9ay6rarbgvWGwDdNqcHsXS3jQ3mTDJ")
-    arr, is_buy = GetPrice.get_token_info("XiBVWV8n9gejY3kmeqaA5NsCC4RDE8TczFScPEohDTY", arr)
+    arr, is_buy = GetPrice.get_token_info("9GVzyBGLDvM8hebjHWuGHAKEyXwebFdrTdUFfrgQ9QUj", arr)
     note_str = "".join(arr)
     print(note_str)
