@@ -96,7 +96,10 @@ class GetPrice:
             else:
                 arr.append("是否停止mint：" + "否,别上了" + "\n\r")
             top_10_holder_rate = res['top_10_holder_rate']
-            arr.append("top10持仓占比：" + str(round(top_10_holder_rate * 100, 2)) + "%\n\r")
+            if not top_10_holder_rate is None and float(top_10_holder_rate) < 1.0:
+                arr.append("top10持仓占比：" + str(round(float(top_10_holder_rate) * 100, 2)) + "%\n\r")
+            else:
+                arr.append("top10持仓占比：" + str(100) + "%\n\r")
             holder_count = res['holder_count']
             rugged_tokens = res['rugged_tokens']
             if len(rugged_tokens) > 0:
@@ -135,12 +138,13 @@ class GetPrice:
                     pass
                 else:
                     arr.append("电报：<" + telegram + ">\n\r")
-            arr.append("当前价格：" + str('{:.10f}'.format(price)) + " $ \n\r")
-            arr.append("1分钟前价格：" + str('{:.10f}'.format(price_1m)) + " $ \n\r")
-            arr.append("5分钟前价格：" + str('{:.10f}'.format(price_5m)) + " $ \n\r")
-            arr.append("1小时前价格：" + str('{:.10f}'.format(price_1h)) + " $ \n\r")
-            arr.append("6小时前价格：" + str('{:.10f}'.format(price_6h)) + " $ \n\r")
-            arr.append("24小时前价格：" + str('{:.10f}'.format(price_24h)) + " $ \n\r")
+            price = (price is None) if price else 0
+            arr.append("当前价格：" + str('{:.10f}'.format((price is None) if price else 0)) + " $ \n\r")
+            arr.append("1分钟前价格：" + str('{:.10f}'.format((price_1m is None) if price_1m else 0)) + " $ \n\r")
+            arr.append("5分钟前价格：" + str('{:.10f}'.format((price_5m is None) if price_5m else 0)) + " $ \n\r")
+            arr.append("1小时前价格：" + str('{:.10f}'.format((price_1h is None) if price_1h else 0)) + " $ \n\r")
+            arr.append("6小时前价格：" + str('{:.10f}'.format((price_6h is None) if price_6h else 0)) + " $ \n\r")
+            arr.append("24小时前价格：" + str('{:.10f}'.format((price_24h is None) if price_24h else 0)) + " $ \n\r")
             arr.append("池子是否燃烧：" + burn_status + "\n\r")
             arr.append("池子燃烧比率：" + str(float(burn_ratio) * 100) + "%\n\r")
             arr = GetPrice.get_token_rat(token, arr)
@@ -186,6 +190,6 @@ if __name__ == '__main__':
     arr = []
     # 招财猫
     # get_token_info("25hAyBQfoDhfWx9ay6rarbgvWGwDdNqcHsXS3jQ3mTDJ")
-    arr, is_buy = GetPrice.get_token_info("9mJttakyiZFF3sCXKSvi1AaQ9zSbrz8kNhqSB13b5Axi", arr)
+    arr, is_buy = GetPrice.get_token_info("HrtGKMRtBTqkvaFARzJYQHeiWmMhVPmbsVa4CVfSXJ1b", arr)
     note_str = "".join(arr)
     print(note_str)
