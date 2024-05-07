@@ -38,7 +38,7 @@ class GetPrice:
         return arr
 
     @staticmethod
-    def get_token_info(token):
+    def get_token_info(token, arr):
         url = f"https://gmgn.ai/defi/quotation/v1/tokens/sol/" + token
         headers = {
             "authority": "gmgn.ai",
@@ -56,7 +56,7 @@ class GetPrice:
 
         }
         response = requests.get(url, headers=headers)
-        arr = []
+
         print("Status code:", response.status_code)
         if response.status_code == 200:
             result = response.json()
@@ -91,8 +91,15 @@ class GetPrice:
             if key_to_check in res:
                 quote_reserve = res["pool_info"]["quote_reserve"]
                 arr.append("当前池子：" + str(quote_reserve) + " Sol\n\r")
+            if float(quote_reserve) > 100.0:
+                is_buy = True
+            else:
+                is_buy = False
             burn_status = res['burn_status']
-            creator_balance = res["creator_balance"]
+            if 'creator_balance' in res.keys():
+                creator_balance = res["creator_balance"]
+            else:
+                creator_balance = 0
             social_links = res["social_links"]
             rug_ratio = res['rug_ratio']
             holder_rugged_num = res['holder_rugged_num']
@@ -125,7 +132,6 @@ class GetPrice:
             arr.append("合约创建者余额：" + str(creator_balance) + " Sol\n\r")
             arr.append("合约持有人数：" + str(holder_count) + "\n\r")
             arr.append("火热等级：" + str(hot_level) + " \n\r")
-            arr.append("名称：" + str(symbol) + " \n\r")
             if rug_ratio is None:
                 pass
             else:
@@ -151,12 +157,13 @@ class GetPrice:
                 arr.append("【☆温馨提示，池子不足300s，小心☆】 \n\r")
 
             arr.append("合约地址：" + token)
-            return arr
+            return arr, is_buy
 
 
 if __name__ == '__main__':
+    arr = []
     # 招财猫
     # get_token_info("25hAyBQfoDhfWx9ay6rarbgvWGwDdNqcHsXS3jQ3mTDJ")
-    arr = GetPrice.get_token_info("PvamRuNK5bGw9uyh199iNfce3zmb7HLFxUctzDA2AtU")
+    arr, is_buy = GetPrice.get_token_info("XiBVWV8n9gejY3kmeqaA5NsCC4RDE8TczFScPEohDTY", arr)
     note_str = "".join(arr)
     print(note_str)

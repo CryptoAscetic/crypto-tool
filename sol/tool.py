@@ -95,7 +95,7 @@ def send_markdown_system():
     url = 'https://oapi.dingtalk.com/robot/send?access_token=' + token_dd
     headers = {'Content-Type': 'application/json;charset=utf-8'}
     msg = ["#### 冲狗必读：\n\r ```", "\n 1.所有项目都是土狗，千万不能贪多，不能格局;\n",
-           "2.不要在一个狗上贪恋爱，该放手就放手;\n",
+           "2.不要在一个狗上谈恋爱，该放手就放手;\n",
            "3.加仓要慢慢加，不能一口吃个胖子;\n", "4.看好的项目一定留一个底仓；\n",
            "5.高倍项目10-30倍一定要出一大部分，否则跌下来就后悔了;\n",
            "6.拿到一个Token先观察，不着急买，看一下项目方，自己做个初步判断上的仓位;\n",
