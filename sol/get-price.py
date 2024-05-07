@@ -151,12 +151,12 @@ class GetPrice:
                 arr.append("【☆温馨提示，池子不足300s，小心☆】 \n\r")
 
             arr.append("合约地址：" + token)
-
-            note_str = "".join(arr)
-            print(note_str)
+            return arr
 
 
 if __name__ == '__main__':
     # 招财猫
     # get_token_info("25hAyBQfoDhfWx9ay6rarbgvWGwDdNqcHsXS3jQ3mTDJ")
-    GetPrice.get_token_info("PvamRuNK5bGw9uyh199iNfce3zmb7HLFxUctzDA2AtU")
+    arr = GetPrice.get_token_info("PvamRuNK5bGw9uyh199iNfce3zmb7HLFxUctzDA2AtU")
+    note_str = "".join(arr)
+    print(note_str)
