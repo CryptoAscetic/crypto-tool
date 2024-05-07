@@ -73,7 +73,7 @@ class GetPrice:
         if response.status_code == 200:
             result = response.json()
             res = result['data']['token']
-            # print(res)
+            print(res)
             price = res['price']
             price_1m = res['price_1m']
             price_5m = res['price_5m']
@@ -82,7 +82,8 @@ class GetPrice:
             price_24h = res['price_24h']
             symbol = res['symbol']
             logo = res['logo']
-            arr.append("![图片地址：](" + logo + ")\n\r")
+            if not logo is None:
+                arr.append("![图片地址：](" + logo + ")\n\r")
             arr.append("当前时间：" + str(china_time) + "\n\r")
             arr.append("名称：" + symbol + "\n\r")
             if 'creator_balance' in res.keys():
