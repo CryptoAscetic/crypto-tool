@@ -10,7 +10,7 @@ from getPrice import GetPrice
 
 token_dd = '1b22d689b3572c931f39f31bcc4730ce95bbd7f474bc1fb11d61f0ac96a062a9'
 # 分钟
-TIME = 120
+TIME = 40
 
 beijing = timezone(timedelta(hours=8))
 print(f'1、北京时区为：{beijing}')
@@ -169,7 +169,7 @@ def send_markdown_address(address, type):
 
 
 def get_hot_token():
-    url = f"https://gmgn.ai/defi/quotation/v1/rank/sol/swaps/1h?orderby=swaps&direction=desc"
+    url = f"https://gmgn.ai/defi/quotation/v1/rank/sol/swaps/6h?orderby=swaps&direction=desc"
     headers = {
         "authority": "gmgn.ai",
         "accept": "application/json, text/plain, */*'",
@@ -203,12 +203,14 @@ def get_hot_token():
                 if (timestamp - pool_creation_timestamp) <= diff:
                     arr, is_buy = GetPrice.get_token_info(token, arr)
                     note_str = "".join(arr)
+                    print(note_str)
                     if is_buy:
-                        print(note_str)
-                        # send_markdown(note_str)
-                        # time.sleep(5)
-                        # send_markdown_address(token, "BUY")
-                        # time.sleep(3)
+                        # print(note_str)
+                        send_markdown(note_str)
+                        time.sleep(5)
+                        send_markdown_address(token, "BUY")
+                        time.sleep(3)
+                    arr = []
 
 
 if __name__ == '__main__':

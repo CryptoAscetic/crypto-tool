@@ -2,6 +2,8 @@
 
 import requests
 
+LIMIT_QUOTE_RESERVE = 90.0
+
 
 class GetPrice:
 
@@ -72,9 +74,13 @@ class GetPrice:
             logo = res['logo']
             arr.append("![图片地址：](" + logo + ")\n\r")
             arr.append("名称：" + symbol + "\n\r")
-            renounced_mint = res['renounced_mint']
+            if 'creator_balance' in res.keys():
+                renounced_mint = res['renounced_mint']
+            else:
+                renounced_mint = 0
+
             if renounced_mint == 1:
-                arr.append("是否停止mint：" + "是" + "\n\r")
+                arr.append("是否停止mint：" + "是,相对安全" + "\n\r")
             else:
                 arr.append("是否停止mint：" + "否,别上了" + "\n\r")
             top_10_holder_rate = res['top_10_holder_rate']
@@ -88,11 +94,6 @@ class GetPrice:
             # 检查键'a'是否存在
             key_to_check = 'pool_info'
             quote_reserve = 0
-
-            if float(quote_reserve) > 100.0:
-                is_buy = True
-            else:
-                is_buy = False
             burn_status = res['burn_status']
             if 'creator_balance' in res.keys():
                 creator_balance = res["creator_balance"]
@@ -134,9 +135,6 @@ class GetPrice:
             arr.append("合约创建者余额：" + str(round(creator_balance, 2)) + " Sol\n\r")
             arr.append("合约持有人数：" + str(holder_count) + "\n\r")
             arr.append("火热等级：" + str(hot_level) + " \n\r")
-            if key_to_check in res:
-                quote_reserve = res["pool_info"]["quote_reserve"]
-                arr.append("当前池子：" + str(round(float(quote_reserve), 0)) + " Sol\n\r")
             if rug_ratio is None:
                 pass
             else:
@@ -149,17 +147,24 @@ class GetPrice:
                 pass
             else:
                 arr.append("跑路的土狗数：" + str(holder_rugged_num) + "\n\r")
+            if key_to_check in res:
+                quote_reserve = res["pool_info"]["quote_reserve"]
+                arr.append("当前池子：" + str(round(float(quote_reserve), 0)) + " Sol\n\r")
+            if float(quote_reserve) > LIMIT_QUOTE_RESERVE:
+                is_buy = True
+            else:
+                is_buy = False
             if float(quote_reserve) > 300.0:
-                if hot_level == 1 and renounced_mint == 1:
+                if hot_level == 1 and renounced_mint == 1 and rug_ratio < 0.5 and float(burn_ratio) > 0.99:
                     arr.append("【☆温馨提示：如果合约安全建议买1s☆】 \n\r")
-                elif hot_level == 2 and renounced_mint == 1:
+                elif hot_level == 2 and renounced_mint == 1 and rug_ratio < 0.5 and float(burn_ratio) > 0.99:
                     arr.append("【☆温馨提示：如果合约安全建议买2s☆】 \n\r")
-                elif hot_level >= 3 and renounced_mint == 1:
+                elif hot_level >= 3 and renounced_mint == 1 and rug_ratio < 0.5 and float(burn_ratio) > 0.99:
                     arr.append("【☆温馨提示：如果合约安全建议买3s☆】 \n\r")
                 else:
-                    arr.append("【☆温馨提示，如果合约安全建议先观察☆】 \n\r")
+                    arr.append("【☆温馨提示，小心点，跑路盘☆】 \n\r")
             else:
-                arr.append("【☆温馨提示，池子不足300s，小心☆】 \n\r")
+                arr.append("【☆温馨提示，小池子，当心跑路☆】 \n\r")
             arr.append("合约地址：" + token)
 
         return arr, is_buy
@@ -169,6 +174,6 @@ if __name__ == '__main__':
     arr = []
     # 招财猫
     # get_token_info("25hAyBQfoDhfWx9ay6rarbgvWGwDdNqcHsXS3jQ3mTDJ")
-    arr, is_buy = GetPrice.get_token_info("3cgCssP69FCNoNN3aexYdaZBKmPhPFQMF9JX59sDr8Tx", arr)
+    arr, is_buy = GetPrice.get_token_info("XiBVWV8n9gejY3kmeqaA5NsCC4RDE8TczFScPEohDTY", arr)
     note_str = "".join(arr)
     print(note_str)
