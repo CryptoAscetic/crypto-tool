@@ -41,4 +41,4 @@ if __name__ == '__main__':
     # 招财猫
     # get_token_info("25hAyBQfoDhfWx9ay6rarbgvWGwDdNqcHsXS3jQ3mTDJ")
 
-    get_token_rat("2CTtsmmsaopFkom7giQNTRtqA1SCw6rQMXTE9cmkK5GF")
+    get_token_rat("71qkaXcSjeNBDHzUh1X87zGW8GqgdFM4S4j5nAeuMSpZ")
