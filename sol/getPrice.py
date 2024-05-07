@@ -175,7 +175,7 @@ class GetPrice:
                 is_buy = True
             else:
                 is_buy = False
-            if float(quote_reserve) > 300.0:
+            if float(quote_reserve) > 300.0 and not rug_ratio is None:
                 if hot_level == 1 and renounced_mint == 1 and rug_ratio < 0.5 and float(burn_ratio) > 0.99:
                     arr.append("【☆温馨提示：如果合约安全建议买1s☆】 \n\r")
                 elif hot_level == 2 and renounced_mint == 1 and rug_ratio < 0.5 and float(burn_ratio) > 0.99:
@@ -195,6 +195,6 @@ if __name__ == '__main__':
     arr = []
     # 招财猫
     # get_token_info("25hAyBQfoDhfWx9ay6rarbgvWGwDdNqcHsXS3jQ3mTDJ")
-    arr, is_buy = GetPrice.get_token_info("25hAyBQfoDhfWx9ay6rarbgvWGwDdNqcHsXS3jQ3mTDJ", arr)
+    arr, is_buy = GetPrice.get_token_info("CLFR99t87xxRQtEtkWkrGj82BiJ2228h7JPgkLWiZ45o", arr)
     note_str = "".join(arr)
     print(note_str)
