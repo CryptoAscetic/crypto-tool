@@ -1,6 +1,31 @@
 # -*- coding: utf-8 -*
+from datetime import timezone, timedelta, datetime
 
 import requests
+
+beijing = timezone(timedelta(hours=8))
+print(f'1、北京时区为：{beijing}')
+
+Tokyo = timezone(timedelta(hours=9))
+print(f'2、东京时区为：{Tokyo}')
+
+New_York = timezone(timedelta(hours=-4))
+print(f'3、纽约时区为：{New_York}')
+
+utc = timezone.utc
+print(f'4、世界标准时区为：{utc}')
+
+utc_time = datetime.utcnow()
+print(f'UTC时间为：{utc_time}')
+print(f'本地时间为：{datetime.now()}')
+
+china_time = utc_time.astimezone(beijing)
+time_tokyo = utc_time.astimezone(Tokyo)
+time_newyork = utc_time.astimezone(New_York)
+
+print('1、更改时区为北京后的时间：', china_time)
+print('2、更改时区为东京后的时间：', time_tokyo)
+print('3、更改时区为纽约后的时间：', time_newyork)
 
 LIMIT_QUOTE_RESERVE = 90.0
 
@@ -73,6 +98,7 @@ class GetPrice:
             symbol = res['symbol']
             logo = res['logo']
             arr.append("![图片地址：](" + logo + ")\n\r")
+            arr.append("当前时间：" + str(china_time) + "\n\r")
             arr.append("名称：" + symbol + "\n\r")
             if 'creator_balance' in res.keys():
                 renounced_mint = res['renounced_mint']
@@ -174,6 +200,6 @@ if __name__ == '__main__':
     arr = []
     # 招财猫
     # get_token_info("25hAyBQfoDhfWx9ay6rarbgvWGwDdNqcHsXS3jQ3mTDJ")
-    arr, is_buy = GetPrice.get_token_info("XiBVWV8n9gejY3kmeqaA5NsCC4RDE8TczFScPEohDTY", arr)
+    arr, is_buy = GetPrice.get_token_info("9mJttakyiZFF3sCXKSvi1AaQ9zSbrz8kNhqSB13b5Axi", arr)
     note_str = "".join(arr)
     print(note_str)
