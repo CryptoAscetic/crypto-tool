@@ -57,7 +57,6 @@ class GetPrice:
         }
         response = requests.get(url, headers=headers)
         arr = []
-        arr = GetPrice.get_token_rat(token, arr)
         print("Status code:", response.status_code)
         if response.status_code == 200:
             result = response.json()
@@ -67,11 +66,15 @@ class GetPrice:
             price_1m = res['price_1m']
             price_5m = res['price_5m']
             price_1h = res['price_1h']
+            symbol = res['symbol']
+            logo = res['logo']
+            arr.append("![图片地址：](" + logo + ")\n\r")
+            arr.append("名称：" + symbol + "\n\r")
             renounced_mint = res['renounced_mint']
             if renounced_mint == 1:
                 arr.append("是否停止mint：" + "是" + "\n\r")
             else:
-                arr.append("是否停止mint：" + "否" + "\n\r")
+                arr.append("是否停止mint：" + "否,别上了" + "\n\r")
             top_10_holder_rate = res['top_10_holder_rate']
             arr.append("top10持仓占比：" + str(top_10_holder_rate * 100) + "%\n\r")
             holder_count = res['holder_count']
@@ -118,11 +121,11 @@ class GetPrice:
             arr.append("24小时前价格：" + str(price_1h) + "$\n\r")
             arr.append("池子是否燃烧：" + burn_status + "\n\r")
             arr.append("池子燃烧比率：" + str(burn_ratio) + "%\n\r")
+            arr = GetPrice.get_token_rat(token, arr)
             arr.append("合约创建者余额：" + str(creator_balance) + " Sol\n\r")
             arr.append("合约持有人数：" + str(holder_count) + "\n\r")
             arr.append("火热等级：" + str(hot_level) + " \n\r")
             arr.append("名称：" + str(symbol) + " \n\r")
-
             if rug_ratio is None:
                 pass
             else:
@@ -136,14 +139,14 @@ class GetPrice:
             else:
                 arr.append("跑路的土狗数：" + str(holder_rugged_num) + "\n\r")
             if float(quote_reserve) > 300.0:
-                if hot_level == 1:
-                    arr.append("【☆温馨提示：建议买1s☆】 \n\r")
-                elif hot_level == 2:
-                    arr.append("【☆温馨提示：建议买2s☆】 \n\r")
-                elif hot_level >= 3:
-                    arr.append("【☆温馨提示：建议买3s☆】 \n\r")
+                if hot_level == 1 and renounced_mint == 1:
+                    arr.append("【☆温馨提示：如果合约安全建议买1s☆】 \n\r")
+                elif hot_level == 2 and renounced_mint == 1:
+                    arr.append("【☆温馨提示：如果合约安全建议买2s☆】 \n\r")
+                elif hot_level >= 3 and renounced_mint == 1:
+                    arr.append("【☆温馨提示：如果合约安全建议买3s☆】 \n\r")
                 else:
-                    arr.append("【☆温馨提示，建议先观察☆】 \n\r")
+                    arr.append("【☆温馨提示，如果合约安全建议先观察☆】 \n\r")
             else:
                 arr.append("【☆温馨提示，池子不足300s，小心☆】 \n\r")
 
