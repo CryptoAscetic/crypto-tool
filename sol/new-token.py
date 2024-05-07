@@ -10,7 +10,7 @@ from getPrice import GetPrice
 
 token_dd = '2fb4e8566e1348bf837cd8527798b8f4461287a2403bda7d15f9903ee8592909'
 # 分钟
-TIME = 60
+TIME = 10
 
 beijing = timezone(timedelta(hours=8))
 print(f'1、北京时区为：{beijing}')
@@ -205,12 +205,10 @@ def get_new_token():
                     arr, is_buy = GetPrice.get_token_info(token, arr)
                     note_str = "".join(arr)
                     print(note_str)
-                    if is_buy:
-                        # print(note_str)
-                        send_markdown(note_str)
-                        time.sleep(5)
-                        send_markdown_address(token, "BUY")
-                        time.sleep(3)
+                    send_markdown(note_str)
+                    time.sleep(5)
+                    send_markdown_address(token, "BUY")
+                    time.sleep(3)
                     arr = []
 
 
