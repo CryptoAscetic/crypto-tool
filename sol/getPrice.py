@@ -138,13 +138,18 @@ class GetPrice:
                     pass
                 else:
                     arr.append("电报：<" + telegram + ">\n\r")
-            price = (price is None) if price else 0
-            arr.append("当前价格：" + str('{:.10f}'.format((price is None) if price else 0)) + " $ \n\r")
-            arr.append("1分钟前价格：" + str('{:.10f}'.format((price_1m is None) if price_1m else 0)) + " $ \n\r")
-            arr.append("5分钟前价格：" + str('{:.10f}'.format((price_5m is None) if price_5m else 0)) + " $ \n\r")
-            arr.append("1小时前价格：" + str('{:.10f}'.format((price_1h is None) if price_1h else 0)) + " $ \n\r")
-            arr.append("6小时前价格：" + str('{:.10f}'.format((price_6h is None) if price_6h else 0)) + " $ \n\r")
-            arr.append("24小时前价格：" + str('{:.10f}'.format((price_24h is None) if price_24h else 0)) + " $ \n\r")
+            if not price is None:
+                arr.append("当前价格：" + str('{:.10f}'.format(price) + " $ \n\r"))
+            if not price_1m is None:
+                arr.append("1分钟前价格：" + str('{:.10f}'.format(price_1m) + " $ \n\r"))
+            if not price_5m is None:
+                arr.append("1分钟前价格：" + str('{:.10f}'.format(price_5m) + " $ \n\r"))
+            if not price_1h is None:
+                arr.append("1分钟前价格：" + str('{:.10f}'.format(price_1h) + " $ \n\r"))
+            if not price_6h is None:
+                arr.append("1分钟前价格：" + str('{:.10f}'.format(price_6h) + " $ \n\r"))
+            if not price_24h is None:
+                arr.append("1分钟前价格：" + str('{:.10f}'.format(price_24h) + " $ \n\r"))
             arr.append("池子是否燃烧：" + burn_status + "\n\r")
             arr.append("池子燃烧比率：" + str(float(burn_ratio) * 100) + "%\n\r")
             arr = GetPrice.get_token_rat(token, arr)
@@ -190,6 +195,6 @@ if __name__ == '__main__':
     arr = []
     # 招财猫
     # get_token_info("25hAyBQfoDhfWx9ay6rarbgvWGwDdNqcHsXS3jQ3mTDJ")
-    arr, is_buy = GetPrice.get_token_info("HrtGKMRtBTqkvaFARzJYQHeiWmMhVPmbsVa4CVfSXJ1b", arr)
+    arr, is_buy = GetPrice.get_token_info("25hAyBQfoDhfWx9ay6rarbgvWGwDdNqcHsXS3jQ3mTDJ", arr)
     note_str = "".join(arr)
     print(note_str)

@@ -9,7 +9,7 @@ import requests
 from getPrice import GetPrice
 
 token_dd = 'a2e2cd49e7ca093d67a4223ed32c59804965edc184697d9fc55cf7c830b7b501'
-TIME = 6
+TIME = 60
 beijing = timezone(timedelta(hours=8))
 print(f'1、北京时区为：{beijing}')
 
