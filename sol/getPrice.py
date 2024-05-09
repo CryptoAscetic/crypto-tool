@@ -181,15 +181,18 @@ class GetPrice:
                 is_buy = True
             else:
                 is_buy = False
-            if float(quote_reserve) > 300.0 and not rug_ratio is None:
-                if hot_level == 1 and renounced_mint == 1 and rug_ratio < 0.5 and float(burn_ratio) > 0.99:
-                    arr.append("【☆温馨提示：如果合约安全建议买1s☆】 \n\r")
-                elif hot_level == 2 and renounced_mint == 1 and rug_ratio < 0.5 and float(burn_ratio) > 0.99:
-                    arr.append("【☆温馨提示：如果合约安全建议买2s☆】 \n\r")
-                elif hot_level >= 3 and renounced_mint == 1 and rug_ratio < 0.5 and float(burn_ratio) > 0.99:
-                    arr.append("【☆温馨提示：如果合约安全建议买3s☆】 \n\r")
+            if float(quote_reserve) > 300.0:
+                if not rug_ratio is None:
+                    if hot_level == 1 and renounced_mint == 1 and rug_ratio < 0.5 and float(burn_ratio) > 0.99:
+                        arr.append("【☆温馨提示：如果合约安全建议买1s☆】 \n\r")
+                    elif hot_level == 2 and renounced_mint == 1 and rug_ratio < 0.5 and float(burn_ratio) > 0.99:
+                        arr.append("【☆温馨提示：如果合约安全建议买2s☆】 \n\r")
+                    elif hot_level >= 3 and renounced_mint == 1 and rug_ratio < 0.5 and float(burn_ratio) > 0.99:
+                        arr.append("【☆温馨提示：如果合约安全建议买3s☆】 \n\r")
+                    else:
+                        arr.append("【☆温馨提示，池子可以，小心跑路☆】 \n\r")
                 else:
-                    arr.append("【☆温馨提示，小心点，跑路盘☆】 \n\r")
+                    arr.append("【☆温馨提示，热度不够，看线上☆】 \n\r")
             else:
                 arr.append("【☆温馨提示，小池子，当心跑路☆】 \n\r")
             arr.append("合约地址：" + token + "\n\r")
