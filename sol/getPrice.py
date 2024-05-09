@@ -88,7 +88,7 @@ class GetPrice:
                 arr.append("![图片地址：](" + logo + ")\n\r")
             arr.append("当前时间：" + str(china_time) + "\n\r")
             arr.append("名称：" + symbol + "\n\r")
-            if 'creator_balance' in res.keys():
+            if 'renounced_mint' in res.keys():
                 renounced_mint = res['renounced_mint']
             else:
                 renounced_mint = 0
@@ -201,6 +201,6 @@ if __name__ == '__main__':
     arr = []
     # 招财猫
     # get_token_info("25hAyBQfoDhfWx9ay6rarbgvWGwDdNqcHsXS3jQ3mTDJ")
-    arr, is_buy = GetPrice.get_token_info("7qtnComv6JkaT9Ey2LUzXGGENnCv7kJTfTihGg9s27FD", arr)
+    arr, is_buy = GetPrice.get_token_info("9EYScpiysGnEimnQPzazr7Jn9GVfxFYzgTEj85hV9L6U", arr)
     note_str = "".join(arr)
     print(note_str)
