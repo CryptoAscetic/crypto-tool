@@ -82,6 +82,8 @@ class GetPrice:
             price_24h = res['price_24h']
             buys_1m = res['buys_1m']
             sells_1m = res['sells_1m']
+            buy_volume_1m = res['buy_volume_1m']
+            sell_volume_1m = res['sell_volume_1m']
             symbol = res['symbol']
             logo = res['logo']
             if not logo is None:
@@ -156,6 +158,10 @@ class GetPrice:
                 arr.append("1分钟购买：：" + str(buys_1m) + " 次 \n\r")
             if not sells_1m is None:
                 arr.append("1分钟卖出：：" + str(sells_1m) + " 次 \n\r")
+            if not buy_volume_1m is None:
+                arr.append("1分钟买入金额：：" + str(buy_volume_1m) + " $ \n\r")
+            if not sell_volume_1m is None:
+                arr.append("1分钟卖出金额：：" + str(sell_volume_1m) + " $ \n\r")
             arr.append("池子是否燃烧：" + burn_status + "\n\r")
             arr.append("池子燃烧比率：" + str(float(burn_ratio) * 100) + "%\n\r")
             arr = GetPrice.get_token_rat(token, arr)
