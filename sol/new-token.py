@@ -10,7 +10,7 @@ from getPrice import GetPrice
 
 token_dd = '2fb4e8566e1348bf837cd8527798b8f4461287a2403bda7d15f9903ee8592909'
 # 分钟
-TIME = 6
+TIME = 30
 
 beijing = timezone(timedelta(hours=8))
 print(f'1、北京时区为：{beijing}')
@@ -168,9 +168,19 @@ def send_markdown_address(address, type):
     print(res.text)
 
 
+# limit=50& 限制条数
+# orderby=open_timestamp& 按照开始时间倒序
+# direction=desc& # 排序倒序
+# filters[]=not_honeypot&
+# filters[]=has_social& 有社交
+# filters[]=not_risk& 没有风险的
+# min_quote_usd=10000 成交额
+# min_marketcap=50000 初始化池子
+# created=30m
+
 def get_new_token():
-    url = f"https://gmgn.ai/defi/quotation/v1/pairs/sol/new_pairs?limit=50&orderby=" \
-          f"open_timestamp&direction=desc&filters[]=not_honeypot&filters[]=not_risk&min_quote_usd=10000"
+    url = f"https://gmgn.ai/defi/quotation/v1/pairs/sol/new_pairs?limit=50&orderby=open_timestamp&direction=desc&" \
+          f"filters[]=has_social&filters[]=not_honeypot&filters[]=not_risk&min_quote_usd=10000&created=30m"
     headers = {
         "authority": "gmgn.ai",
         "accept": "application/json, text/plain, */*'",
