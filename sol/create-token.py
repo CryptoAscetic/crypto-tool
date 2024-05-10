@@ -215,9 +215,10 @@ def request_ok():
 
                     note_str = "".join(arr)
                     print(note_str)
-                    send_markdown(note_str)
-                    time.sleep(4)
-                    send_markdown_address(mint_address)
+                    if is_buy:
+                        send_markdown(note_str)
+                        time.sleep(4)
+                        send_markdown_address(mint_address)
                     arr = []
                     # send_markdown_system()
                 else:
@@ -235,8 +236,8 @@ def request_ok():
                         time.sleep(4)
                         send_markdown_address(mint_address)
                         arr = []
-        time.sleep(30)
-        send_msg()
+        # time.sleep(30)
+        # send_msg()
 
 
 if __name__ == '__main__':
