@@ -167,9 +167,9 @@ class GetPrice:
             if not sells_1m is None:
                 arr.append("1分钟卖出：：" + str(sells_1m) + " 次 \n\r")
             if not buy_volume_1m is None:
-                arr.append("1分钟买入金额：：" + str(buy_volume_1m) + " $ \n\r")
+                arr.append("1分钟买入金额：：" + str(round(buy_volume_1m, 2)) + " $ \n\r")
             if not sell_volume_1m is None:
-                arr.append("1分钟卖出金额：：" + str(sell_volume_1m) + " $ \n\r")
+                arr.append("1分钟卖出金额：：" + str(round(sell_volume_1m, 2)) + " $ \n\r")
             arr.append("池子是否燃烧：" + burn_status + "\n\r")
             arr.append("池子燃烧比率：" + str(float(burn_ratio) * 100) + "%\n\r")
             arr = GetPrice.get_token_rat(token, arr)
