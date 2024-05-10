@@ -191,51 +191,27 @@ def request_ok():
             block_time = r["block_time"]
             mint_address = r["mint_address"]
             action_type = r["action_type"]
-            token_symbol = r["token_symbol"]
-            signer_address = r["signer_address"]
-            # token_name = r["token_name"]
-            token_symbol_image = r["token_symbol_image"]
-            signature = r["signature"]
             # 获取当前时间
             date = datetime.now()
             timestamp = int(date.timestamp())
             # 对比的时间8分钟的购买
             diff = 60 * TIME
             if (timestamp - int(block_time)) <= diff:
-                if action_type == "CREATE_TOKEN" or action_type == "SET_AUTHORITY":
+                if action_type == "SET_AUTHORITY":
                     timeArray = time.localtime(int(block_time))
                     otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
                     arr, is_buy = GetPrice.get_token_info(mint_address, arr)
-                    if action_type == "CREATE_TOKEN":
-                        arr.append("-【科学家创建合约了】温馨提示各位：")
-                    else:
-                        arr.append("-【科学家创把合约放弃权限】温馨提示各位：")
+                    arr.append("-【dev放弃合约权限】温馨提示各位：")
                     arr.append(str((timestamp - int(block_time)) / 60))
                     arr.append("分钟之前，操作时间：" + otherStyleTime + "\n\r")
-
                     note_str = "".join(arr)
                     print(note_str)
-                    if is_buy:
-                        send_markdown(note_str)
-                        time.sleep(4)
-                        send_markdown_address(mint_address)
+
+                    send_markdown(note_str)
+                    time.sleep(4)
+                    send_markdown_address(mint_address)
                     arr = []
                     # send_markdown_system()
-                else:
-                    if not token_symbol is None:
-                        timeArray = time.localtime(int(block_time))
-                        arr, is_buy = GetPrice.get_token_info(mint_address, arr)
-                        otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
-                        arr.append("-【科学家设置权限】温馨提示各位：")
-                        arr.append(str((timestamp - int(block_time)) / 60))
-                        arr.append("分钟之前，烧池子：：" + otherStyleTime + "\n\r")
-
-                        note_str = "".join(arr)
-                        print(note_str)
-                        send_markdown(note_str)
-                        time.sleep(4)
-                        send_markdown_address(mint_address)
-                        arr = []
         # time.sleep(30)
         # send_msg()
 
