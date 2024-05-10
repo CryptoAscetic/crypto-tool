@@ -1,3 +1,4 @@
+import time
 from datetime import timezone, timedelta, datetime
 
 beijing = timezone(timedelta(hours=8))
@@ -23,3 +24,8 @@ time_newyork = utc_time.astimezone(New_York)
 print('1、更改时区为北京后的时间：', time_beijing)
 print('2、更改时区为东京后的时间：', time_tokyo)
 print('3、更改时区为纽约后的时间：', time_newyork)
+
+timeStamp = 1715323559
+timeArray = time.localtime(timeStamp)
+otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
+print(otherStyleTime)

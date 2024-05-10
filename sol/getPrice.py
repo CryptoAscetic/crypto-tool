@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*
+import time
 from datetime import timezone, timedelta, datetime
 
 import requests
@@ -86,9 +87,13 @@ class GetPrice:
             sell_volume_1m = res['sell_volume_1m']
             symbol = res['symbol']
             logo = res['logo']
+            open_timestamp = res['open_timestamp']
             if not logo is None:
                 arr.append("![图片地址：](" + logo + ")\n\r")
             arr.append("当前时间：" + str(china_time) + "\n\r")
+            timeArray = time.localtime(open_timestamp)
+            otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
+            arr.append("合约创建时间：" + otherStyleTime + "\n\r")
             arr.append("名称：" + symbol + "\n\r")
             if 'renounced_mint' in res.keys():
                 renounced_mint = res['renounced_mint']
@@ -118,6 +123,9 @@ class GetPrice:
                 creator_balance = res["creator_balance"]
             else:
                 creator_balance = 0
+            if 'launchpad' in res.keys():
+                launchpad = res["launchpad"]
+                arr.append("发射平台：" + str(launchpad) + " \n\r")
             social_links = res["social_links"]
             rug_ratio = res['rug_ratio']
             holder_rugged_num = res['holder_rugged_num']
@@ -210,6 +218,6 @@ if __name__ == '__main__':
     arr = []
     # 招财猫
     # get_token_info("25hAyBQfoDhfWx9ay6rarbgvWGwDdNqcHsXS3jQ3mTDJ")
-    arr, is_buy = GetPrice.get_token_info("9EYScpiysGnEimnQPzazr7Jn9GVfxFYzgTEj85hV9L6U", arr)
+    arr, is_buy = GetPrice.get_token_info("4iQjNdjr3is21xTFSWcx34Zr5gRfGiXGXkfXnjp781jL", arr)
     note_str = "".join(arr)
     print(note_str)
