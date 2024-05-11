@@ -2,7 +2,11 @@
 import time
 from datetime import timezone, timedelta, datetime
 
+import flask
 import requests
+
+# 实例化api，把当前这个python文件当作一个服务，__name__代表当前这个python文件
+api = flask.Flask(__name__)
 
 beijing = timezone(timedelta(hours=8))
 Tokyo = timezone(timedelta(hours=9))
@@ -214,10 +218,21 @@ class GetPrice:
         return arr, is_buy
 
 
-if __name__ == '__main__':
+@api.route('/get_token', methods=['get'])
+def article():
+    token = flask.request.args.get("id")
     arr = []
-    # 招财猫
-    # get_token_info("25hAyBQfoDhfWx9ay6rarbgvWGwDdNqcHsXS3jQ3mTDJ")
-    arr, is_buy = GetPrice.get_token_info("HAQGauQV3GSs8xVEX3aVh5BfTev2bJULtEVfVHZdm81N", arr)
-    note_str = "".join(arr)
-    print(note_str)
+    arr, is_buy = GetPrice.get_token_info(token, arr)
+    # note_str = "".join(arr)
+
+    return arr
+
+
+if __name__ == '__main__':
+    api.run(port=8888, debug=True, host='192.168.124.55')  # 启动服务
+    # arr = []
+    # # 招财猫
+    # # get_token_info("25hAyBQfoDhfWx9ay6rarbgvWGwDdNqcHsXS3jQ3mTDJ")
+    # arr, is_buy = GetPrice.get_token_info("5c8FLt1gbksoboNPx5AaDoU3k5SMVkTJomdzuUSNGEqm", arr)
+    # note_str = "".join(arr)
+    # print(note_str)
