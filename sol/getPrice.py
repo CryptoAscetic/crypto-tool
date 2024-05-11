@@ -229,7 +229,7 @@ def article():
 
 
 if __name__ == '__main__':
-    api.run(port=6888, debug=True, host='192.168.124.55')  # 启动服务
+    api.run(port=6888, debug=False, host='0.0.0.0')  # 启动服务
     # arr = []
     # # 招财猫
     # # get_token_info("25hAyBQfoDhfWx9ay6rarbgvWGwDdNqcHsXS3jQ3mTDJ")
