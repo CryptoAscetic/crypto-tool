@@ -130,6 +130,9 @@ class GetPrice:
             if 'launchpad' in res.keys():
                 launchpad = res["launchpad"]
                 arr.append("发射平台：" + str(launchpad) + " \n\r")
+            if 'launchpad_progress' in res.keys():
+                launchpad_progress = res["launchpad_progress"]
+                arr.append("发射平台进度：" + str(round(float(launchpad_progress), 2)) + " %\n\r")
             social_links = res["social_links"]
             rug_ratio = res['rug_ratio']
             holder_rugged_num = res['holder_rugged_num']
@@ -195,6 +198,8 @@ class GetPrice:
             if key_to_check in res:
                 quote_reserve = res["pool_info"]["quote_reserve"]
                 arr.append("当前池子：" + str(round(float(quote_reserve), 0)) + " Sol\n\r")
+                initial_quote_reserve = res["pool_info"]["initial_quote_reserve"]
+                arr.append("dev初始化池子：" + str(round(float(initial_quote_reserve), 0)) + " Sol\n\r")
             if float(quote_reserve) > LIMIT_QUOTE_RESERVE:
                 is_buy = True
             else:
@@ -229,10 +234,10 @@ def article():
 
 
 if __name__ == '__main__':
-    api.run(port=6888, debug=False, host='0.0.0.0')  # 启动服务
-    # arr = []
+    # api.run(port=6888, debug=False, host='0.0.0.0')  # 启动服务
+    arr = []
     # # 招财猫
     # # get_token_info("25hAyBQfoDhfWx9ay6rarbgvWGwDdNqcHsXS3jQ3mTDJ")
-    # arr, is_buy = GetPrice.get_token_info("5c8FLt1gbksoboNPx5AaDoU3k5SMVkTJomdzuUSNGEqm", arr)
-    # note_str = "".join(arr)
-    # print(note_str)
+    arr, is_buy = GetPrice.get_token_info("F3hr7FDnhT8QAjS7qTCu12xhDWgw6BrPcDquCaFq6HSt", arr)
+    note_str = "".join(arr)
+    print(note_str)
