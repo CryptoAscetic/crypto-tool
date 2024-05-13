@@ -191,23 +191,22 @@ def request_ok():
             created_timestamp = r["created_timestamp"] / 1000
             mint = r["mint"]
             complete = r["complete"]
+            reply_count = r["reply_count"]
             # 获取当前时间
             date = datetime.now()
-            timestamp = int(date.timestamp())
-            # 对比的时间8分钟的购买
-            diff = 60 * TIME
-            if complete:
+            if int(reply_count) > 200:
+                timeArray = time.localtime(created_timestamp)
+                print(mint)
+                otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
+                arr.append("合约创建时间：" + otherStyleTime + "\n\r")
                 arr, is_buy = GetPrice.get_token_info(mint, arr)
-                arr.append("-【dev放弃合约权限】温馨提示各位：")
-                arr.append(str((timestamp - int(created_timestamp)) / 60))
-                arr.append("分钟之前，操作时间：" + otherStyleTime + "\n\r")
                 note_str = "".join(arr)
                 print(note_str)
-
-                send_markdown(note_str)
-                time.sleep(4)
-                send_markdown_address(mint)
-                arr = []
+                #
+                # send_markdown(note_str)
+                # time.sleep(4)
+                # send_markdown_address(mint)
+                # arr = []
                 # send_markdown_system()
         # time.sleep(30)
         # send_msg()
