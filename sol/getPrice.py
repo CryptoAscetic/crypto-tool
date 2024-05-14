@@ -91,6 +91,8 @@ class GetPrice:
             sells_5m = res['sells_5m']
             buy_volume_1m = res['buy_volume_1m']
             sell_volume_1m = res['sell_volume_1m']
+            buy_volume_5m = res['buy_volume_5m']
+            sell_volume_5m = res['sell_volume_5m']
             symbol = res['symbol']
             logo = res['logo']
             open_timestamp = res['open_timestamp']
@@ -183,6 +185,10 @@ class GetPrice:
                 arr.append("1分钟买入金额：：" + str(round(buy_volume_1m, 2)) + " $ \n\r")
             if not sell_volume_1m is None:
                 arr.append("1分钟卖出金额：：" + str(round(sell_volume_1m, 2)) + " $ \n\r")
+            if not buy_volume_5m is None:
+                arr.append("5分钟买入金额：：" + str(round(buy_volume_5m, 2)) + " $ \n\r")
+            if not sell_volume_5m is None:
+                arr.append("5分钟卖出金额：：" + str(round(sell_volume_5m, 2)) + " $ \n\r")
             if burn_status == "burn":
                 arr.append("池子是否燃烧： 已燃烧" + "\n\r")
             else:
