@@ -94,6 +94,8 @@ class GetPrice:
             buy_volume_5m = res['buy_volume_5m']
             sell_volume_5m = res['sell_volume_5m']
             symbol = res['symbol']
+            max_supply = res['max_supply']
+            market_cap = res['market_cap']
             logo = res['logo']
             open_timestamp = res['open_timestamp']
             if not logo is None:
@@ -103,6 +105,8 @@ class GetPrice:
             otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
             arr.append("合约创建时间：" + otherStyleTime + "\n\r")
             arr.append("名称：" + symbol + "\n\r")
+            arr.append("最大供应量：" + str(max_supply) + "\n\r")
+            arr.append("市值：" + str(round(market_cap, 2)) + " $ \n\r")
             if 'renounced_mint' in res.keys():
                 renounced_mint = res['renounced_mint']
             else:
@@ -255,6 +259,6 @@ if __name__ == '__main__':
     arr = []
     # # 招财猫
     # # get_token_info("25hAyBQfoDhfWx9ay6rarbgvWGwDdNqcHsXS3jQ3mTDJ")
-    arr, is_buy = GetPrice.get_token_info("2brEwCJTYYyrd9jLSoSdN4zBMdAWrGc4qEw1nWDTLPpW", arr)
+    arr, is_buy = GetPrice.get_token_info("5MXVq99D4hQgziRFeDob6MmbtyczhN3yHUqQu49p7PTX", arr)
     note_str = "".join(arr)
     print(note_str)
