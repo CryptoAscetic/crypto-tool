@@ -87,6 +87,8 @@ class GetPrice:
             price_24h = res['price_24h']
             buys_1m = res['buys_1m']
             sells_1m = res['sells_1m']
+            buys_5m = res['buys_5m']
+            sells_5m = res['sells_5m']
             buy_volume_1m = res['buy_volume_1m']
             sell_volume_1m = res['sell_volume_1m']
             symbol = res['symbol']
@@ -173,11 +175,19 @@ class GetPrice:
                 arr.append("1分钟购买：：" + str(buys_1m) + " 次 \n\r")
             if not sells_1m is None:
                 arr.append("1分钟卖出：：" + str(sells_1m) + " 次 \n\r")
+            if not buys_5m is None:
+                arr.append("5分钟购买：：" + str(buys_5m) + " 次 \n\r")
+            if not sells_5m is None:
+                arr.append("5分钟卖出：：" + str(sells_5m) + " 次 \n\r")
             if not buy_volume_1m is None:
                 arr.append("1分钟买入金额：：" + str(round(buy_volume_1m, 2)) + " $ \n\r")
             if not sell_volume_1m is None:
                 arr.append("1分钟卖出金额：：" + str(round(sell_volume_1m, 2)) + " $ \n\r")
-            arr.append("池子是否燃烧：" + burn_status + "\n\r")
+            if burn_status == "burn":
+                arr.append("池子是否燃烧： 已燃烧" + "\n\r")
+            else:
+                arr.append("池子是否燃烧： 小心，池子没烧" + "\n\r")
+
             arr.append("池子燃烧比率：" + str(float(burn_ratio) * 100) + "%\n\r")
             arr = GetPrice.get_token_rat(token, arr)
             arr.append("合约创建者余额：" + str(round(creator_balance, 2)) + " Sol\n\r")
@@ -198,7 +208,8 @@ class GetPrice:
             if key_to_check in res:
                 quote_reserve = res["pool_info"]["quote_reserve"]
                 arr.append("当前池子：" + str(round(float(quote_reserve), 0)) + " Sol\n\r")
-                initial_quote_reserve = res["pool_info"]["initial_quote_reserve"]
+            initial_quote_reserve = res["pool_info"]["initial_quote_reserve"]
+            if not initial_quote_reserve is None:
                 arr.append("dev初始化池子：" + str(round(float(initial_quote_reserve), 0)) + " Sol\n\r")
             if float(quote_reserve) > LIMIT_QUOTE_RESERVE:
                 is_buy = True
@@ -238,6 +249,6 @@ if __name__ == '__main__':
     arr = []
     # # 招财猫
     # # get_token_info("25hAyBQfoDhfWx9ay6rarbgvWGwDdNqcHsXS3jQ3mTDJ")
-    arr, is_buy = GetPrice.get_token_info("9HoRXnCcXdTWA1YhYJoPVpp9YByYS3Y8nVV42z1MTBoV", arr)
+    arr, is_buy = GetPrice.get_token_info("2brEwCJTYYyrd9jLSoSdN4zBMdAWrGc4qEw1nWDTLPpW", arr)
     note_str = "".join(arr)
     print(note_str)
