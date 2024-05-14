@@ -106,7 +106,7 @@ class GetPrice:
             arr.append("合约创建时间：" + otherStyleTime + "\n\r")
             arr.append("名称：" + symbol + "\n\r")
             arr.append("最大供应量：" + str(max_supply) + "\n\r")
-            arr.append("市值：" + str(round(market_cap, 2)) + " $ \n\r")
+            arr.append("市值：" + str(round(market_cap / 10000, 2)) + "w $ \n\r")
             if 'renounced_mint' in res.keys():
                 renounced_mint = res['renounced_mint']
             else:
