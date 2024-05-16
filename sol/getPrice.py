@@ -17,7 +17,7 @@ china_time = utc_time.astimezone(beijing)
 time_tokyo = utc_time.astimezone(Tokyo)
 time_newyork = utc_time.astimezone(New_York)
 
-LIMIT_QUOTE_RESERVE = 90.0
+LIMIT_QUOTE_RESERVE = 130.0
 
 
 class GetPrice:
@@ -94,6 +94,7 @@ class GetPrice:
                 event = re['event']
                 maker_name = re['maker_name']
                 timestamp = re['timestamp']
+                amount_usd = re['amount_usd']
                 timeArray = time.localtime(timestamp)
                 otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
                 if not price_usd is None:
@@ -101,8 +102,9 @@ class GetPrice:
                     arr.append(maker_name + ":" + event + "：价格：" + str('{:.10f}'.format(float(price_usd)) + "$ ")
                                + "金额：" + str(round(amount_usd, 2)) + " $\n\r")
 
-                    if maker not in new_li:
-                        new_li.append(maker)
+                    arr.append("购买金额：" + str(amount_usd) + " $\n\r")
+                if maker not in new_li:
+                    new_li.append(maker)
 
             arr.append("Kol数：" + str(len(new_li)) + "\n\r")
 
@@ -143,21 +145,26 @@ class GetPrice:
             res = result['data']['history']
             buy = 0
             sell = 0
+            buy_sum = 0.0
+            sell_sum = 0.0
             # print(res)
             for re in res:
                 maker = re['maker']
                 event = re['event']
-                if event == "sell":
-                    sell = sell + 1
-                else:
-                    buy = buy + 1
-                if maker not in new_li:
-                    new_li.append(maker)
+                amount_usd = re['amount_usd']
+                if not amount_usd is None:
+                    if event == "sell":
+                        sell = sell + 1
+                        sell_sum = sell_sum + amount_usd
+                    else:
+                        buy = buy + 1
+                        buy_sum = buy_sum + amount_usd
+                    if maker not in new_li:
+                        new_li.append(maker)
 
             arr.append("聪明钱：" + str(len(new_li)) + "\n\r")
-            print(buy, sell)
-
-            print(arr)
+            arr.append("购买次数：" + str(buy) + " 卖除次数：" + str(sell) + "\n\r")
+            arr.append("购买金额：" + str(float(buy_sum)) + " $ 卖除金额：" + str(float(sell_sum)) + " $\n\r")
         return arr
 
     @staticmethod

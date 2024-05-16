@@ -6,8 +6,6 @@ from datetime import timezone, timedelta, datetime
 
 import requests
 
-from getPrice import GetPrice
-
 token_dd = 'a2e2cd49e7ca093d67a4223ed32c59804965edc184697d9fc55cf7c830b7b501'
 TIME = 6
 beijing = timezone(timedelta(hours=8))
@@ -161,6 +159,7 @@ def send_markdown(msg):
     print(res.text)
 
 
+# https://client-api-2-74b1891ee9f9.herokuapp.com/coins?offset=0&limit=50&sort=created_timestamp&order=DESC&includeNsfw=false
 def request_ok():
     url = (f"https://client-api-2-74b1891ee9f9.herokuapp.com/coins?offset=0&limit=50"
            f"&sort=last_trade_timestamp&order=DESC&includeNsfw=false")
@@ -192,24 +191,29 @@ def request_ok():
             mint = r["mint"]
             complete = r["complete"]
             reply_count = r["reply_count"]
-            # 获取当前时间
-            date = datetime.now()
-            if int(reply_count) > 200:
-                timeArray = time.localtime(created_timestamp)
-                print(mint)
-                otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
-                arr.append("合约创建时间：" + otherStyleTime + "\n\r")
-                arr, is_buy = GetPrice.get_token_info(mint, arr)
-                note_str = "".join(arr)
-                print(note_str)
-                #
-                # send_markdown(note_str)
-                # time.sleep(4)
-                # send_markdown_address(mint)
-                # arr = []
-                # send_markdown_system()
-        # time.sleep(30)
-        # send_msg()
+            if not reply_count is None:
+                # 获取当前时间
+                date = datetime.now()
+                if int(reply_count) > 100:
+                    timeArray = time.localtime(created_timestamp)
+                    print("地址：" + mint)
+                    print(complete)
+                    print(reply_count)
+
+                    otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
+                    print("合约创建时间：" + otherStyleTime + "\n\r")
+                    print("========================")
+                    # arr, is_buy = GetPrice.get_token_info(mint, arr)
+                    # note_str = "".join(arr)
+                    # print(note_str)
+                    #
+                    # send_markdown(note_str)
+                    # time.sleep(4)
+                    # send_markdown_address(mint)
+                    # arr = []
+                    # send_markdown_system()
+            # time.sleep(30)
+            # send_msg()
 
 
 if __name__ == '__main__':
