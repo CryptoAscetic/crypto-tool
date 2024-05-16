@@ -56,7 +56,7 @@ class GetPrice:
 
     # https://gmgn.ai/defi/quotation/v1/trades/sol/9jaZhJM6nMHTo4hY9DGabQ1HNuUWhJtm7js1fmKMVpkN?limit=50
     @staticmethod
-    def get_smart_token(token, arr):
+    def get_kol_token(token, arr):
         url = f"https://gmgn.ai/defi/quotation/v1/trades/sol/" + token + "?limit=100&&tag=renowned"
         headers = {
             "authority": "gmgn.ai",
@@ -90,17 +90,72 @@ class GetPrice:
             for re in res:
                 maker = re['maker']
                 price_usd = re['price_usd']
+                amount_usd = re['amount_usd']
                 event = re['event']
                 maker_name = re['maker_name']
                 timestamp = re['timestamp']
                 timeArray = time.localtime(timestamp)
                 otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
-                arr.append("操作时间：" + otherStyleTime + "\n\r")
-                arr.append(maker_name + ":" + event + "：价格：" + str(round(float(price_usd), 6)) + " $\n\r")
+                if not price_usd is None:
+                    arr.append("操作时间：" + otherStyleTime + "\n\r")
+                    arr.append(maker_name + ":" + event + "：价格：" + str('{:.10f}'.format(float(price_usd)) + "$ ")
+                               + "金额：" + str(round(amount_usd, 2)) + " $\n\r")
+
+                    if maker not in new_li:
+                        new_li.append(maker)
+
+            arr.append("Kol数：" + str(len(new_li)) + "\n\r")
+
+            print(arr)
+        return arr
+
+    # https://gmgn.ai/defi/quotation/v1/trades/sol/9jaZhJM6nMHTo4hY9DGabQ1HNuUWhJtm7js1fmKMVpkN?limit=50
+    @staticmethod
+    def get_smart_token(token, arr):
+        url = f"https://gmgn.ai/defi/quotation/v1/trades/sol/" + token + "?limit=100&&tag=smart_degen"
+        headers = {
+            "authority": "gmgn.ai",
+            "accept": "application/json, text/plain, */*'",
+            "accept-language": "zh,zh-CN;q=0.9",
+            "authorization": "Bearer eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9"
+                             ".eyJhdWQiOiJnbWduLmFpL2FjY2VzcyIsImV4cCI6MTcxNTkxNDE3NCwiaWF0IjoxNzE1NzQx"
+                             "Mzc0LCJpc3MiOiJnbWduLmFpL3NpZ25lciIsInN1YiI6ImdtZ24uYWkvYWNjZXNzIiwidmVyc2"
+                             "lvbiI6IjEuMCIsImFkZHJlc3MiOiIyVXFBVjJBR1lrdHkzeVhSeHYyZ0ZaTjNhUXZvOVg0Zjdhd"
+                             "moxTE1rTjZzeSIsImNoYWluIjoic29sIn0.E-1oShnWksT5-EZeE7SZxegQN42KnRVb7Uqv_xkl"
+                             "hUzZRD3n39yYiCZB74zVmXBaS9XuDCOwjXknLi3xB3LAzA'",
+            "cache-control": "no-cache",
+            "cookie": "_ga=GA1.1.1538430465.1713834683; _ga_0XM0LYXGC8=GS1.1.1714184467.2.1.1714184492.0.0.0",
+            "pragma": "no-cache",
+            "referer": "https://gmgn.ai/sol/token/" + token,
+            "sec-ch-ua-platform": "Linux",
+            "sec-fetch-dest": "empty",
+            "sec-fetch-mode": "cors",
+            "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 "
+                          "Safari/537.36",
+
+        }
+        response = requests.get(url, headers=headers)
+        print("Status code:", response.status_code)
+        # rat_trader  sandwich_bot
+        new_li = []
+        if response.status_code == 200:
+            result = response.json()
+            res = result['data']['history']
+            buy = 0
+            sell = 0
+            # print(res)
+            for re in res:
+                maker = re['maker']
+                event = re['event']
+                if event == "sell":
+                    sell = sell + 1
+                else:
+                    buy = buy + 1
                 if maker not in new_li:
                     new_li.append(maker)
 
-            arr.append("Kol数：" + str(len(new_li)) + "\n\r")
+            arr.append("聪明钱：" + str(len(new_li)) + "\n\r")
+            print(buy, sell)
 
             print(arr)
         return arr
@@ -251,6 +306,7 @@ class GetPrice:
 
             arr.append("池子燃烧比率：" + str(float(burn_ratio) * 100) + "%\n\r")
             arr = GetPrice.get_token_rat(token, arr)
+            arr = GetPrice.get_kol_token(token, arr)
             arr = GetPrice.get_smart_token(token, arr)
             arr.append("合约创建者余额：" + str(round(creator_balance, 2)) + " Sol\n\r")
             arr.append("合约持有人数：" + str(holder_count) + "\n\r")
@@ -316,6 +372,6 @@ if __name__ == '__main__':
     arr = []
     # # # 招财猫
     # # # get_token_info("25hAyBQfoDhfWx9ay6rarbgvWGwDdNqcHsXS3jQ3mTDJ")
-    arr, is_buy = GetPrice.get_token_info("4ABXJEK62bfKqPiCbSsUtmb4nfkCNPDGtvLhwQcAWNjc", arr)
+    arr, is_buy = GetPrice.get_token_info("9jaZhJM6nMHTo4hY9DGabQ1HNuUWhJtm7js1fmKMVpkN", arr)
     note_str = "".join(arr)
     print(note_str)
