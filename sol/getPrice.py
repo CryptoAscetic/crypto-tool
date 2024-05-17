@@ -18,7 +18,7 @@ time_tokyo = utc_time.astimezone(Tokyo)
 time_newyork = utc_time.astimezone(New_York)
 
 LIMIT_QUOTE_RESERVE = 130.0
-
+TIME_NOW = 8 * 60 * 60
 
 class GetPrice:
 
@@ -95,7 +95,7 @@ class GetPrice:
                 maker_name = re['maker_name']
                 timestamp = re['timestamp']
                 amount_usd = re['amount_usd']
-                timeArray = time.localtime(timestamp)
+                timeArray = time.localtime(timestamp + +TIME_NOW)
                 otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
                 if not price_usd is None:
                     arr.append("操作时间：" + otherStyleTime + "\n\r")
@@ -214,7 +214,7 @@ class GetPrice:
             if not logo is None:
                 arr.append("![图片地址：](" + logo + ")\n\r")
             arr.append("当前时间：" + str(china_time) + "\n\r")
-            timeArray = time.localtime(open_timestamp)
+            timeArray = time.localtime(open_timestamp + TIME_NOW)
             otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
             arr.append("合约创建时间：" + otherStyleTime + "\n\r")
             arr.append("名称：" + symbol + "\n\r")
@@ -379,6 +379,6 @@ if __name__ == '__main__':
     arr = []
     # # # 招财猫
     # # # get_token_info("25hAyBQfoDhfWx9ay6rarbgvWGwDdNqcHsXS3jQ3mTDJ")
-    arr, is_buy = GetPrice.get_token_info("9jaZhJM6nMHTo4hY9DGabQ1HNuUWhJtm7js1fmKMVpkN", arr)
+    arr, is_buy = GetPrice.get_token_info("8YvSuRsjTtox2XEWk2djgi7TVc1HVFKG4SddwJFVHSXN", arr)
     note_str = "".join(arr)
     print(note_str)
