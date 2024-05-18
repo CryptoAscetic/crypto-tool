@@ -8,7 +8,7 @@ import requests
 
 # token_dd = 'a2e2cd49e7ca093d67a4223ed32c59804965edc184697d9fc55cf7c830b7b501'
 
-token_dd = 'a9aab412b508bb619859974fc7fb202668b436574a992efc69b3aef3e14650e9'
+token_dd = '6c7b12dca94257fa0b586ea9a5708765bed58a218d34eae082e7aa50bd9276a8'
 # 分钟
 TIME = 3
 
@@ -198,18 +198,19 @@ def request_ok():
     if response.status_code == 200:
         result = response.json()
         res = result['data']['rank']
+        arr = []
         for re in res:
             pnl_1d = re['pnl_1d']
             # 聪明钱包地址
             wallet = re['wallet_address']
             if not pnl_1d is None:
-                if pnl_1d > 0.8:
-                    print("当前钱包倍数：" + str(round(pnl_1d, 2)) + "X")
+                if pnl_1d > 1.2:
                     # print(re)
                     # 获取所有的数据
                     smart_url = (f"https://gmgn.ai/defi/quotation/v1/wallet_activity/sol?type=buy&type=sell&"
                                  f"wallet=" + wallet + "&limit=10&cost=10")
                     response = requests.get(smart_url, headers=headers)
+                    time.sleep(1)
                     print("Status code:", response.status_code)
                     if response.status_code == 200:
                         result = response.json()
@@ -227,15 +228,23 @@ def request_ok():
                                 price = ac['price']
                                 cost_usd = ac['cost_usd']
                                 symbol = ac['token']['symbol']
+                                logo = ac['token']['logo']
                                 price = str('{:.10f}'.format(price) + " $ \n\r")
                                 # print(ac)
-                                print("===========================")
-                                print(event_type)
-                                print(cost_usd)
-                                print(symbol)
-                                print(token_address)
-                                print(price)
-                                print("====================================\n\r")
+                                arr.append("![图片地址：](" + logo + ")\n\r")
+                                arr.append("方式：" + str(event_type) + "\n\r")
+                                arr.append("交易金额：" + str(cost_usd) + "$\n\r")
+                                arr.append("合约名称：" + str(symbol) + "\n\r")
+                                arr.append("价格：：" + str(price) + "$\n\r")
+                                arr.append("合约地址：" + str(token_address) + "\n\r")
+
+                                note_str = "".join(arr)
+                                print(note_str)
+                                send_markdown(note_str)
+                                time.sleep(3)
+                                send_markdown_address(token_address, "BUY")
+                                time.sleep(2)
+                                arr = []
 
 
 if __name__ == '__main__':
