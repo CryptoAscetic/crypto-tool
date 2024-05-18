@@ -10,7 +10,7 @@ import requests
 
 token_dd = '6c7b12dca94257fa0b586ea9a5708765bed58a218d34eae082e7aa50bd9276a8'
 # 分钟
-TIME = 3
+TIME = 1
 
 beijing = timezone(timedelta(hours=8))
 print(f'1、北京时区为：{beijing}')
