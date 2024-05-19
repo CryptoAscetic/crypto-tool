@@ -206,7 +206,7 @@ def request_ok():
             # 聪明钱包地址
             wallet = re['wallet_address']
             if not pnl_1d is None:
-                if pnl_1d > 3:
+                if pnl_1d > 2.0:
                     # print(re)
                     # 获取所有的数据
                     smart_url = (f"https://gmgn.ai/defi/quotation/v1/wallet_activity/sol?type=buy&type=sell&"

@@ -203,7 +203,7 @@ def request_ok():
             # 聪明钱包地址
             wallet = re['wallet_address']
             if not pnl_1d is None:
-                if pnl_1d > 0.8:
+                if pnl_1d > 1.0:
                     # print(re)
                     # 获取所有的数据
                     smart_url = (f"https://gmgn.ai/defi/quotation/v1/wallet_activity/sol?type=buy&type=sell&"
@@ -224,12 +224,12 @@ def request_ok():
                             if timestamp - int(wallet_timestamp) <= diff:
                                 token_address = ac['token_address']
                                 event_type = ac['event_type']
-                                price = ac['price']
+                                price = ac['price_usd']
                                 cost_usd = ac['cost_usd']
                                 symbol = ac['token']['symbol']
                                 logo = ac['token']['logo']
                                 price = str('{:.10f}'.format(price))
-                                print(ac)
+                                # print(ac)
                                 # arr, is_buy = GetPrice.get_token_info(token_address, arr)
                                 arr.append("操作方式：" + str(event_type) + "\n\r")
                                 arr.append("交易金额：" + str(cost_usd) + "$\n\r")
