@@ -6,13 +6,11 @@ from datetime import timezone, timedelta, datetime
 
 import requests
 
-from sol.getPrice import GetPrice
-
 # token_dd = 'a2e2cd49e7ca093d67a4223ed32c59804965edc184697d9fc55cf7c830b7b501'
 
 token_dd = '6c7b12dca94257fa0b586ea9a5708765bed58a218d34eae082e7aa50bd9276a8'
 # 分钟
-TIME = 2
+TIME = 1
 
 beijing = timezone(timedelta(hours=8))
 print(f'1、北京时区为：{beijing}')
@@ -231,9 +229,10 @@ def request_ok():
                                 cost_usd = ac['cost_usd']
                                 symbol = ac['token']['symbol']
                                 logo = ac['token']['logo']
+                                arr.append("![图片地址：](" + logo + ")\n\r")
                                 price = str('{:.10f}'.format(price) + " $ \n\r")
                                 # print(ac)
-                                arr, is_buy = GetPrice.get_token_info(token_address, arr)
+                                # arr, is_buy = GetPrice.get_token_info(token_address, arr)
                                 arr.append("操作方式：" + str(event_type) + "\n\r")
                                 arr.append("交易金额：" + str(cost_usd) + "$\n\r")
                                 arr.append("合约名称：" + str(symbol) + "\n\r")
