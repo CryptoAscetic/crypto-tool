@@ -6,7 +6,7 @@ from datetime import timezone, timedelta, datetime
 
 import requests
 
-from sol.getAiPrice import getAiPrice
+from getAiPrice import getAiPrice
 
 # token_dd = 'a2e2cd49e7ca093d67a4223ed32c59804965edc184697d9fc55cf7c830b7b501'
 
