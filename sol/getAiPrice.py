@@ -5,7 +5,7 @@ from datetime import timezone, timedelta, datetime
 import flask
 import requests
 
-from sol.getPrice import GetPrice
+from getPrice import GetPrice
 
 # 实例化api，把当前这个python文件当作一个服务，__name__代表当前这个python文件
 api = flask.Flask(__name__)
