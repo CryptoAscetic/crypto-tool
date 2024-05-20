@@ -220,28 +220,32 @@ def request_ok():
                             # 对比的时间8分钟的购买
                             diff = 60 * TIME
                             if timestamp - int(wallet_timestamp) <= diff:
-                                token_address = ac['token_address']
-                                event_type = ac['event_type']
-                                price = ac['price']
                                 cost_usd = ac['cost_usd']
-                                symbol = ac['token']['symbol']
-                                logo = ac['token']['logo']
-                                arr.append("![图片地址：](" + logo + ")\n\r")
-                                price = str('{:.10f}'.format(price) + " $ \n\r")
-                                # print(ac)
-                                # arr, is_buy = GetPrice.get_token_info(token_address, arr)
-                                arr.append("操作方式：" + str(event_type) + "\n\r")
-                                arr.append("交易金额：" + str(cost_usd) + "$\n\r")
-                                arr.append("合约名称：" + str(symbol) + "\n\r")
-                                arr.append("购买价格：：" + str(price) + "$\n\r")
+                                event_type = ac['event_type']
+                                if cost_usd > 10.0 and event_type == "buy":
+                                    token_address = ac['token_address']
 
-                                note_str = "".join(arr)
-                                print(note_str)
-                                send_markdown(note_str)
-                                time.sleep(3)
-                                send_markdown_address(token_address, "BUY")
-                                time.sleep(2)
-                                arr = []
+                                    price = ac['token']['price']
+                                    symbol = ac['token']['symbol']
+                                    logo = ac['token']['logo']
+
+                                    price = str('{:.10f}'.format(price))
+                                    print(ac)
+                                    arr.append("![图片地址：](" + logo + ")\n\r")
+                                    # arr, is_buy = GetPrice.get_token_info(token_address, arr)
+                                    arr.append("当前时间：" + str(china_time) + "\n\r")
+                                    arr.append("操作方式：" + str(event_type) + "\n\r")
+                                    arr.append("交易金额：" + str(cost_usd) + "$\n\r")
+                                    arr.append("合约名称：" + str(symbol) + "\n\r")
+                                    arr.append("购买价格：：" + str(price) + "$\n\r")
+
+                                    note_str = "".join(arr)
+                                    print(note_str)
+                                    send_markdown(note_str)
+                                    time.sleep(3)
+                                    send_markdown_address(token_address, "BUY")
+                                    time.sleep(2)
+                                    arr = []
 
 
 if __name__ == '__main__':
