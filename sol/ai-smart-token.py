@@ -152,9 +152,6 @@ def send_markdown_address(address, type):
     }
 
     buy_data = {
-        "at": {
-            "isAtAll": True
-        },
         "msgtype": "markdown",
         "markdown": {
             "title": str(china_time) + "sol-直接复制粘贴",
