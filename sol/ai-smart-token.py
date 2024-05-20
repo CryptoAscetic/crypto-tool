@@ -6,11 +6,15 @@ from datetime import timezone, timedelta, datetime
 
 import requests
 
+from sol.getAiPrice import getAiPrice
+
 # token_dd = 'a2e2cd49e7ca093d67a4223ed32c59804965edc184697d9fc55cf7c830b7b501'
 
 token_dd = '6c7b12dca94257fa0b586ea9a5708765bed58a218d34eae082e7aa50bd9276a8'
 # 分钟
 TIME = 1
+# 胜率
+PNL = 0.1
 
 beijing = timezone(timedelta(hours=8))
 print(f'1、北京时区为：{beijing}')
@@ -201,7 +205,7 @@ def request_ok():
             # 聪明钱包地址
             wallet = re['wallet_address']
             if not pnl_1d is None:
-                if pnl_1d > 1.0:
+                if pnl_1d > PNL:
                     # print(re)
                     # 获取所有的数据
                     smart_url = (f"https://gmgn.ai/defi/quotation/v1/wallet_activity/sol?type=buy&type=sell&"
@@ -222,22 +226,25 @@ def request_ok():
                             if timestamp - int(wallet_timestamp) <= diff:
                                 cost_usd = ac['cost_usd']
                                 event_type = ac['event_type']
-                                if event_type == "buy":
+                                logo = ac['token']['logo']
+                                if event_type == "buy" and not logo is None and cost_usd > 20.0:
                                     token_address = ac['token_address']
 
                                     price = ac['token']['price']
                                     symbol = ac['token']['symbol']
-                                    logo = ac['token']['logo']
 
                                     price = str('{:.10f}'.format(price))
                                     print(ac)
-                                    arr.append("![图片地址：](" + logo + ")\n\r")
-                                    # arr, is_buy = GetPrice.get_token_info(token_address, arr)
-                                    arr.append("当前时间：" + str(china_time) + "\n\r")
-                                    arr.append("操作方式：" + str(event_type) + "\n\r")
+
+                                    arr, is_buy = getAiPrice.get_token_info(token_address, arr)
+                                    # arr.append("![图片地址：](" + logo + ")\n\r")
+                                    # arr.append("当前时间：" + str(china_time) + "\n\r")
+                                    arr.append("收益率：" + str(round(pnl_1d, 2)) + " 倍\n\r")
+                                    arr.append("聪明钱地址：" + str(wallet) + "\n\r")
+                                    arr.append("买就发财：" + str(event_type) + "\n\r")
                                     arr.append("交易金额：" + str(cost_usd) + "$\n\r")
-                                    arr.append("合约名称：" + str(symbol) + "\n\r")
                                     arr.append("购买价格：：" + str(price) + "$\n\r")
+                                    # arr.append("合约名称：" + str(symbol) + "\n\r")
 
                                     note_str = "".join(arr)
                                     print(note_str)
