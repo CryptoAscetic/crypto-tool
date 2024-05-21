@@ -5,6 +5,8 @@ from datetime import timezone, timedelta, datetime
 import flask
 import requests
 
+from getAiPrice import getAiPrice
+
 # 实例化api，把当前这个python文件当作一个服务，__name__代表当前这个python文件
 api = flask.Flask(__name__)
 
@@ -20,10 +22,12 @@ time_newyork = utc_time.astimezone(New_York)
 LIMIT_QUOTE_RESERVE = 130.0
 TIME_NOW = 8 * 60 * 60
 
+
 class GetPrice:
 
     @staticmethod
     def get_token_rat(token, arr):
+        global is_buy
         url = f"https://gmgn.ai/defi/quotation/v1/tokens/stats/sol/" + token
         headers = {
             "authority": "gmgn.ai",
@@ -51,8 +55,9 @@ class GetPrice:
 
             arr.append("老鼠仓个数：：" + str(top_rat_trader_count) + "个\n\r")
             arr.append("老鼠仓占比：" + str(round(float(top_rat_trader_amount_percentage * 100), 2)) + " %\n\r")
-
-        return arr
+            if float(top_rat_trader_amount_percentage * 100) > 30:
+                is_buy = False
+        return arr, is_buy
 
     # https://gmgn.ai/defi/quotation/v1/trades/sol/9jaZhJM6nMHTo4hY9DGabQ1HNuUWhJtm7js1fmKMVpkN?limit=50
     @staticmethod
@@ -379,6 +384,6 @@ if __name__ == '__main__':
     arr = []
     # # # 招财猫
     # # # get_token_info("25hAyBQfoDhfWx9ay6rarbgvWGwDdNqcHsXS3jQ3mTDJ")
-    arr, is_buy = GetPrice.get_token_info("9XptBMEdZpuZFXSDvcvF29Jw6wcstX5Vr9SBj6mcPL78", arr)
+    arr, is_buy = getAiPrice.get_token_info("9XptBMEdZpuZFXSDvcvF29Jw6wcstX5Vr9SBj6mcPL78", arr)
     note_str = "".join(arr)
     print(note_str)

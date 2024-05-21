@@ -6,7 +6,7 @@ from datetime import timezone, timedelta, datetime
 
 import requests
 
-from getAiPrice import getAiPrice
+from getAiPrice import GetAiPrice
 
 # token_dd = 'a2e2cd49e7ca093d67a4223ed32c59804965edc184697d9fc55cf7c830b7b501'
 
@@ -227,7 +227,7 @@ def request_ok():
                                 cost_usd = ac['cost_usd']
                                 event_type = ac['event_type']
                                 logo = ac['token']['logo']
-                                if event_type == "buy" and not logo is None and cost_usd > 20.0:
+                                if event_type == "buy" and not logo is None and cost_usd > 5.0:
                                     token_address = ac['token_address']
 
                                     price = ac['token']['price']
@@ -236,7 +236,7 @@ def request_ok():
                                     price = str('{:.10f}'.format(price))
                                     print(ac)
 
-                                    arr, is_buy = getAiPrice.get_token_info(token_address, arr)
+                                    arr, is_buy = GetAiPrice.get_token_info(token_address, arr)
                                     # arr.append("![图片地址：](" + logo + ")\n\r")
                                     # arr.append("当前时间：" + str(china_time) + "\n\r")
                                     arr.append("收益率：" + str(round(pnl_1d, 2)) + " 倍\n\r")

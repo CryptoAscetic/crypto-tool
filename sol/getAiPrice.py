@@ -5,8 +5,6 @@ from datetime import timezone, timedelta, datetime
 import flask
 import requests
 
-from getPrice import GetPrice
-
 # 实例化api，把当前这个python文件当作一个服务，__name__代表当前这个python文件
 api = flask.Flask(__name__)
 
@@ -32,7 +30,7 @@ BURN_RATIO = 99.0
 TIME_NOW = 8 * 60 * 60
 
 
-class getAiPrice:
+class GetAiPrice:
 
     @staticmethod
     def get_token_rat(token, arr):
@@ -203,6 +201,7 @@ class getAiPrice:
         if response.status_code == 200:
             result = response.json()
             res = result['data']['token']
+            print(res)
             symbol = res['symbol']
             max_supply = res['max_supply']
             market_cap = res['market_cap']
@@ -283,7 +282,7 @@ class getAiPrice:
                 arr.append("池子是否燃烧： 小心，池子没烧" + "\n\r")
 
             arr.append("池子燃烧比率：" + str(float(burn_ratio) * 100) + "%\n\r")
-            arr = GetPrice.get_token_rat(token, arr)
+            arr = GetAiPrice.get_token_rat(token, arr)
             arr.append("合约创建者余额：" + str(round(creator_balance, 2)) + " Sol\n\r")
             arr.append("合约持有人数：" + str(holder_count) + "\n\r")
             arr.append("火热等级：" + str(hot_level) + " \n\r")
@@ -309,20 +308,23 @@ class getAiPrice:
                 is_buy = True
             else:
                 is_buy = False
-            if float(quote_reserve) > 300.0:
-                if not rug_ratio is None:
-                    if hot_level == 1 and renounced_mint == 1 and rug_ratio < 0.5 and float(burn_ratio) > 0.99:
-                        arr.append("【☆温馨提示：如果合约安全建议买1s☆】 \n\r")
-                    elif hot_level == 2 and renounced_mint == 1 and rug_ratio < 0.5 and float(burn_ratio) > 0.99:
-                        arr.append("【☆☆温馨提示：如果合约安全建议买2s☆】 \n\r")
-                    elif hot_level >= 3 and renounced_mint == 1 and rug_ratio < 0.5 and float(burn_ratio) > 0.99:
-                        arr.append("【☆☆☆温馨提示：如果合约安全建议买3s☆】 \n\r")
-                    else:
-                        arr.append("【☆温馨提示，池子可以，小心跑路☆】 \n\r")
-                else:
-                    arr.append("【☆温馨提示，老鼠仓占比大或者热度不够，看线上☆】 \n\r")
+                arr.append("【☆温馨提示，池子太小，小心跑路☆】 \n\r")
+            # 推特、电报、官网
+            if len(social_links) > SOCIAL_LINKS:
+                is_buy = True
             else:
-                arr.append("【☆温馨提示，小池子，当心跑路☆】 \n\r")
+                is_buy = False
+            # top小于 配置
+            if top_10_holder_rate < TOP_RATIO:
+                is_buy = True
+            else:
+                is_buy = False
+                # top小于 配置
+            if top_10_holder_rate < TOP_RATIO:
+                is_buy = True
+            else:
+                is_buy = False
+
             arr.append("合约地址：" + token + "\n\r")
 
         return arr, is_buy
@@ -334,6 +336,6 @@ if __name__ == '__main__':
     arr = []
     # # # 招财猫
     # # # get_token_info("25hAyBQfoDhfWx9ay6rarbgvWGwDdNqcHsXS3jQ3mTDJ")
-    arr, is_buy = GetPrice.get_token_info("Hno4MZrepVrsMR1Yz8KouVJwArsyzzUdf15rycFSyUay", arr)
+    arr, is_buy = GetAiPrice.get_token_info("Hno4MZrepVrsMR1Yz8KouVJwArsyzzUdf15rycFSyUay", arr)
     note_str = "".join(arr)
     print(note_str)
