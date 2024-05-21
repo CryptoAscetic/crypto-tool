@@ -18,8 +18,17 @@ utc_time = datetime.utcnow()
 china_time = utc_time.astimezone(beijing)
 time_tokyo = utc_time.astimezone(Tokyo)
 time_newyork = utc_time.astimezone(New_York)
-
+# 池子的配置
 LIMIT_QUOTE_RESERVE = 130.0
+# 基本链接 推特、电报、官网
+SOCIAL_LINKS = 3
+# top占比小于30%
+TOP_RATIO = 30.0
+# 老鼠仓占比
+RAT_RATIO = 30.0
+# 燃烧比例
+BURN_RATIO = 99.0
+# 当前时间的配置
 TIME_NOW = 8 * 60 * 60
 
 

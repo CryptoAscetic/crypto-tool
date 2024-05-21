@@ -8,3 +8,4 @@ https://docs.python.org/zh-cn/3/library/datetime.html#strftime-and-strptime-beha
 - 2.必须有推特，如果三五产品不上
 - 3.top的占比，30%能上
 - 4.老鼠仓的占比高于30%直接不上
+- 5.对比一下机器人看一下占比情况
