@@ -17,7 +17,7 @@ china_time = utc_time.astimezone(beijing)
 time_tokyo = utc_time.astimezone(Tokyo)
 time_newyork = utc_time.astimezone(New_York)
 # 池子的配置
-LIMIT_QUOTE_RESERVE = 130.0
+LIMIT_QUOTE_RESERVE = 79.0
 # 基本链接 推特、电报、官网
 SOCIAL_LINKS = 3
 # top占比小于30%
@@ -202,6 +202,20 @@ class GetAiPrice:
             result = response.json()
             res = result['data']['token']
             print(res)
+            price = res['price']
+            price_1m = res['price_1m']
+            price_5m = res['price_5m']
+            price_1h = res['price_1h']
+            price_6h = res['price_6h']
+            price_24h = res['price_24h']
+            buys_1m = res['buys_1m']
+            sells_1m = res['sells_1m']
+            buys_5m = res['buys_5m']
+            sells_5m = res['sells_5m']
+            buy_volume_1m = res['buy_volume_1m']
+            sell_volume_1m = res['sell_volume_1m']
+            buy_volume_5m = res['buy_volume_5m']
+            sell_volume_5m = res['sell_volume_5m']
             symbol = res['symbol']
             max_supply = res['max_supply']
             market_cap = res['market_cap']
@@ -275,7 +289,38 @@ class GetAiPrice:
                     pass
                 else:
                     arr.append("电报：<" + telegram + ">\n\r")
-
+                    if not price is None:
+                        arr.append("当前价格：" + str('{:.10f}'.format(price) + " $ \n\r"))
+                    if not price_1m is None:
+                        arr.append("1分钟前价格：" + str('{:.10f}'.format(price_1m) + " $ \n\r"))
+                    if not price_5m is None:
+                        arr.append("5分钟前价格：" + str('{:.10f}'.format(price_5m) + " $ \n\r"))
+                    if not price_1h is None:
+                        arr.append("1小时前价格：" + str('{:.10f}'.format(price_1h) + " $ \n\r"))
+                    if not price_6h is None:
+                        arr.append("6小时前价格：" + str('{:.10f}'.format(price_6h) + " $ \n\r"))
+                    if not price_24h is None:
+                        arr.append("24小时前价格：" + str('{:.10f}'.format(price_24h) + " $ \n\r"))
+                    if not buys_1m is None:
+                        arr.append("1分钟购买：：" + str(buys_1m) + " 次 \n\r")
+                    if not sells_1m is None:
+                        arr.append("1分钟卖出：：" + str(sells_1m) + " 次 \n\r")
+                    if not buys_5m is None:
+                        arr.append("5分钟购买：：" + str(buys_5m) + " 次 \n\r")
+                    if not sells_5m is None:
+                        arr.append("5分钟卖出：：" + str(sells_5m) + " 次 \n\r")
+                    if not buy_volume_1m is None:
+                        arr.append("1分钟买入金额：：" + str(round(buy_volume_1m, 2)) + " $ \n\r")
+                    if not sell_volume_1m is None:
+                        arr.append("1分钟卖出金额：：" + str(round(sell_volume_1m, 2)) + " $ \n\r")
+                    if not buy_volume_5m is None:
+                        arr.append("5分钟买入金额：：" + str(round(buy_volume_5m, 2)) + " $ \n\r")
+                    if not sell_volume_5m is None:
+                        arr.append("5分钟卖出金额：：" + str(round(sell_volume_5m, 2)) + " $ \n\r")
+                    if burn_status == "burn":
+                        arr.append("池子是否燃烧： 已燃烧" + "\n\r")
+                    else:
+                        arr.append("池子是否燃烧： 小心，池子没烧" + "\n\r")
             if burn_status == "burn":
                 arr.append("池子是否燃烧： 已燃烧" + "\n\r")
             else:
@@ -304,22 +349,12 @@ class GetAiPrice:
             initial_quote_reserve = res["pool_info"]["initial_quote_reserve"]
             if not initial_quote_reserve is None:
                 arr.append("dev初始化池子：" + str(round(float(initial_quote_reserve), 0)) + " Sol\n\r")
-            if float(quote_reserve) > LIMIT_QUOTE_RESERVE:
+                # 池子大于配置 top小于 配置
+            if float(quote_reserve) > LIMIT_QUOTE_RESERVE and top_10_holder_rate < TOP_RATIO:
                 is_buy = True
             else:
                 is_buy = False
                 arr.append("【☆温馨提示，池子太小，小心跑路☆】 \n\r")
-            # 推特、电报、官网
-            if len(social_links) > SOCIAL_LINKS:
-                is_buy = True
-            else:
-                is_buy = False
-            # top小于 配置
-            if top_10_holder_rate < TOP_RATIO:
-                is_buy = True
-            else:
-                is_buy = False
-
             arr.append("合约地址：" + token + "\n\r")
 
         return arr, is_buy

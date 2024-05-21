@@ -14,7 +14,7 @@ token_dd = '6c7b12dca94257fa0b586ea9a5708765bed58a218d34eae082e7aa50bd9276a8'
 # 分钟
 TIME = 1
 # 胜率
-PNL = 0.3
+PNL = 0.5
 
 beijing = timezone(timedelta(hours=8))
 print(f'1、北京时区为：{beijing}')
@@ -227,14 +227,13 @@ def request_ok():
                                 cost_usd = ac['cost_usd']
                                 event_type = ac['event_type']
                                 logo = ac['token']['logo']
-                                if event_type == "buy" and not logo is None and cost_usd > 5.0:
+                                if event_type == "buy" and not logo is None and cost_usd > 50.0:
                                     token_address = ac['token_address']
 
                                     price = ac['token']['price']
                                     symbol = ac['token']['symbol']
 
                                     price = str('{:.10f}'.format(price))
-                                    print(ac)
 
                                     arr, is_buy = GetAiPrice.get_token_info(token_address, arr)
                                     # arr.append("![图片地址：](" + logo + ")\n\r")
