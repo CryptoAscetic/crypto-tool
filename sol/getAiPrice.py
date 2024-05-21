@@ -21,7 +21,7 @@ LIMIT_QUOTE_RESERVE = 130.0
 # 基本链接 推特、电报、官网
 SOCIAL_LINKS = 3
 # top占比小于30%
-TOP_RATIO = 30.0
+TOP_RATIO = 0.3
 # 老鼠仓占比
 RAT_RATIO = 30.0
 # 燃烧比例
@@ -315,11 +315,6 @@ class GetAiPrice:
             else:
                 is_buy = False
             # top小于 配置
-            if top_10_holder_rate < TOP_RATIO:
-                is_buy = True
-            else:
-                is_buy = False
-                # top小于 配置
             if top_10_holder_rate < TOP_RATIO:
                 is_buy = True
             else:
