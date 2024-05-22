@@ -289,38 +289,34 @@ class GetAiPrice:
                     pass
                 else:
                     arr.append("电报：<" + telegram + ">\n\r")
-                    if not price is None:
-                        arr.append("当前价格：" + str('{:.10f}'.format(price) + " $ \n\r"))
-                    if not price_1m is None:
-                        arr.append("1分钟前价格：" + str('{:.10f}'.format(price_1m) + " $ \n\r"))
-                    if not price_5m is None:
-                        arr.append("5分钟前价格：" + str('{:.10f}'.format(price_5m) + " $ \n\r"))
-                    if not price_1h is None:
-                        arr.append("1小时前价格：" + str('{:.10f}'.format(price_1h) + " $ \n\r"))
-                    if not price_6h is None:
-                        arr.append("6小时前价格：" + str('{:.10f}'.format(price_6h) + " $ \n\r"))
-                    if not price_24h is None:
-                        arr.append("24小时前价格：" + str('{:.10f}'.format(price_24h) + " $ \n\r"))
-                    if not buys_1m is None:
-                        arr.append("1分钟购买：：" + str(buys_1m) + " 次 \n\r")
-                    if not sells_1m is None:
-                        arr.append("1分钟卖出：：" + str(sells_1m) + " 次 \n\r")
-                    if not buys_5m is None:
-                        arr.append("5分钟购买：：" + str(buys_5m) + " 次 \n\r")
-                    if not sells_5m is None:
-                        arr.append("5分钟卖出：：" + str(sells_5m) + " 次 \n\r")
-                    if not buy_volume_1m is None:
-                        arr.append("1分钟买入金额：：" + str(round(buy_volume_1m, 2)) + " $ \n\r")
-                    if not sell_volume_1m is None:
-                        arr.append("1分钟卖出金额：：" + str(round(sell_volume_1m, 2)) + " $ \n\r")
-                    if not buy_volume_5m is None:
-                        arr.append("5分钟买入金额：：" + str(round(buy_volume_5m, 2)) + " $ \n\r")
-                    if not sell_volume_5m is None:
-                        arr.append("5分钟卖出金额：：" + str(round(sell_volume_5m, 2)) + " $ \n\r")
-                    if burn_status == "burn":
-                        arr.append("池子是否燃烧： 已燃烧" + "\n\r")
-                    else:
-                        arr.append("池子是否燃烧： 小心，池子没烧" + "\n\r")
+            if not price is None:
+                arr.append("当前价格：" + str('{:.10f}'.format(price) + " $ \n\r"))
+            if not price_1m is None:
+                arr.append("1分钟前价格：" + str('{:.10f}'.format(price_1m) + " $ \n\r"))
+            if not price_5m is None:
+                arr.append("5分钟前价格：" + str('{:.10f}'.format(price_5m) + " $ \n\r"))
+            if not price_1h is None:
+                arr.append("1小时前价格：" + str('{:.10f}'.format(price_1h) + " $ \n\r"))
+            if not price_6h is None:
+                arr.append("6小时前价格：" + str('{:.10f}'.format(price_6h) + " $ \n\r"))
+            if not price_24h is None:
+                arr.append("24小时前价格：" + str('{:.10f}'.format(price_24h) + " $ \n\r"))
+            if not buys_1m is None:
+                arr.append("1分钟购买：：" + str(buys_1m) + " 次 \n\r")
+            if not sells_1m is None:
+                arr.append("1分钟卖出：：" + str(sells_1m) + " 次 \n\r")
+            if not buys_5m is None:
+                arr.append("5分钟购买：：" + str(buys_5m) + " 次 \n\r")
+            if not sells_5m is None:
+                arr.append("5分钟卖出：：" + str(sells_5m) + " 次 \n\r")
+            if not buy_volume_1m is None:
+                arr.append("1分钟买入金额：：" + str(round(buy_volume_1m, 2)) + " $ \n\r")
+            if not sell_volume_1m is None:
+                arr.append("1分钟卖出金额：：" + str(round(sell_volume_1m, 2)) + " $ \n\r")
+            if not buy_volume_5m is None:
+                arr.append("5分钟买入金额：：" + str(round(buy_volume_5m, 2)) + " $ \n\r")
+            if not sell_volume_5m is None:
+                arr.append("5分钟卖出金额：：" + str(round(sell_volume_5m, 2)) + " $ \n\r")
             if burn_status == "burn":
                 arr.append("池子是否燃烧： 已燃烧" + "\n\r")
             else:

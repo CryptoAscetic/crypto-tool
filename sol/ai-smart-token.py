@@ -201,11 +201,14 @@ def request_ok():
         res = result['data']['rank']
         arr = []
         for re in res:
+            # print(re)
             pnl_1d = re['pnl_1d']
+            pnl_7d = re['pnl_7d']
+            pnl_30d = re['pnl_30d']
             # 聪明钱包地址
             wallet = re['wallet_address']
-            if not pnl_1d is None:
-                if pnl_1d > PNL:
+            if not pnl_7d is None:
+                if pnl_7d > PNL:
                     # print(re)
                     # 获取所有的数据
                     smart_url = (f"https://gmgn.ai/defi/quotation/v1/wallet_activity/sol?type=buy&type=sell&"
@@ -227,7 +230,7 @@ def request_ok():
                                 cost_usd = ac['cost_usd']
                                 event_type = ac['event_type']
                                 logo = ac['token']['logo']
-                                if event_type == "buy" and not logo is None and cost_usd > 50.0:
+                                if not logo is None and cost_usd > 50.0:
                                     token_address = ac['token_address']
 
                                     price = ac['token']['price']
@@ -238,7 +241,12 @@ def request_ok():
                                     arr, is_buy = GetAiPrice.get_token_info(token_address, arr)
                                     # arr.append("![图片地址：](" + logo + ")\n\r")
                                     # arr.append("当前时间：" + str(china_time) + "\n\r")
-                                    arr.append("收益率：" + str(round(pnl_1d, 2)) + " 倍\n\r")
+                                    if not pnl_7d is None:
+                                        arr.append("7天收益率：" + str(round(pnl_7d, 2)) + " 倍\n\r")
+                                    if not pnl_1d is None:
+                                        arr.append("1天收益率：" + str(round(pnl_1d, 2)) + " 倍\n\r")
+                                    if not pnl_30d is None:
+                                        arr.append("30收益率：" + str(round(pnl_30d, 2)) + " 倍\n\r")
                                     arr.append("聪明钱地址：" + str(wallet) + "\n\r")
                                     arr.append("买就发财：" + str(event_type) + "\n\r")
                                     arr.append("交易金额：" + str(cost_usd) + "$\n\r")
