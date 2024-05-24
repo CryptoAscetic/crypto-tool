@@ -17,7 +17,7 @@ china_time = utc_time.astimezone(beijing)
 time_tokyo = utc_time.astimezone(Tokyo)
 time_newyork = utc_time.astimezone(New_York)
 # 池子的配置
-LIMIT_QUOTE_RESERVE = 130.0
+LIMIT_QUOTE_RESERVE = 120.0
 # 基本链接 推特、电报、官网
 SOCIAL_LINKS = 3
 # top占比小于30%
