@@ -17,7 +17,7 @@ china_time = utc_time.astimezone(beijing)
 time_tokyo = utc_time.astimezone(Tokyo)
 time_newyork = utc_time.astimezone(New_York)
 
-LIMIT_QUOTE_RESERVE = 120.0
+LIMIT_QUOTE_RESERVE = 99.0
 TIME_NOW = 8 * 60 * 60
 
 
