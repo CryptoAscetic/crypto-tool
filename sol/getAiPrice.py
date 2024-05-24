@@ -201,7 +201,7 @@ class GetAiPrice:
         if response.status_code == 200:
             result = response.json()
             res = result['data']['token']
-            print(res)
+            # print(res)
             price = res['price']
             price_1m = res['price_1m']
             price_5m = res['price_5m']
@@ -342,9 +342,11 @@ class GetAiPrice:
             if key_to_check in res:
                 quote_reserve = res["pool_info"]["quote_reserve"]
                 arr.append("当前池子：" + str(round(float(quote_reserve), 0)) + " Sol\n\r")
-            initial_quote_reserve = res["pool_info"]["initial_quote_reserve"]
-            if not initial_quote_reserve is None:
-                arr.append("dev初始化池子：" + str(round(float(initial_quote_reserve), 0)) + " Sol\n\r")
+            key_to_check_reserve = "initial_quote_reserve"
+            if key_to_check_reserve in res:
+                initial_quote_reserve = res["pool_info"]["initial_quote_reserve"]
+                if not initial_quote_reserve is None:
+                    arr.append("dev初始化池子：" + str(round(float(initial_quote_reserve), 0)) + " Sol\n\r")
                 # 池子大于配置 top小于 配置
             if float(quote_reserve) > LIMIT_QUOTE_RESERVE and top_10_holder_rate < TOP_RATIO:
                 is_buy = True
@@ -362,6 +364,6 @@ if __name__ == '__main__':
     arr = []
     # # # 招财猫
     # # # get_token_info("25hAyBQfoDhfWx9ay6rarbgvWGwDdNqcHsXS3jQ3mTDJ")
-    arr, is_buy = GetAiPrice.get_token_info("Hno4MZrepVrsMR1Yz8KouVJwArsyzzUdf15rycFSyUay", arr)
+    arr, is_buy = GetAiPrice.get_token_info("FJup6BbEBoCeFJZtqW4qcaqABLco5SkV8683do38P9tu", arr)
     note_str = "".join(arr)
     print(note_str)

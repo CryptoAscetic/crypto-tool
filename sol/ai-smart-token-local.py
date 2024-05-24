@@ -6,9 +6,11 @@ from datetime import timezone, timedelta, datetime
 
 import requests
 
-# token_dd = 'a2e2cd49e7ca093d67a4223ed32c59804965edc184697d9fc55cf7c830b7b501'
+from getAiPrice import GetAiPrice
 
-token_dd = '6c7b12dca94257fa0b586ea9a5708765bed58a218d34eae082e7aa50bd9276a8'
+token_dd = 'a2e2cd49e7ca093d67a4223ed32c59804965edc184697d9fc55cf7c830b7b501'
+
+# token_dd = '6c7b12dca94257fa0b586ea9a5708765bed58a218d34eae082e7aa50bd9276a8'
 # 分钟
 TIME = 1
 
@@ -200,6 +202,8 @@ def request_ok():
         arr = []
         for re in res:
             pnl_1d = re['pnl_1d']
+            pnl_7d = re['pnl_7d']
+            pnl_30d = re['pnl_30d']
             # 聪明钱包地址
             wallet = re['wallet_address']
             if not pnl_1d is None:
@@ -222,24 +226,26 @@ def request_ok():
                             # 对比的时间8分钟的购买
                             diff = 60 * TIME
                             if timestamp - int(wallet_timestamp) <= diff:
-                                token_address = ac['token_address']
                                 event_type = ac['event_type']
-                                price = ac['price_usd']
-                                cost_usd = ac['cost_usd']
-                                symbol = ac['token']['symbol']
-                                logo = ac['token']['logo']
-                                price = str('{:.10f}'.format(price))
-                                # print(ac)
-                                # arr, is_buy = GetPrice.get_token_info(token_address, arr)
-                                arr.append("操作方式：" + str(event_type) + "\n\r")
-                                arr.append("交易金额：" + str(cost_usd) + "$\n\r")
-                                arr.append("合约名称：" + str(symbol) + "\n\r")
-                                arr.append("购买价格：：" + str(price) + "$\n\r")
-                                arr.append("合约地址：" + str(token_address) + "\n\r")
-                                arr.append("分割：" + "===============" + "\n\r")
+                                if event_type == "buy":
+                                    token_address = ac['token_address']
 
-                                note_str = "".join(arr)
-                                print(note_str)
+                                    price = ac['price_usd']
+                                    cost_usd = ac['cost_usd']
+                                    symbol = ac['token']['symbol']
+                                    logo = ac['token']['logo']
+                                    price = str('{:.10f}'.format(price))
+                                    # print(ac)
+                                    arr, is_buy = GetAiPrice.get_token_info(token_address, arr)
+                                    arr.append("操作方式：" + str(event_type) + "\n\r")
+                                    arr.append("交易金额：" + str(cost_usd) + "$\n\r")
+                                    arr.append("合约名称：" + str(symbol) + "\n\r")
+                                    arr.append("购买价格：：" + str(price) + "$\n\r")
+                                    # arr.append("合约地址：" + str(token_address) + "\n\r")
+                                    arr.append("分割：" + "================================================" + "\n\r")
+
+                                    note_str = "".join(arr)
+                                    print(note_str)
 
 
 if __name__ == '__main__':
