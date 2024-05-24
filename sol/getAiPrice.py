@@ -227,7 +227,7 @@ class GetAiPrice:
             if not open_timestamp is None:
                 timeArray = time.localtime(open_timestamp + TIME_NOW)
                 otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
-                arr.append("合约创建时间：" + otherStyleTime + "\n\r")
+                arr.append("☆☆☆合约创建时间：" + otherStyleTime + "\n\r")
             arr.append("名称：" + symbol + "\n\r")
             arr.append("最大供应量：" + str(max_supply) + "\n\r")
             arr.append("市值：" + str(round(market_cap / 10000, 2)) + "w $ \n\r")
@@ -237,12 +237,12 @@ class GetAiPrice:
                 renounced_mint = 0
 
             if renounced_mint == 1:
-                arr.append("是否停止mint：" + "是,相对安全" + "\n\r")
+                arr.append("☆☆☆是否停止mint：" + "是,相对安全" + "\n\r")
             else:
-                arr.append("是否停止mint：" + "否,别上了" + "\n\r")
+                arr.append("☆☆☆是否停止mint：" + "否,别上了" + "\n\r")
             top_10_holder_rate = res['top_10_holder_rate']
             if not top_10_holder_rate is None and float(top_10_holder_rate) < 1.0:
-                arr.append("top10持仓占比：" + str(round(float(top_10_holder_rate) * 100, 2)) + "%\n\r")
+                arr.append("☆☆☆top10持仓占比：" + str(round(float(top_10_holder_rate) * 100, 2)) + "%\n\r")
             else:
                 arr.append("top10持仓占比：" + str(100) + "%\n\r")
             holder_count = res['holder_count']
@@ -264,7 +264,7 @@ class GetAiPrice:
                 arr.append("发射平台：" + str(launchpad) + " \n\r")
             if 'launchpad_progress' in res.keys():
                 launchpad_progress = res["launchpad_progress"]
-                arr.append("发射平台进度：" + str(round(float(launchpad_progress), 2)) + " %\n\r")
+                arr.append("☆☆☆发射平台进度,大于5的关注：" + str(round(float(launchpad_progress), 2)) + " %\n\r")
             social_links = res["social_links"]
             rug_ratio = res['rug_ratio']
             holder_rugged_num = res['holder_rugged_num']
@@ -326,11 +326,11 @@ class GetAiPrice:
             arr = GetAiPrice.get_token_rat(token, arr)
             arr.append("合约创建者余额：" + str(round(creator_balance, 2)) + " Sol\n\r")
             arr.append("合约持有人数：" + str(holder_count) + "\n\r")
-            arr.append("火热等级：" + str(hot_level) + " \n\r")
+            arr.append("☆☆☆火热等级：" + str(hot_level) + " \n\r")
             if rug_ratio is None:
                 pass
             else:
-                arr.append("dev逃跑比例：" + str(round(rug_ratio * 100, 2)) + "%\n\r")
+                arr.append("☆☆☆dev逃跑比例：" + str(round(rug_ratio * 100, 2)) + "%\n\r")
             if rug_ratio is None:
                 pass
             else:
