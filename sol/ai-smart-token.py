@@ -248,7 +248,10 @@ def request_ok():
                                     if not pnl_30d is None:
                                         arr.append("30收益率：" + str(round(pnl_30d, 2)) + " 倍\n\r")
                                     arr.append("聪明钱地址：" + str(wallet) + "\n\r")
-                                    arr.append("买就发财：" + str(event_type) + "\n\r")
+                                    if event_type == "buy":
+                                        arr.append("买就发财：" + str(event_type) + "\n\r")
+                                    else:
+                                        arr.append("卖把，如果交易金额过大抄底：" + "\n\r")
                                     arr.append("交易金额：" + str(cost_usd) + "$\n\r")
                                     arr.append("购买价格：：" + str(price) + "$\n\r")
                                     # arr.append("合约名称：" + str(symbol) + "\n\r")
