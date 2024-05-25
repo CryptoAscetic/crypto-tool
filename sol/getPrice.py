@@ -17,7 +17,7 @@ china_time = utc_time.astimezone(beijing)
 time_tokyo = utc_time.astimezone(Tokyo)
 time_newyork = utc_time.astimezone(New_York)
 
-LIMIT_QUOTE_RESERVE = 99.0
+LIMIT_QUOTE_RESERVE = 130.0
 TIME_NOW = 8 * 60 * 60
 
 
@@ -380,6 +380,6 @@ if __name__ == '__main__':
     arr = []
     # # # 招财猫
     # # # get_token_info("25hAyBQfoDhfWx9ay6rarbgvWGwDdNqcHsXS3jQ3mTDJ")
-    arr, is_buy = GetPrice.get_token_info("3J5qLjj3xf5ZcMscPEviVGJth2UbnHrsuCVsiiWhqyvW", arr)
+    arr, is_buy = GetPrice.get_token_info("3WKzqdh3ZW3tP2PhAtAuDu4e1XsEzFhk7qnN8mApm3S2", arr)
     note_str = "".join(arr)
     print(note_str)
