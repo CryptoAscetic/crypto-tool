@@ -10,9 +10,9 @@ from getAiPrice import GetAiPrice
 
 # token_dd = 'a2e2cd49e7ca093d67a4223ed32c59804965edc184697d9fc55cf7c830b7b501'
 
-token_dd = '1b22d689b3572c931f39f31bcc4730ce95bbd7f474bc1fb11d61f0ac96a062a9'
+token_dd = '2fb4e8566e1348bf837cd8527798b8f4461287a2403bda7d15f9903ee8592909'
 # 分钟
-TIME = 5
+TIME = 1
 # 胜率
 PNL = 0.5
 
@@ -171,14 +171,20 @@ def send_markdown_address(address, type):
 
 def request_ok():
     arr = []
-    tokens = {'515FRkgdKUunk4BJGndav2FgZniEqYtkdLqcgc8nLSNV': '大帅'}
+    tokens = {'515FRkgdKUunk4BJGndav2FgZniEqYtkdLqcgc8nLSNV': '大帅',
+              '441bsKo6VHuhyUhkDiGxYKXyoZzNuF2Ru4hbPteFiEdn': 'klöss',
+              'BgJrk3AJEWf41WxThAvDCkZmxuxbt3Q4aZc1P2rrHtZV': 'not BusinessWeek',
+              '9sB4T5UBqdz5M7zEce2idFRAPVKe65DpuBooWYoRtpQi': '໓uke of ¢ryptoshi',
+              'DxpA16RZwXmUAFHHxBRwNb1DUrnKyS1e8rYkh1MvjbxC': 'Kenny Powerz-cat超低价'
+              }
 
     #     my_dict = {'a': 1, 'b': 2, 'c': 3}
     # for key in my_dict.keys():
     #     print(key, my_dict[key])
     for token in tokens.keys():
         # 获取所有的数据
-        url = f"https://gmgn.ai/defi/quotation/v1/wallet/sol/holdings/" + token + "?orderby=last_active_timestamp&direction=desc&showsmall=true&sellout=true&limit=50&tx30d=true"
+        url = (f"https://gmgn.ai/defi/quotation/v1/wallet_activity/sol?type=buy&type=sell&wallet=" + token
+               + "&limit=10&cost=10")
 
         headers = {
             "authority": "gmgn.ai",
@@ -202,37 +208,40 @@ def request_ok():
 
         }
         response = requests.get(url, headers=headers)
+        time.sleep(1)
         print("Status code:", response.status_code)
         if response.status_code == 200:
             result = response.json()
-            res = result['data']['holdings']
-            for r in res:
-                last_active_timestamp = r["last_active_timestamp"]
-                address = r["address"]
-                realized_profit_30d = r["realized_profit_30d"]
-                realized_profit = r["realized_profit"]
-                history_sold_income = r["history_sold_income"]
-                history_bought_cost = r["history_bought_cost"]
-
+            activities = result['data']['activities']
+            for ac in activities:
+                wallet_timestamp = ac['timestamp']
                 # 获取当前时间
                 date = datetime.now()
                 timestamp = int(date.timestamp())
                 # 对比的时间8分钟的购买
                 diff = 60 * TIME
-                if (timestamp - int(last_active_timestamp)) <= diff:
-                    arr, is_buy = GetAiPrice.get_token_info(address, arr)
-                    arr.append("该代币30收益：" + str(realized_profit_30d) + "\n\r")
-                    arr.append("当天收益：" + str(realized_profit) + "$\n\r")
-                    arr.append("卖出总额：" + str(history_sold_income) + "\n\r")
-                    arr.append("买入总额：" + str(history_bought_cost) + "$\n\r")
-                    arr.append("kol名字：" + str(tokens[token]) + "$\n\r")
+                if timestamp - int(wallet_timestamp) <= diff:
+                    cost_usd = ac['cost_usd']
+                    event_type = ac['event_type']
+                    token_address = ac['token_address']
+                    price = ac['token']['price']
+                    price = str('{:.10f}'.format(price))
+
+                    arr, is_buy = GetAiPrice.get_token_info(token_address, arr)
+                    if event_type == "buy":
+                        arr.append("买就发财：" + str(event_type) + "\n\r")
+                    else:
+                        arr.append("卖把，如果交易金额过大抄底：" + "\n\r")
+                    arr.append("交易金额：" + str(cost_usd) + "$\n\r")
+                    arr.append("购买价格：：" + str(price) + "$\n\r")
+                    arr.append("kol名字：" + str(tokens[token]) + "\n\r")
 
                     note_str = "".join(arr)
                     print(note_str)
-
                     send_markdown(note_str)
-                    time.sleep(4)
-                    send_markdown_address(address, "buy")
+                    time.sleep(3)
+                    send_markdown_address(token_address, "BUY")
+                    time.sleep(2)
                     arr = []
 
 

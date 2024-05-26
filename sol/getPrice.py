@@ -87,7 +87,7 @@ class GetPrice:
         if response.status_code == 200:
             result = response.json()
             res = result['data']['history']
-            # print(res)
+            print(res)
             for re in res:
                 maker = re['maker']
                 price_usd = re['price_usd']
