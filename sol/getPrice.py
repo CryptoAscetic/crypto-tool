@@ -380,6 +380,6 @@ if __name__ == '__main__':
     arr = []
     # # # 招财猫
     # # # get_token_info("25hAyBQfoDhfWx9ay6rarbgvWGwDdNqcHsXS3jQ3mTDJ")
-    arr, is_buy = GetPrice.get_token_info("3WKzqdh3ZW3tP2PhAtAuDu4e1XsEzFhk7qnN8mApm3S2", arr)
+    arr, is_buy = GetPrice.get_token_info("4GJ3TCt5mTgQT5BRKb14AkjddpFQqKVfphxzS3t4foZ9", arr)
     note_str = "".join(arr)
     print(note_str)
