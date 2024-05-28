@@ -251,7 +251,7 @@ def request_ok():
                                     if event_type == "buy":
                                         arr.append("买就发财：" + str(event_type) + "\n\r")
                                     else:
-                                        arr.append("卖把，如果交易金额过大抄底：" + "\n\r")
+                                        arr.append("【卖卖卖】，如果交易金额过大抄底：" + "\n\r")
                                     arr.append("交易金额：" + str(cost_usd) + "$\n\r")
                                     arr.append("购买价格：：" + str(price) + "$\n\r")
                                     # arr.append("合约名称：" + str(symbol) + "\n\r")
