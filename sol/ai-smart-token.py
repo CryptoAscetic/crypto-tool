@@ -247,7 +247,7 @@ def request_ok():
                                         arr.append("1天收益率：" + str(round(pnl_1d, 2)) + " 倍\n\r")
                                     if not pnl_30d is None:
                                         arr.append("30收益率：" + str(round(pnl_30d, 2)) + " 倍\n\r")
-                                    arr.append("聪明钱地址：" + str(wallet) + "\n\r")
+                                    # arr.append("聪明钱地址：" + str(wallet) + "\n\r")
                                     if event_type == "buy":
                                         arr.append("买就发财：" + str(event_type) + "\n\r")
                                     else:

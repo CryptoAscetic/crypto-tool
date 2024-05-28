@@ -245,7 +245,7 @@ def request_ok():
                     arr.append("涨幅：" + str(increaseInPrice) + "%\n\r")
                     arr.append("![图片地址：](" + tokenLogo + ")\n\r")
                     arr.append("看线：<" + "https://dexscreener.com/solana/" + tokenAddress + ">\n\r")
-                    arr.append("聪明钱地址：" + userAddress + "\n\r")
+                    # arr.append("聪明钱地址：" + userAddress + "\n\r")
                     arr.append("7日内收益：" + winRate + "%\n\r")
                     arr.append("7日内收益率：" + yieldRate + "%\n\r")
                     arr.append("查看合约：<" + "https://www.dexlab.space/mintinglab/spl-token/" + tokenAddress + ">\n\r")
