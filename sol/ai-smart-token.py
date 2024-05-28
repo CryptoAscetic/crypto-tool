@@ -12,9 +12,9 @@ from getAiPrice import GetAiPrice
 
 token_dd = 'a9aab412b508bb619859974fc7fb202668b436574a992efc69b3aef3e14650e9'
 # 分钟
-TIME = 2
+TIME = 1
 # 胜率
-PNL = 1
+PNL = 0.3
 
 beijing = timezone(timedelta(hours=8))
 print(f'1、北京时区为：{beijing}')
