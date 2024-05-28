@@ -169,7 +169,7 @@ def send_markdown_address(address, type):
     print(res.text)
 
 
-# https://gmgn.ai/sol/address/4pDuLhqZ77e3mBxWb2jqfmMLufLeM6NjEP8hezTnv3Ve
+# https://gmgn.ai/sol/address/BTp4uCeCeWKxT6pzTmqJzzrtyqeTmtF1zr2EtpnZSw7F
 def request_ok():
     arr = []
     tokens = {'515FRkgdKUunk4BJGndav2FgZniEqYtkdLqcgc8nLSNV': '大帅',
@@ -180,7 +180,8 @@ def request_ok():
               'Gf9XgdmvNHt8fUTFsWAccNbKeyDXsgJyZN8iFJKg5Pbd': '0xuezhang|985.eth',
               'DG6QpsjvwqCGyLAYXKEmDBLRfomJ2UAmoe4MJWL9fNtt': 'Queenkayx ❤',
               'G1NhjBssPqbu6rkaiTjmc1SCTGxjzMf4vnvhmkQFRiBL': 'M1STΞR5ΞRM4N',
-              'ABDAKRTDRfDUbosQinqXs8NRH3AjeA4s2j2pFukzicFf': 'NickakaMole-阿乐第一人'
+              'ABDAKRTDRfDUbosQinqXs8NRH3AjeA4s2j2pFukzicFf': 'NickakaMole-阿乐第一人',
+              'BTp4uCeCeWKxT6pzTmqJzzrtyqeTmtF1zr2EtpnZSw7F': 'richclassdecor.eth-moga第一人'
               }
 
     #     my_dict = {'a': 1, 'b': 2, 'c': 3}
