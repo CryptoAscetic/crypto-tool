@@ -17,7 +17,7 @@ china_time = utc_time.astimezone(beijing)
 time_tokyo = utc_time.astimezone(Tokyo)
 time_newyork = utc_time.astimezone(New_York)
 # 池子的配置
-LIMIT_QUOTE_RESERVE = 130.0
+LIMIT_QUOTE_RESERVE = 99.0
 # 基本链接 推特、电报、官网
 SOCIAL_LINKS = 3
 # top占比小于30%
@@ -348,7 +348,7 @@ class GetAiPrice:
                 if not initial_quote_reserve is None:
                     arr.append("dev初始化池子：" + str(round(float(initial_quote_reserve), 0)) + " Sol\n\r")
                 # 池子大于配置 top小于 配置
-            if float(quote_reserve) > LIMIT_QUOTE_RESERVE and top_10_holder_rate < TOP_RATIO:
+            if float(quote_reserve) >= LIMIT_QUOTE_RESERVE and top_10_holder_rate < TOP_RATIO:
                 is_buy = True
             else:
                 is_buy = False

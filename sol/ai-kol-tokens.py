@@ -240,13 +240,13 @@ def request_ok():
                     arr.append("交易金额：" + str(cost_usd) + "$\n\r")
                     arr.append("购买价格：：" + str(price) + "$\n\r")
                     arr.append("kol名字：" + str(tokens[token]) + "\n\r")
-
-                    note_str = "".join(arr)
-                    print(note_str)
-                    send_markdown(note_str)
-                    time.sleep(3)
-                    send_markdown_address(token_address, "BUY")
-                    time.sleep(2)
+                    if is_buy:
+                        note_str = "".join(arr)
+                        print(note_str)
+                        send_markdown(note_str)
+                        time.sleep(3)
+                        send_markdown_address(token_address, "BUY")
+                        time.sleep(2)
                     arr = []
 
 
