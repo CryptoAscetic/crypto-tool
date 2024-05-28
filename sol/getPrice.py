@@ -148,7 +148,7 @@ class GetPrice:
             sell = 0
             buy_sum = 0.0
             sell_sum = 0.0
-            # print(res)
+            print(res)
             for re in res:
                 maker = re['maker']
                 event = re['event']
@@ -380,6 +380,6 @@ if __name__ == '__main__':
     arr = []
     # # # 招财猫
     # # # get_token_info("25hAyBQfoDhfWx9ay6rarbgvWGwDdNqcHsXS3jQ3mTDJ")
-    arr, is_buy = GetPrice.get_token_info("0x59d1e836f7b7210a978b25a855085cc46fd090b5", arr)
+    arr, is_buy = GetPrice.get_token_info("9JWjcjqTLgSEHfjrt4WXACk134zS6yerwCWwK2n6qyn9", arr)
     note_str = "".join(arr)
     print(note_str)
