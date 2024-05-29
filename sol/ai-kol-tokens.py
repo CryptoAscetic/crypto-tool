@@ -12,7 +12,7 @@ from getAiPrice import GetAiPrice
 
 token_dd = '2fb4e8566e1348bf837cd8527798b8f4461287a2403bda7d15f9903ee8592909'
 # 分钟
-TIME = 1
+TIME = 600
 # 胜率
 PNL = 0.5
 
@@ -172,7 +172,8 @@ def send_markdown_address(address, type):
 # https://gmgn.ai/sol/address/BTp4uCeCeWKxT6pzTmqJzzrtyqeTmtF1zr2EtpnZSw7F
 def request_ok():
     arr = []
-    tokens = {'515FRkgdKUunk4BJGndav2FgZniEqYtkdLqcgc8nLSNV': '大帅',
+    tokens = {
+        '515FRkgdKUunk4BJGndav2FgZniEqYtkdLqcgc8nLSNV': '大帅',
               '441bsKo6VHuhyUhkDiGxYKXyoZzNuF2Ru4hbPteFiEdn': 'klöss',
               'BgJrk3AJEWf41WxThAvDCkZmxuxbt3Q4aZc1P2rrHtZV': 'not BusinessWeek',
               '9sB4T5UBqdz5M7zEce2idFRAPVKe65DpuBooWYoRtpQi': '໓uke of ¢ryptoshi',
@@ -248,13 +249,13 @@ def request_ok():
                     arr.append("交易金额：" + str(cost_usd) + "$\n\r")
                     arr.append("购买价格：：" + str(price) + "$\n\r")
                     arr.append("kol名字：" + str(tokens[token]) + "\n\r")
-                    if is_buy:
-                        note_str = "".join(arr)
-                        print(note_str)
-                        send_markdown(note_str)
-                        time.sleep(3)
-                        send_markdown_address(token_address, "BUY")
-                        time.sleep(2)
+
+                    note_str = "".join(arr)
+                    print(note_str)
+                    send_markdown(note_str)
+                    time.sleep(3)
+                    send_markdown_address(token_address, "BUY")
+                    time.sleep(2)
                     arr = []
 
 

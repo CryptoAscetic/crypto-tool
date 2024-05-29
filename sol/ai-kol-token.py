@@ -225,6 +225,11 @@ def request_ok():
                     arr.append("当天收益：" + str(realized_profit) + "$\n\r")
                     arr.append("卖出总额：" + str(history_sold_income) + "\n\r")
                     arr.append("买入总额：" + str(history_bought_cost) + "$\n\r")
+
+                    if is_buy:
+                        arr.append("系统检测安全级别高" + "\n\r")
+                    else:
+                        arr.append("系统检测池子小，持仓占比大" + "\n\r")
                     arr.append("kol名字：" + str(tokens[token]) + "$\n\r")
 
                     note_str = "".join(arr)
