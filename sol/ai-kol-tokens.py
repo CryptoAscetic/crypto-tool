@@ -186,7 +186,9 @@ def request_ok():
               '9hy2BKD9yf5H6HWR4Vr8xnsNdvnYrZEjqx3H7vp4gbGe': 'smart-2-还行',
               'D68Jqb7jEZAGtav4aVui536mtT1KAJ4bKwYgFqy8etW7': 'smart-3-稍高',
               '82jXFTVu2XwCnG63pGqdf1yAfGMLbmXNzmBE5nupx6YF': 'xu-happy',
-              'Haee7H5bKDCnm6dXLkeR9DcWw9Puhnkwk71QBUSHcpUt': 'xu-bazinga'
+              'Haee7H5bKDCnm6dXLkeR9DcWw9Puhnkwk71QBUSHcpUt': 'xu-bazinga',
+              'E2SRcmvvX71efevxnYJTcW9oggnprz7Xk2aSj3DV558L': 'xu-father-1',
+              'HLe1XVdMPiTakEryE2t593iv9pK9YEMBmRzMk71WetpK': 'xu-father-2'
               }
 
     #     my_dict = {'a': 1, 'b': 2, 'c': 3}
