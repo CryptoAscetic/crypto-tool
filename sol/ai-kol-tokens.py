@@ -262,7 +262,6 @@ def request_ok():
                     arr = []
                     if 'xule' in str(tokens[token]):
                         send_markdown_system()
-                        time.sleep(2)
 
 
 if __name__ == '__main__':
