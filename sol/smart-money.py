@@ -418,7 +418,7 @@ def get_token_info(token, arr, action):
         if len(rugged_tokens) > 0:
             for r in rugged_tokens:
                 # arr.append("狗庄的跑路合约：" + str(r['address']) + "\n\r")
-                arr.append("跑路合约名称：" + str(r['symbol']) + "\n\r")
+                arr.append("历史合约名称：" + str(r['symbol']) + "\n\r")
         arr.append("★火热等级：" + str(hot_level) + " \n\r")
         if key_to_check in res:
             quote_reserve = res["pool_info"]["quote_reserve"]
