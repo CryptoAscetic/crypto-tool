@@ -247,10 +247,10 @@ class GetAiPrice:
                 arr.append("top10持仓占比：" + str(100) + "%\n\r")
             holder_count = res['holder_count']
             rugged_tokens = res['rugged_tokens']
-            if len(rugged_tokens) > 0:
-                for r in rugged_tokens:
-                    # arr.append("狗庄的跑路合约：" + str(r['address']) + "\n\r")
-                    arr.append("跑路合约名称：" + str(r['symbol']) + "\n\r")
+            # if len(rugged_tokens) > 0:
+            #     for r in rugged_tokens:
+            #         # arr.append("狗庄的跑路合约：" + str(r['address']) + "\n\r")
+            #         arr.append("跑路合约名称：" + str(r['symbol']) + "\n\r")
             # 检查键'a'是否存在
             key_to_check = 'pool_info'
             quote_reserve = 0
@@ -305,18 +305,18 @@ class GetAiPrice:
                 arr.append("1分钟购买：：" + str(buys_1m) + " 次 \n\r")
             if not sells_1m is None:
                 arr.append("1分钟卖出：：" + str(sells_1m) + " 次 \n\r")
-            if not buys_5m is None:
-                arr.append("5分钟购买：：" + str(buys_5m) + " 次 \n\r")
-            if not sells_5m is None:
-                arr.append("5分钟卖出：：" + str(sells_5m) + " 次 \n\r")
-            if not buy_volume_1m is None:
-                arr.append("1分钟买入金额：：" + str(round(buy_volume_1m, 2)) + " $ \n\r")
-            if not sell_volume_1m is None:
-                arr.append("1分钟卖出金额：：" + str(round(sell_volume_1m, 2)) + " $ \n\r")
-            if not buy_volume_5m is None:
-                arr.append("5分钟买入金额：：" + str(round(buy_volume_5m, 2)) + " $ \n\r")
-            if not sell_volume_5m is None:
-                arr.append("5分钟卖出金额：：" + str(round(sell_volume_5m, 2)) + " $ \n\r")
+            # if not buys_5m is None:
+            #     arr.append("5分钟购买：：" + str(buys_5m) + " 次 \n\r")
+            # if not sells_5m is None:
+            #     arr.append("5分钟卖出：：" + str(sells_5m) + " 次 \n\r")
+            # if not buy_volume_1m is None:
+            #     arr.append("1分钟买入金额：：" + str(round(buy_volume_1m, 2)) + " $ \n\r")
+            # if not sell_volume_1m is None:
+            #     arr.append("1分钟卖出金额：：" + str(round(sell_volume_1m, 2)) + " $ \n\r")
+            # if not buy_volume_5m is None:
+            #     arr.append("5分钟买入金额：：" + str(round(buy_volume_5m, 2)) + " $ \n\r")
+            # if not sell_volume_5m is None:
+            #     arr.append("5分钟卖出金额：：" + str(round(sell_volume_5m, 2)) + " $ \n\r")
             if burn_status == "burn":
                 arr.append("池子是否燃烧： 已燃烧" + "\n\r")
             else:
