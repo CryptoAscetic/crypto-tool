@@ -184,7 +184,9 @@ def request_ok():
               'BTp4uCeCeWKxT6pzTmqJzzrtyqeTmtF1zr2EtpnZSw7F': 'richclassdecor.eth-moga第一人',
               'C6DYY8opJ5dxLEGGUWvwBGACyszxmDQ9VHdV5DeyrgbH': 'smart-1-超低',
               '9hy2BKD9yf5H6HWR4Vr8xnsNdvnYrZEjqx3H7vp4gbGe': 'smart-2-还行',
-              'D68Jqb7jEZAGtav4aVui536mtT1KAJ4bKwYgFqy8etW7': 'smart-3-稍高'
+              'D68Jqb7jEZAGtav4aVui536mtT1KAJ4bKwYgFqy8etW7': 'smart-3-稍高',
+              '82jXFTVu2XwCnG63pGqdf1yAfGMLbmXNzmBE5nupx6YF': 'xu-happy',
+              'Haee7H5bKDCnm6dXLkeR9DcWw9Puhnkwk71QBUSHcpUt': 'xu-bazinga'
               }
 
     #     my_dict = {'a': 1, 'b': 2, 'c': 3}
