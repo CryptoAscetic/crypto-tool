@@ -200,12 +200,13 @@ class GetPrice:
             price_24h = res['price_24h']
             symbol = res['symbol']
             logo = res['logo']
+            address = res['address']
 
             if not logo is None:
                 arr.append("![图片地址：](" + logo + ")\n\r")
             arr.append("当前时间：" + str(china_time) + "\n\r")
             arr.append("当前价格：" + str('{:.10f}'.format(price) + " $ \n\r"))
-            arr.append("合约名称：" + str(symbol + " $ \n\r"))
+            arr.append("合约名称：" + str(symbol + " \n\r"))
 
             if not price_6h is None:
                 arr.append("5分钟前价格：" + str('{:.10f}'.format(price_5m) + " $ \n\r"))
@@ -216,10 +217,8 @@ class GetPrice:
             if not price_24h is None:
                 arr.append("24小时前价格：" + str('{:.10f}'.format(price_24h) + " $ \n\r"))
 
-            arr.append("合约创建者余额：" + str(round(creator_balance, 2)) + " Sol\n\r")
-            arr.append("合约持有人数：" + str(holder_count) + "\n\r")
-
-            arr.append("合约地址：" + token + "\n\r")
+            arr.append("合约地址：" + address + "\n\r")
+            is_buy = True
 
         return arr, is_buy
 
