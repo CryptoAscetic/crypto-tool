@@ -14,7 +14,7 @@ token_dd = 'a9aab412b508bb619859974fc7fb202668b436574a992efc69b3aef3e14650e9'
 # 分钟
 TIME = 1
 # 胜率
-PNL = 0.3
+PNL = 1.0
 
 beijing = timezone(timedelta(hours=8))
 print(f'1、北京时区为：{beijing}')
@@ -230,7 +230,7 @@ def request_ok():
                                 cost_usd = ac['cost_usd']
                                 event_type = ac['event_type']
                                 logo = ac['token']['logo']
-                                if not logo is None and cost_usd > 50.0:
+                                if not logo is None and cost_usd > 66.0:
                                     token_address = ac['token_address']
 
                                     price = ac['token']['price']
