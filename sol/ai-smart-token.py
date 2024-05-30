@@ -14,7 +14,7 @@ token_dd = 'a9aab412b508bb619859974fc7fb202668b436574a992efc69b3aef3e14650e9'
 # 分钟
 TIME = 1
 # 胜率
-PNL = 1.0
+PNL = 0.1
 
 beijing = timezone(timedelta(hours=8))
 print(f'1、北京时区为：{beijing}')
@@ -241,12 +241,12 @@ def request_ok():
                                     arr, is_buy = GetAiPrice.get_token_info(token_address, arr)
                                     # arr.append("![图片地址：](" + logo + ")\n\r")
                                     # arr.append("当前时间：" + str(china_time) + "\n\r")
-                                    if not pnl_7d is None:
-                                        arr.append("7天收益率：" + str(round(pnl_7d, 2)) + " 倍\n\r")
-                                    if not pnl_1d is None:
-                                        arr.append("1天收益率：" + str(round(pnl_1d, 2)) + " 倍\n\r")
+                                    # if not pnl_7d is None:
+                                    #     arr.append("7天收益率：" + str(round(pnl_7d, 2)) + " 倍\n\r")
+                                    # if not pnl_1d is None:
+                                    #     arr.append("1天收益率：" + str(round(pnl_1d, 2)) + " 倍\n\r")
                                     if not pnl_30d is None:
-                                        arr.append("30收益率：" + str(round(pnl_30d, 2)) + " 倍\n\r")
+                                        arr.append("30天收益率：" + str(round(pnl_30d, 2)) + " 倍\n\r")
                                     # arr.append("聪明钱地址：" + str(wallet) + "\n\r")
                                     if event_type == "buy":
                                         arr.append("买就发财：" + str(event_type) + "\n\r")

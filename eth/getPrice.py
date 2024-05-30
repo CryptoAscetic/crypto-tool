@@ -208,6 +208,23 @@ class GetPrice:
             arr.append("当前价格：" + str('{:.10f}'.format(price) + " $ \n\r"))
             arr.append("合约名称：" + str(symbol + " \n\r"))
 
+            if len(social_links) > 0:
+                twitter_username = res["social_links"]["twitter_username"]
+                website = res["social_links"]["website"]
+                telegram = res["social_links"]["telegram"]
+                if twitter_username is None:
+                    pass
+                else:
+                    arr.append("推特：<" + "https://twitter.com/" + twitter_username + ">\n\r")
+                if website is None:
+                    pass
+                else:
+                    arr.append("官网地址：<" + website + ">\n\r")
+                if telegram is None:
+                    pass
+                else:
+                    arr.append("电报：<" + telegram + ">\n\r")
+
             if not price_6h is None:
                 arr.append("5分钟前价格：" + str('{:.10f}'.format(price_5m) + " $ \n\r"))
             if not price_1h is None:
