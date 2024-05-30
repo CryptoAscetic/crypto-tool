@@ -220,13 +220,13 @@ class GetPrice:
             arr.append("发型总量：" + str(total_supply) + " \n\r")
             arr.append("持有人数：" + str(holder_count) + " \n\r")
             if is_open_source == 1:
-                arr.append("开源，相对安全" + "\n\r")
+                arr.append("是否开源：开源，相对安全" + "\n\r")
             else:
-                arr.append("为开源，不安全" + "\n\r")
+                arr.append("是否开源：未开源，不安全" + "\n\r")
             if isLock:
-                arr.append("池子已锁，相对安全" + "\n\r")
+                arr.append("是否锁池子：已锁，相对安全" + "\n\r")
             else:
-                arr.append("池子未锁，不安全" + "\n\r")
+                arr.append("是否锁池子：未锁，不安全" + "\n\r")
 
             if len(social_links) > 0:
                 twitter_username = res["social_links"]["twitter_username"]
