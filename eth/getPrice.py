@@ -201,12 +201,32 @@ class GetPrice:
             symbol = res['symbol']
             logo = res['logo']
             address = res['address']
+            social_links = res['social_links']
+            pool_info = res['pool_info']
+            quote_reserve = pool_info['quote_reserve']
+            is_open_source = res['is_open_source']
+            isLock = res['lockInfo']['isLock']
+            search_num_24h = res['search_num_24h']
+            smart_buy_24h = res['smart_buy_24h']
+            smart_sell_24h = res['smart_sell_24h']
+            total_supply = res['total_supply']
+            holder_count = res['holder_count']
 
             if not logo is None:
                 arr.append("![图片地址：](" + logo + ")\n\r")
             arr.append("当前时间：" + str(china_time) + "\n\r")
-            arr.append("当前价格：" + str('{:.10f}'.format(price) + " $ \n\r"))
             arr.append("合约名称：" + str(symbol + " \n\r"))
+            arr.append("当前池子：" + str(round(float(quote_reserve), 0)) + " ETH \n\r")
+            arr.append("发型总量：" + str(total_supply) + " \n\r")
+            arr.append("持有人数：" + str(holder_count) + " \n\r")
+            if is_open_source == 1:
+                arr.append("开源，相对安全" + "\n\r")
+            else:
+                arr.append("为开源，不安全" + "\n\r")
+            if isLock:
+                arr.append("池子已锁，相对安全" + "\n\r")
+            else:
+                arr.append("池子未锁，不安全" + "\n\r")
 
             if len(social_links) > 0:
                 twitter_username = res["social_links"]["twitter_username"]
@@ -224,7 +244,7 @@ class GetPrice:
                     pass
                 else:
                     arr.append("电报：<" + telegram + ">\n\r")
-
+            arr.append("当前价格：" + str('{:.10f}'.format(price) + " $ \n\r"))
             if not price_6h is None:
                 arr.append("5分钟前价格：" + str('{:.10f}'.format(price_5m) + " $ \n\r"))
             if not price_1h is None:
@@ -233,6 +253,9 @@ class GetPrice:
                 arr.append("6小时前价格：" + str('{:.10f}'.format(price_6h) + " $ \n\r"))
             if not price_24h is None:
                 arr.append("24小时前价格：" + str('{:.10f}'.format(price_24h) + " $ \n\r"))
+            arr.append("24小时搜索次数：" + str(search_num_24h) + "  \n\r")
+            arr.append("聪明钱24小时购买次数：" + str(smart_buy_24h) + " \n\r")
+            arr.append("聪明钱24小时卖出次数：" + str(smart_sell_24h) + " \n\r")
 
             arr.append("合约地址：" + address + "\n\r")
             is_buy = True
