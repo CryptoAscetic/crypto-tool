@@ -256,12 +256,13 @@ def request_ok():
                     note_str = "".join(arr)
                     print(note_str)
                     send_markdown(note_str)
-                    time.sleep(3)
+                    time.sleep(1)
                     send_markdown_address(token_address, "BUY")
-                    time.sleep(2)
+                    time.sleep(1)
                     arr = []
                     if 'xule' in str(tokens[token]):
                         send_markdown_system()
+                        time.sleep(1)
 
 
 if __name__ == '__main__':
