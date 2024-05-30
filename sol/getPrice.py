@@ -214,7 +214,7 @@ class GetPrice:
             open_timestamp = res['open_timestamp']
             if not logo is None:
                 arr.append("![图片地址：](" + logo + ")\n\r")
-            arr.append("当前时间：" + str(china_time) + "\n\r")
+            arr.append("【SOL】当前时间：" + str(china_time) + "\n\r")
             timeArray = time.localtime(open_timestamp + TIME_NOW)
             otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
             arr.append("合约创建时间：" + otherStyleTime + "\n\r")

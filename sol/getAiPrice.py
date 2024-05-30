@@ -223,7 +223,7 @@ class GetAiPrice:
             open_timestamp = res['open_timestamp']
             if not logo is None:
                 arr.append("![图片地址：](" + logo + ")\n\r")
-            arr.append("当前时间：" + str(china_time) + "\n\r")
+            arr.append("【SOL】当前时间：" + str(china_time) + "\n\r")
             if not open_timestamp is None:
                 timeArray = time.localtime(open_timestamp + TIME_NOW)
                 otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)

@@ -214,7 +214,7 @@ class GetPrice:
 
             if not logo is None:
                 arr.append("![图片地址：](" + logo + ")\n\r")
-            arr.append("当前时间：" + str(china_time) + "\n\r")
+            arr.append("【ETH】当前时间：" + str(china_time) + "\n\r")
             arr.append("合约名称：" + str(symbol + " \n\r"))
             arr.append("当前池子：" + str(round(float(quote_reserve), 0)) + " ETH \n\r")
             arr.append("发型总量：" + str(total_supply) + " \n\r")
