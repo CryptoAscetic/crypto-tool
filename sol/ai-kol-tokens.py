@@ -178,7 +178,7 @@ def request_ok():
     tokens = {
         '515FRkgdKUunk4BJGndav2FgZniEqYtkdLqcgc8nLSNV': '大帅',
         '441bsKo6VHuhyUhkDiGxYKXyoZzNuF2Ru4hbPteFiEdn': 'klöss',
-        'BgJrk3AJEWf41WxThAvDCkZmxuxbt3Q4aZc1P2rrHtZV': 'not BusinessWeek',
+        # 'BgJrk3AJEWf41WxThAvDCkZmxuxbt3Q4aZc1P2rrHtZV': 'not BusinessWeek',
         '9sB4T5UBqdz5M7zEce2idFRAPVKe65DpuBooWYoRtpQi': '໓uke of ¢ryptoshi',
         # 'DxpA16RZwXmUAFHHxBRwNb1DUrnKyS1e8rYkh1MvjbxC': 'Kenny Powerz-cat超低价',
         # 'Gf9XgdmvNHt8fUTFsWAccNbKeyDXsgJyZN8iFJKg5Pbd': '0xuezhang|985.eth',
@@ -187,12 +187,12 @@ def request_ok():
         # 'ABDAKRTDRfDUbosQinqXs8NRH3AjeA4s2j2pFukzicFf': 'NickakaMole-阿乐第一人',
         # 'BTp4uCeCeWKxT6pzTmqJzzrtyqeTmtF1zr2EtpnZSw7F': 'richclassdecor.eth-moga第一人',
         # 'C6DYY8opJ5dxLEGGUWvwBGACyszxmDQ9VHdV5DeyrgbH': 'smart-1-超低',
-        '9hy2BKD9yf5H6HWR4Vr8xnsNdvnYrZEjqx3H7vp4gbGe': 'smart-2-还行',
-        'D68Jqb7jEZAGtav4aVui536mtT1KAJ4bKwYgFqy8etW7': 'smart-3-稍高',
+        # '9hy2BKD9yf5H6HWR4Vr8xnsNdvnYrZEjqx3H7vp4gbGe': 'smart-2-还行',
+        # 'D68Jqb7jEZAGtav4aVui536mtT1KAJ4bKwYgFqy8etW7': 'smart-3-稍高',
         '82jXFTVu2XwCnG63pGqdf1yAfGMLbmXNzmBE5nupx6YF': 'xule-happy',
-        'Haee7H5bKDCnm6dXLkeR9DcWw9Puhnkwk71QBUSHcpUt': 'xule-bazinga',
-        'E2SRcmvvX71efevxnYJTcW9oggnprz7Xk2aSj3DV558L': 'xule-father-1',
-        'HLe1XVdMPiTakEryE2t593iv9pK9YEMBmRzMk71WetpK': 'xule-father-2'
+        'Haee7H5bKDCnm6dXLkeR9DcWw9Puhnkwk71QBUSHcpUt': 'xule-bazinga'
+        # 'E2SRcmvvX71efevxnYJTcW9oggnprz7Xk2aSj3DV558L': 'xule-father-1',
+        # 'HLe1XVdMPiTakEryE2t593iv9pK9YEMBmRzMk71WetpK': 'xule-father-2'
     }
 
     #     my_dict = {'a': 1, 'b': 2, 'c': 3}
