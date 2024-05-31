@@ -314,8 +314,8 @@ class GetPrice:
 
             arr.append("池子燃烧比率：" + str(float(burn_ratio) * 100) + "%\n\r")
             arr = GetPrice.get_token_rat(token, arr)
-            arr = GetPrice.get_kol_token(token, arr)
-            arr = GetPrice.get_smart_token(token, arr)
+            # arr = GetPrice.get_kol_token(token, arr)
+            # arr = GetPrice.get_smart_token(token, arr)
             arr.append("合约创建者余额：" + str(round(creator_balance, 2)) + " Sol\n\r")
             arr.append("合约持有人数：" + str(holder_count) + "\n\r")
             arr.append("火热等级：" + str(hot_level) + " \n\r")
@@ -337,7 +337,7 @@ class GetPrice:
             initial_quote_reserve = res["pool_info"]["initial_quote_reserve"]
             if not initial_quote_reserve is None:
                 arr.append("dev初始化池子：" + str(round(float(initial_quote_reserve), 0)) + " Sol\n\r")
-            if float(quote_reserve) > LIMIT_QUOTE_RESERVE:
+            if float(quote_reserve) >= LIMIT_QUOTE_RESERVE:
                 is_buy = True
             else:
                 is_buy = False
