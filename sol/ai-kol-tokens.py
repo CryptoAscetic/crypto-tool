@@ -191,7 +191,8 @@ def request_ok():
         # 'D68Jqb7jEZAGtav4aVui536mtT1KAJ4bKwYgFqy8etW7': 'smart-3-稍高',
         '82jXFTVu2XwCnG63pGqdf1yAfGMLbmXNzmBE5nupx6YF': 'xule-happy',
         'Haee7H5bKDCnm6dXLkeR9DcWw9Puhnkwk71QBUSHcpUt': 'xule-bazinga',
-        '4zhALcaaGZQGexZE7VpX5Nk1ihHRDz9nfGCSt3FRy4z1': 'a-zhi'
+        '4zhALcaaGZQGexZE7VpX5Nk1ihHRDz9nfGCSt3FRy4z1': 'a-zhi',
+        '4hBL4Z2Tvn2bCNqZniAxL82xviPJaTQeyKMdnLwsVt7L': 'happy第一人',
         # 'E2SRcmvvX71efevxnYJTcW9oggnprz7Xk2aSj3DV558L': 'xule-father-1',
         # 'HLe1XVdMPiTakEryE2t593iv9pK9YEMBmRzMk71WetpK': 'xule-father-2'
     }
