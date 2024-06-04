@@ -176,7 +176,8 @@ def request_ok():
     arr = []
     tokens = {
         '82jXFTVu2XwCnG63pGqdf1yAfGMLbmXNzmBE5nupx6YF': 'xule-happy',
-        'Haee7H5bKDCnm6dXLkeR9DcWw9Puhnkwk71QBUSHcpUt': 'xule-bazinga'
+        'Haee7H5bKDCnm6dXLkeR9DcWw9Puhnkwk71QBUSHcpUt': 'xule-bazinga',
+        'Atc7cQAmSCjLhVcCDpP56dGFv6eBqrXyWjJEUo84Nm67': 'ceo'
     }
 
     #     my_dict = {'a': 1, 'b': 2, 'c': 3}
