@@ -148,7 +148,7 @@ class GetPrice:
             sell = 0
             buy_sum = 0.0
             sell_sum = 0.0
-            print(res)
+            # print(res)
             for re in res:
                 maker = re['maker']
                 event = re['event']
@@ -314,7 +314,7 @@ class GetPrice:
 
             arr.append("池子燃烧比率：" + str(float(burn_ratio) * 100) + "%\n\r")
             arr = GetPrice.get_token_rat(token, arr)
-            arr = GetPrice.get_kol_token(token, arr)
+            # arr = GetPrice.get_kol_token(token, arr)
             arr = GetPrice.get_smart_token(token, arr)
             arr.append("合约创建者余额：" + str(round(creator_balance, 2)) + " Sol\n\r")
             arr.append("合约持有人数：" + str(holder_count) + "\n\r")
@@ -380,6 +380,6 @@ if __name__ == '__main__':
     arr = []
     # # # 招财猫
     # # # get_token_info("25hAyBQfoDhfWx9ay6rarbgvWGwDdNqcHsXS3jQ3mTDJ")
-    arr, is_buy = GetPrice.get_token_info("FigPk2qX3XzTRnbTGmmX4b6ToVfRTMJ3TPwfjWMppump", arr)
+    arr, is_buy = GetPrice.get_token_info("3hAiaotg8UJYCv9RiqSH6f1ZexG51hG8BBXzgiretr9z", arr)
     note_str = "".join(arr)
     print(note_str)
