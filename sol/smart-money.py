@@ -429,7 +429,7 @@ def get_token_info(token, arr, action):
             is_buy = False
         if action == "BUY":
             if rug_ratio is None:
-                if float(quote_reserve) > 300.0:
+                if float(quote_reserve) > 250.0:
                     if hot_level == 1:
                         arr.append("【★温馨提示：建议买1s★】 \n\r")
                     elif hot_level == 2:

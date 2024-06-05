@@ -17,7 +17,7 @@ china_time = utc_time.astimezone(beijing)
 time_tokyo = utc_time.astimezone(Tokyo)
 time_newyork = utc_time.astimezone(New_York)
 
-LIMIT_QUOTE_RESERVE = 300.0
+LIMIT_QUOTE_RESERVE = 250.0
 TIME_NOW = 8 * 60 * 60
 
 
@@ -341,7 +341,7 @@ class GetPrice:
                 is_buy = True
             else:
                 is_buy = False
-            if float(quote_reserve) > 300.0:
+            if float(quote_reserve) > 250.0:
                 if not rug_ratio is None:
                     if hot_level == 1 and renounced_mint == 1 and rug_ratio < 0.5 and float(burn_ratio) > 0.99:
                         arr.append("【☆温馨提示：如果合约安全建议买1s☆】 \n\r")
@@ -380,6 +380,6 @@ if __name__ == '__main__':
     arr = []
     # # # 招财猫
     # # # get_token_info("25hAyBQfoDhfWx9ay6rarbgvWGwDdNqcHsXS3jQ3mTDJ")
-    arr, is_buy = GetPrice.get_token_info("3hAiaotg8UJYCv9RiqSH6f1ZexG51hG8BBXzgiretr9z", arr)
+    arr, is_buy = GetPrice.get_token_info("q181ST7rmrrZrXgKButYmTb7Wt2p34BvLuvPWaypump", arr)
     note_str = "".join(arr)
     print(note_str)
