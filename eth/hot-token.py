@@ -8,7 +8,7 @@ import requests
 
 from getPrice import GetPrice
 
-token_dd = 'a9aab412b508bb619859974fc7fb202668b436574a992efc69b3aef3e14650e9'
+token_dd = 'fedcbd5442846473d7f4c2a08dafdd7538e29ace9f0829cb8f8af02cbd725be7'
 # token_dd = 'a9aab412b508bb619859974fc7fb202668b436574a992efc69b3aef3e14650e9'
 # 分钟
 TIME = 180
