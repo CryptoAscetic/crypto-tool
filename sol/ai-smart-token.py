@@ -12,7 +12,7 @@ from getAiPrice import GetAiPrice
 
 token_dd = 'a9aab412b508bb619859974fc7fb202668b436574a992efc69b3aef3e14650e9'
 # 分钟
-TIME = 1
+TIME = 3
 # 胜率
 PNL = 0.1
 
