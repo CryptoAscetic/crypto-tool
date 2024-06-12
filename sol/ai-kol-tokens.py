@@ -172,18 +172,19 @@ def send_markdown_address(address, type):
     print(res.text)
 
 
-# https://gmgn.ai/sol/address/BTp4uCeCeWKxT6pzTmqJzzrtyqeTmtF1zr2EtpnZSw7F
+# https://gmgn.ai/sol/address/9i5xAL7Go7g8ST3qg6AtDwJPetY4vAxfnpCuKLWHKEC1
 def request_ok():
     arr = []
     tokens = {
         '515FRkgdKUunk4BJGndav2FgZniEqYtkdLqcgc8nLSNV': '大帅',
-        '441bsKo6VHuhyUhkDiGxYKXyoZzNuF2Ru4hbPteFiEdn': 'klöss',
+        # '441bsKo6VHuhyUhkDiGxYKXyoZzNuF2Ru4hbPteFiEdn': 'klöss',
         # 'BgJrk3AJEWf41WxThAvDCkZmxuxbt3Q4aZc1P2rrHtZV': 'not BusinessWeek',
         '9sB4T5UBqdz5M7zEce2idFRAPVKe65DpuBooWYoRtpQi': '໓uke of ¢ryptoshi',
         # 'DxpA16RZwXmUAFHHxBRwNb1DUrnKyS1e8rYkh1MvjbxC': 'Kenny Powerz-cat超低价',
-        # 'Gf9XgdmvNHt8fUTFsWAccNbKeyDXsgJyZN8iFJKg5Pbd': '0xuezhang|985.eth',
+        'Gf9XgdmvNHt8fUTFsWAccNbKeyDXsgJyZN8iFJKg5Pbd': '0xuezhang|985.eth',
         'DG6QpsjvwqCGyLAYXKEmDBLRfomJ2UAmoe4MJWL9fNtt': 'Queenkayx ❤',
         'G1NhjBssPqbu6rkaiTjmc1SCTGxjzMf4vnvhmkQFRiBL': 'M1STΞR5ΞRM4N',
+        '9i5xAL7Go7g8ST3qg6AtDwJPetY4vAxfnpCuKLWHKEC1': 'Kerrrlu166',
         # 'ABDAKRTDRfDUbosQinqXs8NRH3AjeA4s2j2pFukzicFf': 'NickakaMole-阿乐第一人',
         # 'BTp4uCeCeWKxT6pzTmqJzzrtyqeTmtF1zr2EtpnZSw7F': 'richclassdecor.eth-moga第一人',
         # 'C6DYY8opJ5dxLEGGUWvwBGACyszxmDQ9VHdV5DeyrgbH': 'smart-1-超低',
@@ -195,6 +196,7 @@ def request_ok():
         '4hBL4Z2Tvn2bCNqZniAxL82xviPJaTQeyKMdnLwsVt7L': 'happy第一人',
         'VWhB2S3ZzwSR95esNKsQYe5XdF78pX1vLRCQQ1J2v63': 'roxi',
         '9cQL8n7fkzg7uBrzi9K5EXdxZwC1i11khQTyXQGDBz5A': 'billymcsmithers.eth',
+        '8TQWGgcpuR92r4ce7r61d4Ph3C4PJfkXXsJDJuVNf2Yk': 'gme大户',
         # 'E2SRcmvvX71efevxnYJTcW9oggnprz7Xk2aSj3DV558L': 'xule-father-1',
         # 'HLe1XVdMPiTakEryE2t593iv9pK9YEMBmRzMk71WetpK': 'xule-father-2'
     }
