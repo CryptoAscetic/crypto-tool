@@ -177,7 +177,8 @@ def request_ok():
     tokens = {
         '82jXFTVu2XwCnG63pGqdf1yAfGMLbmXNzmBE5nupx6YF': 'xule-happy',
         'Haee7H5bKDCnm6dXLkeR9DcWw9Puhnkwk71QBUSHcpUt': 'xule-bazinga',
-        'Atc7cQAmSCjLhVcCDpP56dGFv6eBqrXyWjJEUo84Nm67': 'ceo'
+        'Atc7cQAmSCjLhVcCDpP56dGFv6eBqrXyWjJEUo84Nm67': 'ceo',
+        '2on26WsSW3vvL8xRpZuuiyjEhyzrmjPE6bGHaujbD77U': '方圆'
     }
 
     #     my_dict = {'a': 1, 'b': 2, 'c': 3}
