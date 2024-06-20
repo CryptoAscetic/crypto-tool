@@ -178,7 +178,10 @@ def request_ok():
         '82jXFTVu2XwCnG63pGqdf1yAfGMLbmXNzmBE5nupx6YF': 'xule-happy',
         'Haee7H5bKDCnm6dXLkeR9DcWw9Puhnkwk71QBUSHcpUt': 'xule-bazinga',
         'Atc7cQAmSCjLhVcCDpP56dGFv6eBqrXyWjJEUo84Nm67': 'ceo',
-        '2on26WsSW3vvL8xRpZuuiyjEhyzrmjPE6bGHaujbD77U': '方圆'
+        '2on26WsSW3vvL8xRpZuuiyjEhyzrmjPE6bGHaujbD77U': '方圆',
+        '4zhALcaaGZQGexZE7VpX5Nk1ihHRDz9nfGCSt3FRy4z1': 'a-zhi',
+        '4hBL4Z2Tvn2bCNqZniAxL82xviPJaTQeyKMdnLwsVt7L': 'happy第一人',
+        '9cQL8n7fkzg7uBrzi9K5EXdxZwC1i11khQTyXQGDBz5A': 'billymcsmithers.eth',
     }
 
     #     my_dict = {'a': 1, 'b': 2, 'c': 3}
