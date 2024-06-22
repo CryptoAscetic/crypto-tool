@@ -182,6 +182,9 @@ def request_ok():
         '4zhALcaaGZQGexZE7VpX5Nk1ihHRDz9nfGCSt3FRy4z1': 'a-zhi',
         '4hBL4Z2Tvn2bCNqZniAxL82xviPJaTQeyKMdnLwsVt7L': 'happy第一人',
         '9cQL8n7fkzg7uBrzi9K5EXdxZwC1i11khQTyXQGDBz5A': 'billymcsmithers.eth',
+        'BgJrk3AJEWf41WxThAvDCkZmxuxbt3Q4aZc1P2rrHtZV': 'not BusinessWeek',
+        'Gf9XgdmvNHt8fUTFsWAccNbKeyDXsgJyZN8iFJKg5Pbd': '0xuezhang|985.eth',
+
     }
 
     #     my_dict = {'a': 1, 'b': 2, 'c': 3}
