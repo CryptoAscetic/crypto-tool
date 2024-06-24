@@ -181,6 +181,8 @@ def request_ok():
         '9sB4T5UBqdz5M7zEce2idFRAPVKe65DpuBooWYoRtpQi': '໓uke of ¢ryptoshi',
         'DxpA16RZwXmUAFHHxBRwNb1DUrnKyS1e8rYkh1MvjbxC': 'Kenny Powerz-cat超低价',
         'DG6QpsjvwqCGyLAYXKEmDBLRfomJ2UAmoe4MJWL9fNtt': 'Queenkayx ❤',
+        'BgJrk3AJEWf41WxThAvDCkZmxuxbt3Q4aZc1P2rrHtZV': 'not BusinessWeek',
+        'Gf9XgdmvNHt8fUTFsWAccNbKeyDXsgJyZN8iFJKg5Pbd': '0xuezhang|985.eth',
         'G1NhjBssPqbu6rkaiTjmc1SCTGxjzMf4vnvhmkQFRiBL': 'M1STΞR5ΞRM4N',
         '9i5xAL7Go7g8ST3qg6AtDwJPetY4vAxfnpCuKLWHKEC1': 'Kerrrlu166',
         # 'ABDAKRTDRfDUbosQinqXs8NRH3AjeA4s2j2pFukzicFf': 'NickakaMole-阿乐第一人',
@@ -194,6 +196,7 @@ def request_ok():
         '8TQWGgcpuR92r4ce7r61d4Ph3C4PJfkXXsJDJuVNf2Yk': 'gme大户',
         'E2SRcmvvX71efevxnYJTcW9oggnprz7Xk2aSj3DV558L': 'xule-father-1',
         'HLe1XVdMPiTakEryE2t593iv9pK9YEMBmRzMk71WetpK': 'xule-father-2'
+
     }
 
     #     my_dict = {'a': 1, 'b': 2, 'c': 3}
