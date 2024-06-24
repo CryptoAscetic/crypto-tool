@@ -250,8 +250,8 @@ def request_ok():
                     send_markdown_address(token_address, "BUY")
                     time.sleep(1)
                     arr = []
-                    send_markdown_system()
-                    time.sleep(1)
+                    # send_markdown_system()
+                    # time.sleep(1)
 
 
 if __name__ == '__main__':
