@@ -185,6 +185,10 @@ def request_ok():
         'Gf9XgdmvNHt8fUTFsWAccNbKeyDXsgJyZN8iFJKg5Pbd': '0xuezhang|985.eth',
         'G1NhjBssPqbu6rkaiTjmc1SCTGxjzMf4vnvhmkQFRiBL': 'M1STΞR5ΞRM4N',
         '9i5xAL7Go7g8ST3qg6AtDwJPetY4vAxfnpCuKLWHKEC1': 'Kerrrlu166',
+        'Atc7cQAmSCjLhVcCDpP56dGFv6eBqrXyWjJEUo84Nm67': 'ceo',
+        '2on26WsSW3vvL8xRpZuuiyjEhyzrmjPE6bGHaujbD77U': '方圆',
+        '4zhALcaaGZQGexZE7VpX5Nk1ihHRDz9nfGCSt3FRy4z1': 'a-zhi',
+        '4hBL4Z2Tvn2bCNqZniAxL82xviPJaTQeyKMdnLwsVt7L': 'happy第一人',
         # 'ABDAKRTDRfDUbosQinqXs8NRH3AjeA4s2j2pFukzicFf': 'NickakaMole-阿乐第一人',
         # 'BTp4uCeCeWKxT6pzTmqJzzrtyqeTmtF1zr2EtpnZSw7F': 'richclassdecor.eth-moga第一人',
         # 'C6DYY8opJ5dxLEGGUWvwBGACyszxmDQ9VHdV5DeyrgbH': 'smart-1-超低',
@@ -192,7 +196,6 @@ def request_ok():
         # 'D68Jqb7jEZAGtav4aVui536mtT1KAJ4bKwYgFqy8etW7': 'smart-3-稍高',
         '82jXFTVu2XwCnG63pGqdf1yAfGMLbmXNzmBE5nupx6YF': 'xule-happy',
         'Haee7H5bKDCnm6dXLkeR9DcWw9Puhnkwk71QBUSHcpUt': 'xule-bazinga',
-        'VWhB2S3ZzwSR95esNKsQYe5XdF78pX1vLRCQQ1J2v63': 'roxi',
         '8TQWGgcpuR92r4ce7r61d4Ph3C4PJfkXXsJDJuVNf2Yk': 'gme大户',
         'E2SRcmvvX71efevxnYJTcW9oggnprz7Xk2aSj3DV558L': 'xule-father-1',
         'HLe1XVdMPiTakEryE2t593iv9pK9YEMBmRzMk71WetpK': 'xule-father-2'
