@@ -171,7 +171,7 @@ def send_markdown_address(address, type):
     print(res.text)
 
 
-# https://gmgn.ai/sol/address/4zhALcaaGZQGexZE7VpX5Nk1ihHRDz9nfGCSt3FRy4z1
+# https://gmgn.ai/sol/address/Haee7H5bKDCnm6dXLkeR9DcWw9Puhnkwk71QBUSHcpUt
 def request_ok():
     arr = []
     tokens = {
