@@ -309,6 +309,7 @@ class GetPrice:
                 arr.append("5分钟卖出金额：：" + str(round(sell_volume_5m, 2)) + " $ \n\r")
             if burn_status == "burn":
                 arr.append("池子是否燃烧： 已燃烧" + "\n\r")
+
             else:
                 arr.append("池子是否燃烧： 小心，池子没烧" + "\n\r")
 
