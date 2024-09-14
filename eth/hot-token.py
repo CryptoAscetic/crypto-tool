@@ -175,9 +175,23 @@ def get_hot_token():
         "accept": "application/json, text/plain, */*'",
         "accept-language": "zh,zh-CN;q=0.9",
         "cache-control": "no-cache",
-        "cookie": "_ga=GA1.1.1538430465.1713834683; _ga_0XM0LYXGC8=GS1.1.1714184467.2.1.1714184492.0.0.0",
+        "cookie": "_ga=GA1.1.1538430465.1713834683; cf_clearance=.OyaesAhLSMsM5eF2KlNX79_NZwt3uF5DwSgXkDnEJ8"
+                  "-1723854910-1.2.1.1-F8vMYbk4qMo9g5ibqisZP69oa8kb.29cP_rEy6z2Fk9Id61yMRh7zKGDsMF"
+                  ".r4cgaUDlAH8ooF3pbDNIvn.GLhvB6WVYGfOBfJHAxu0l0REF86BexB5xnXlMVV.FgG2IDE25_NcOsh9h_D8kPE3uJ"
+                  ".W0XrEL_pUvfvNedxnMe2emNFuKZUn01O4OK0CFeD0Jn6I0"
+                  ".Mku73Y7r_w8J8JZ5jUGjR85qBLImi77sR0IMtJjw1pikWSSVb6Imuk2UqQ0Iq"
+                  ".0cBLouOh4Vo99zyNw5AScroUFpAwT9Ctv3WRmlTzZlSqy86jKt17BKJaXYI.fOZrhjzoEVoUk"
+                  ".m2R32F6IrBnYh5T_XcR2fLEqEMpMimJr9YnihBAUtAd5Ce4GmlfTLDD2GUZMcnVMNnxmLhQ4w9fFqaBNxQQeh6_1yVLMQc; "
+                  "__cf_bm=nolL.xKKdw7qaKzLNJGLcAoM24LGENAMovD8cgPM0bE-1723854914-1.0.1.1-XSU0zDsMukZxKzyaopnKC"
+                  ".rl7YYbgO.u8DgrD6oYFSC6G1eCclhSNRkbawDaDpPiMD663hlufTgyLcy1PMLAxg; "
+                  "_ga_0XM0LYXGC8=GS1.1.1723854780.73.1.1723854954.0.0.0",
         "pragma": "no-cache",
         "referer": "https://gmgn.ai/trend?chain=eth",
+        "sec-ch-ua": '"Google Chrome";v="117", "Chromium";v="117", "Not A;Brand";v="99", "Microsoft Edge";v="117"',
+        "sec-ch-ua-mobile": "?0",
+        "sec-fetch-site": "same-origin",
+        "sec-fetch-user": "?1",
+        "upgrade-insecure-requests": "1",
         "sec-ch-ua-platform": "Linux",
         "sec-fetch-dest": "empty",
         "sec-fetch-mode": "cors",

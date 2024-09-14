@@ -6,13 +6,11 @@ from datetime import timezone, timedelta, datetime
 
 import requests
 
-from getPrice import GetPrice
-
 # token_dd = 'a2e2cd49e7ca093d67a4223ed32c59804965edc184697d9fc55cf7c830b7b501'
 
 token_dd = 'a9aab412b508bb619859974fc7fb202668b436574a992efc69b3aef3e14650e9'
 # 分钟
-TIME = 3
+TIME = 100
 
 beijing = timezone(timedelta(hours=8))
 print(f'1、北京时区为：{beijing}')
@@ -204,6 +202,7 @@ def request_ok():
         # print(res)
         arr = []
         for r in res:  # 第二个实例
+            print(r)
             transactionAction = r["transactionAction"]
             tokenAddress = r["tokenAddress"]
             tokenTradingTime = r["tokenTradingTime"]
@@ -211,6 +210,11 @@ def request_ok():
             smartMoneySellCount = r["smartMoneySellCount"]
             smartMoneyBuyCount = r["smartMoneyBuyCount"]
             smartMoneyBuyAmount = r["smartMoneyBuyAmount"]
+            tokenLogo = r["tokenLogo"]
+            tokenSymbol = r["tokenSymbol"]
+            tokenCreateTime = int(r["tokenCreateTime"]) / 1000
+            timeArray = time.localtime(tokenCreateTime)
+            otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
 
             # 获取当前时间
             date = datetime.now()
@@ -219,7 +223,11 @@ def request_ok():
             diff = 60 * TIME
             if (timestamp - int(tokenTradingTime) / 1000) <= diff:
                 if transactionAction == "BUY":
-                    arr, is_buy = GetPrice.get_token_info(tokenAddress, arr)
+                    # arr, is_buy = GetPrice.get_token_info(tokenAddress, arr)
+                    if not tokenLogo is None:
+                        arr.append("![图片地址：](" + tokenLogo + ")\n\r")
+                    arr.append("合约创建时间：" + otherStyleTime + "\n\r")
+                    arr.append("名称：" + tokenSymbol + "\n\r")
                     arr.append(str(round((timestamp - int(tokenTradingTime) / 1000) / 60, 2)))
                     arr.append("分钟之前" + "\n\r")
                     arr.append("买就发财：" + str(smartMoneyBuyCount) + "个聪明钱买入\n\r")
@@ -227,25 +235,25 @@ def request_ok():
 
                     note_str = "".join(arr)
                     # print(note_str)
-                    if is_buy:
-                        send_markdown(note_str)
-                        time.sleep(5)
-                        send_markdown_address(tokenAddress, "BUY")
+                    # if is_buy:
+                    send_markdown(note_str)
+                    time.sleep(5)
+                    send_markdown_address(tokenAddress, "BUY")
                     arr = []
                 else:
-                    arr, is_buy = GetPrice.get_token_info(tokenAddress, arr)
+                    # arr, is_buy = GetPrice.get_token_info(tokenAddress, arr)
                     arr.append(str(round((timestamp - int(tokenTradingTime) / 1000) / 60, 2)))
                     arr.append("分钟之前" + "\n\r")
                     arr.append("狗庄跑了，卖：" + str(smartMoneySellCount) + "个聪明钱卖出\n\r")
                     arr.append("★卖出订单金额：" + latestOrderPrice + "$\n\r")
                     note_str = "".join(arr)
                     print(note_str)
-                    if is_buy:
-                        send_markdown(note_str)
-                        send_markdown_address(tokenAddress, "SELL")
-                        time.sleep(5)
-                        if float(smartMoneyBuyAmount) > 600.0:
-                            send_markdown_system()
+                    # if is_buy:
+                    send_markdown(note_str)
+                    send_markdown_address(tokenAddress, "SELL")
+                    time.sleep(5)
+                    if float(smartMoneyBuyAmount) > 600.0:
+                        send_markdown_system()
                     arr = []
 
         # time.sleep(60)
