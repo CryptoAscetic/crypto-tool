@@ -242,6 +242,12 @@ def request_ok():
                     arr = []
                 else:
                     # arr, is_buy = GetPrice.get_token_info(tokenAddress, arr)
+                    if not tokenLogo is None:
+                        arr.append("![图片地址：](" + tokenLogo + ")\n\r")
+                    arr.append("合约创建时间：" + otherStyleTime + "\n\r")
+                    arr.append("名称：" + tokenSymbol + "\n\r")
+                    arr.append(str(round((timestamp - int(tokenTradingTime) / 1000) / 60, 2)))
+                    arr.append("分钟之前" + "\n\r")
                     arr.append(str(round((timestamp - int(tokenTradingTime) / 1000) / 60, 2)))
                     arr.append("分钟之前" + "\n\r")
                     arr.append("狗庄跑了，卖：" + str(smartMoneySellCount) + "个聪明钱卖出\n\r")
