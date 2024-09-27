@@ -240,7 +240,7 @@ def request_ok():
                         arr.append(
                             "买入时间：" + str(
                                 round((timestamp - int(tokenTradingTime) / 1000) / 60, 2)) + "分钟之前" + "\n\r")
-                        arr.append("聪明钱个数：" + str(smartMoneyBuyCount) + "个\n\r")
+                        arr.append("★聪明钱个数：" + str(smartMoneyBuyCount) + "个\n\r")
                         arr.append("聪明钱买入总额：" + format(float(smartMoneyBuyAmount), '.2f') + " $\n\r")
                         arr.append("聪明钱卖出总额：" + format(float(smartMoneySellAmount), '.2f') + "$\n\r")
                         arr.append("★购买金额：" + format(float(latestOrderPrice), '.2f') + " $\n\r")
