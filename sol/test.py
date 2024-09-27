@@ -90,4 +90,18 @@ if __name__ == '__main__':
     }
     response = requests.get(url, headers=headers)
     print("Status code:", response.status_code)
-    print(response.text)
+    # print(response.text)
+    result = response.json()
+    links = result['links']
+    community_data = result['community_data']
+    twitter_followers = community_data['twitter_followers']
+    homepage = links['homepage'][0]
+    twitter_screen_name = links['twitter_screen_name']
+    print(homepage)
+    print(twitter_screen_name)
+    print(twitter_followers)
+    tickers = result['tickers']
+    # for t in tickers:
+    #     print(t)
+    name = tickers[0]['market']['name']
+    print(name)
