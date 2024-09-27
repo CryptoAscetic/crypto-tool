@@ -73,47 +73,15 @@ def base58_encode(string_input):
 print()
 
 if __name__ == '__main__':
-    # 兑换要花的b
-    inputToken = "So11111111111111111111111111111111111111112"
-    # 兑换目标币地址
-    outputToken = "5zgTYTDK836G2Fc4ZLQp4rsyi78pAbuDr4qaQUE1pump"
-    # 最小单位lamports， 100000000=0.1SOL
-    amount = "100000000"
-    # 发起交易钱包地址
-    fromAddress = ""
-
-    # 滑点 滑点，%之上的数值，比如10表示10%
-    slippage = 1.0
-
-    url = (f"https://gmgn.ai/defi/router/v1/sol/tx/get_swap_route?token_in_address={inputToken}&token_out_address="
-           f"{outputToken}&in_amount={amount}&from_address={fromAddress}&slippage={slippage}")
+    url = "https://gmgn.ai/api/v1/token_link/sol/GewCPXyZncLyFCaU5rPvN6joVJks78qUFjCA6b7Spump"
     headers = {
-        "authority": "gmgn.ai",
-        "accept": "application/json, text/plain, */*'",
-        "accept-language": "zh,zh-CN;q=0.9",
-        "cache-control": "no-cache",
-        "cookie": "_ga=GA1.1.1538430465.1713834683; _ga_0XM0LYXGC8=GS1.1.1714184467.2.1.1714184492.0.0.0",
-        "pragma": "no-cache",
-        "referer": "https://gmgn.ai",
-        "sec-ch-ua-platform": "Linux",
-        "sec-fetch-dest": "empty",
-        "sec-fetch-mode": "cors",
-        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 "
-                      "Safari/537.36",
-
+        "Cookie": "_ga=GA1.1.1538430465.1713834683; __cf_bm=Lh0riuOmzSvvIgLI2jexxCTfgnlXNJSUqRIFGiqFB3k-1727420862-1"
+                  ".0.1.1-Xj126WHC2RvlkqU4yJT1Uy.oWHsOo00rF_bLvpRsbGezDk.h8GFVnJKqmD68v1gJTm72xB9Zy2NOLliLUzaxKg; "
+                  "cf_clearance=RiadSjB_4UmvdpjU7UpYwxfQ4BhLDiX3IrL5aWeL0aw-1727420865-1.2.1.1"
+                  "-n2ZxvMRXmbByQ1H2Xkcsvb5doN3VvdW1062rVts589o7A7YfJe0ijQpgkkoqhYkKz0T5Ti4wzxuSuLSxVItinKSIo2124qeyDhwAGUrSlbnk9ZtjEgINepFGzGKZLbIMfY1mzCj738jfnOi3AuyIOXtMlGu9XY.2IEAOCOSCquI2_0pkbRkzkX0kZN4VIIxfOAbsyiFhFHnpQZcu3Fm4uT3amOinNFbLhfuKplSdb2Uuf.Qw19fZp8vpmwLj94bIrYuOn8Bc4vWJe5qBx9oU.WLM1xw1bvsknmotkYsovQ4Vy3Q0hodkcLj.xdJZ2m3MEe8anbowjnLDUiaeRzBFMOS_m7fXem8TwPY0n8Y1qAN6JO4IPBuYrVPzRQ3R3j_l; _ga_0XM0LYXGC8=GS1.1.1727420863.81.1.1727420905.0.0.0",
+        "User-Agent": "PostmanRuntime/7.36.3"
     }
     response = requests.get(url, headers=headers)
     print("Status code:", response.status_code)
     print(response.text)
 
-    swapTransaction = response.text[]
-
-    post_url = "https://gmgn.ai/defi/router/v1/sol/tx/submit_signed_transaction"
-    headers = {
-        "content-type': 'application/json"
-    }
-
-    base58_decode(base58_encode('hongfei'))
-
-    data = {'signed_tx':}
-    requests.post(post_url, data={''}, headers=headers)
