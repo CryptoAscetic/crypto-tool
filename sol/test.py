@@ -73,15 +73,21 @@ def base58_encode(string_input):
 print()
 
 if __name__ == '__main__':
-    url = "https://gmgn.ai/api/v1/token_link/sol/GewCPXyZncLyFCaU5rPvN6joVJks78qUFjCA6b7Spump"
+    url = "https://api.coingecko.com/api/v3/coins/solana/contract/WENWENvqqNya429ubCdR81ZmD69brwQaaBYY6p3LCpk"
     headers = {
-        "Cookie": "_ga=GA1.1.1538430465.1713834683; __cf_bm=Lh0riuOmzSvvIgLI2jexxCTfgnlXNJSUqRIFGiqFB3k-1727420862-1"
-                  ".0.1.1-Xj126WHC2RvlkqU4yJT1Uy.oWHsOo00rF_bLvpRsbGezDk.h8GFVnJKqmD68v1gJTm72xB9Zy2NOLliLUzaxKg; "
-                  "cf_clearance=RiadSjB_4UmvdpjU7UpYwxfQ4BhLDiX3IrL5aWeL0aw-1727420865-1.2.1.1"
-                  "-n2ZxvMRXmbByQ1H2Xkcsvb5doN3VvdW1062rVts589o7A7YfJe0ijQpgkkoqhYkKz0T5Ti4wzxuSuLSxVItinKSIo2124qeyDhwAGUrSlbnk9ZtjEgINepFGzGKZLbIMfY1mzCj738jfnOi3AuyIOXtMlGu9XY.2IEAOCOSCquI2_0pkbRkzkX0kZN4VIIxfOAbsyiFhFHnpQZcu3Fm4uT3amOinNFbLhfuKplSdb2Uuf.Qw19fZp8vpmwLj94bIrYuOn8Bc4vWJe5qBx9oU.WLM1xw1bvsknmotkYsovQ4Vy3Q0hodkcLj.xdJZ2m3MEe8anbowjnLDUiaeRzBFMOS_m7fXem8TwPY0n8Y1qAN6JO4IPBuYrVPzRQ3R3j_l; _ga_0XM0LYXGC8=GS1.1.1727420863.81.1.1727420905.0.0.0",
-        "User-Agent": "PostmanRuntime/7.36.3"
+        "authority": "api.coingecko.com",
+        "accept": "*/*",
+        "accept-language": "zh,zh-CN;q=0.9",
+        "if-none-match": "f02a7498213486e9fb311f2c8a4665b1",
+        "origin": "https://www.dexlab.space",
+        "referer": "https://www.dexlab.space/",
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": "Linux",
+        "sec-fetch-dest": "empty",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "cross-site",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
     }
     response = requests.get(url, headers=headers)
     print("Status code:", response.status_code)
     print(response.text)
-
