@@ -199,10 +199,8 @@ def request_ok():
     if response.status_code == 200:
         result = response.json()
         res = result['data']['result']
-        # print(res)
         arr = []
         for r in res:  # 第二个实例
-            print(r)
             transactionAction = r["transactionAction"]
             tokenAddress = r["tokenAddress"]
             tokenTradingTime = r["tokenTradingTime"]
@@ -210,11 +208,18 @@ def request_ok():
             smartMoneySellCount = r["smartMoneySellCount"]
             smartMoneyBuyCount = r["smartMoneyBuyCount"]
             smartMoneyBuyAmount = r["smartMoneyBuyAmount"]
+            smartMoneySellAmount = r["smartMoneySellAmount"]
             tokenLogo = r["tokenLogo"]
             tokenSymbol = r["tokenSymbol"]
             tokenCreateTime = int(r["tokenCreateTime"]) / 1000
             timeArray = time.localtime(tokenCreateTime)
             otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
+            # 市值
+            tokenFDV = r['tokenFDV']
+            # 5分钟交易量
+            tradeVolume5 = r['tradeVolume5']
+            # 1小时交易量
+            tradeVolume60 = r['tradeVolume60']
 
             # 获取当前时间
             date = datetime.now()
@@ -226,15 +231,23 @@ def request_ok():
                     # arr, is_buy = GetPrice.get_token_info(tokenAddress, arr)
                     if not tokenLogo is None:
                         arr.append("![图片地址：](" + tokenLogo + ")\n\r")
-                    arr.append("合约创建时间：" + otherStyleTime + "\n\r")
+                    arr.append("【买买买】合约创建时间：" + otherStyleTime + "\n\r")
                     arr.append("名称：" + tokenSymbol + "\n\r")
-                    arr.append(str(round((timestamp - int(tokenTradingTime) / 1000) / 60, 2)))
-                    arr.append("分钟之前" + "\n\r")
-                    arr.append("买就发财：" + str(smartMoneyBuyCount) + "个聪明钱买入\n\r")
-                    arr.append("★购买金额：" + latestOrderPrice + "$\n\r")
-
+                    arr.append("★市值：" + format(float(tokenFDV), '.2f') + " $\n\r")
+                    arr.append(
+                        "时间：" + str(round((timestamp - int(tokenTradingTime) / 1000) / 60, 2)) + "分钟之前" + "\n\r")
+                    arr.append("聪明钱个数：" + str(smartMoneyBuyCount) + "个\n\r")
+                    arr.append("聪明钱买入总额：" + format(float(smartMoneyBuyAmount), '.2f') + " $\n\r")
+                    arr.append("聪明钱卖出总额：" + format(float(smartMoneySellAmount), '.2f') + "$\n\r")
+                    arr.append("★购买金额：" + format(float(latestOrderPrice), '.2f') + " $\n\r")
+                    arr.append("5分钟交易金额：" + format(float(tradeVolume5), '.2f') + " $\n\r")
+                    arr.append("1小时交易所金额：" + format(float(tradeVolume60), '.2f') + " $\n\r")
+                    arr.append("看线地址：<" + "https://dexscreener.com/solana/" + tokenAddress + ">\n\r")
+                    arr.append("AI看：<" + "https://gmgn.ai/sol/token/" + tokenAddress + ">\n\r")
+                    arr.append("查看合约：<" + "https://www.dexlab.space/mintinglab/spl-token/" + tokenAddress + ">\n\r")
                     note_str = "".join(arr)
-                    # print(note_str)
+                    print(r)
+                    print(note_str)
                     # if is_buy:
                     send_markdown(note_str)
                     time.sleep(5)
@@ -244,7 +257,7 @@ def request_ok():
                     # arr, is_buy = GetPrice.get_token_info(tokenAddress, arr)
                     if not tokenLogo is None:
                         arr.append("![图片地址：](" + tokenLogo + ")\n\r")
-                    arr.append("合约创建时间：" + otherStyleTime + "\n\r")
+                    arr.append("【卖卖卖】合约创建时间：" + otherStyleTime + "\n\r")
                     arr.append("名称：" + tokenSymbol + "\n\r")
                     arr.append(str(round((timestamp - int(tokenTradingTime) / 1000) / 60, 2)))
                     arr.append("分钟之前" + "\n\r")
@@ -253,13 +266,13 @@ def request_ok():
                     arr.append("狗庄跑了，卖：" + str(smartMoneySellCount) + "个聪明钱卖出\n\r")
                     arr.append("★卖出订单金额：" + latestOrderPrice + "$\n\r")
                     note_str = "".join(arr)
-                    print(note_str)
+                    # print(note_str)
                     # if is_buy:
-                    send_markdown(note_str)
-                    send_markdown_address(tokenAddress, "SELL")
-                    time.sleep(5)
-                    if float(smartMoneyBuyAmount) > 600.0:
-                        send_markdown_system()
+                    # send_markdown(note_str)
+                    # send_markdown_address(tokenAddress, "SELL")
+                    # time.sleep(5)
+                    # if float(smartMoneyBuyAmount) > 600.0:
+                    #     send_markdown_system()
                     arr = []
 
         # time.sleep(60)
