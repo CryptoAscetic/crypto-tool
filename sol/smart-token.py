@@ -11,6 +11,7 @@ import requests
 token_dd = 'a9aab412b508bb619859974fc7fb202668b436574a992efc69b3aef3e14650e9'
 # 分钟
 TIME = 3
+tokenFDVMax = 500000
 
 beijing = timezone(timedelta(hours=8))
 print(f'1、北京时区为：{beijing}')
@@ -228,31 +229,35 @@ def request_ok():
             diff = 60 * TIME
             if (timestamp - int(tokenTradingTime) / 1000) <= diff:
                 if transactionAction == "BUY":
-                    # arr, is_buy = GetPrice.get_token_info(tokenAddress, arr)
-                    if not tokenLogo is None:
-                        arr.append("![图片地址：](" + tokenLogo + ")\n\r")
-                    arr.append("【买买买】合约创建时间：" + otherStyleTime + "\n\r")
-                    arr.append("名称：" + tokenSymbol + "\n\r")
-                    arr.append("★市值：" + format(float(tokenFDV), '.2f') + " $\n\r")
-                    arr.append(
-                        "时间：" + str(round((timestamp - int(tokenTradingTime) / 1000) / 60, 2)) + "分钟之前" + "\n\r")
-                    arr.append("聪明钱个数：" + str(smartMoneyBuyCount) + "个\n\r")
-                    arr.append("聪明钱买入总额：" + format(float(smartMoneyBuyAmount), '.2f') + " $\n\r")
-                    arr.append("聪明钱卖出总额：" + format(float(smartMoneySellAmount), '.2f') + "$\n\r")
-                    arr.append("★购买金额：" + format(float(latestOrderPrice), '.2f') + " $\n\r")
-                    arr.append("5分钟交易金额：" + format(float(tradeVolume5), '.2f') + " $\n\r")
-                    arr.append("1小时交易所金额：" + format(float(tradeVolume60), '.2f') + " $\n\r")
-                    arr.append("看线地址：<" + "https://dexscreener.com/solana/" + tokenAddress + ">\n\r")
-                    arr.append("AI看：<" + "https://gmgn.ai/sol/token/" + tokenAddress + ">\n\r")
-                    arr.append("查看合约：<" + "https://www.dexlab.space/mintinglab/spl-token/" + tokenAddress + ">\n\r")
-                    note_str = "".join(arr)
-                    print(r)
-                    print(note_str)
-                    # if is_buy:
-                    send_markdown(note_str)
-                    time.sleep(5)
-                    send_markdown_address(tokenAddress, "BUY")
-                    arr = []
+                    # 市值大于50万
+                    if float(tokenFDV) > tokenFDVMax:
+                        # arr, is_buy = GetPrice.get_token_info(tokenAddress, arr)
+                        if not tokenLogo is None:
+                            arr.append("![图片地址：](" + tokenLogo + ")\n\r")
+                        arr.append("【买买买】合约创建时间：" + otherStyleTime + "\n\r")
+                        arr.append("名称：" + tokenSymbol + "\n\r")
+                        arr.append("★市值：" + format(float(tokenFDV), '.2f') + " $\n\r")
+                        arr.append(
+                            "买入时间：" + str(
+                                round((timestamp - int(tokenTradingTime) / 1000) / 60, 2)) + "分钟之前" + "\n\r")
+                        arr.append("聪明钱个数：" + str(smartMoneyBuyCount) + "个\n\r")
+                        arr.append("聪明钱买入总额：" + format(float(smartMoneyBuyAmount), '.2f') + " $\n\r")
+                        arr.append("聪明钱卖出总额：" + format(float(smartMoneySellAmount), '.2f') + "$\n\r")
+                        arr.append("★购买金额：" + format(float(latestOrderPrice), '.2f') + " $\n\r")
+                        arr.append("5分钟交易金额：" + format(float(tradeVolume5), '.2f') + " $\n\r")
+                        arr.append("1小时交易所金额：" + format(float(tradeVolume60), '.2f') + " $\n\r")
+                        arr.append("看线地址：<" + "https://dexscreener.com/solana/" + tokenAddress + ">\n\r")
+                        arr.append("AI看：<" + "https://gmgn.ai/sol/token/" + tokenAddress + ">\n\r")
+                        arr.append(
+                            "查看合约：<" + "https://www.dexlab.space/mintinglab/spl-token/" + tokenAddress + ">\n\r")
+                        note_str = "".join(arr)
+                        print(r)
+                        print(note_str)
+                        # if is_buy:
+                        send_markdown(note_str)
+                        time.sleep(5)
+                        send_markdown_address(tokenAddress, "BUY")
+                        arr = []
                 else:
                     # arr, is_buy = GetPrice.get_token_info(tokenAddress, arr)
                     if not tokenLogo is None:
