@@ -39,7 +39,7 @@ mydb = mysql.connector.connect(host='block.chain.com', user='root', password='ut
 
 token_dd = 'a9aab412b508bb619859974fc7fb202668b436574a992efc69b3aef3e14650e9'
 # 分钟
-TIME = 10
+TIME = 3
 tokenFDVMax = 50000
 
 beijing = timezone(timedelta(hours=8))
