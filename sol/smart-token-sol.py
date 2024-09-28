@@ -1,19 +1,46 @@
 # -*- coding: utf-8 -*
 import datetime as dt
 import json
+import logging
+import os
 import time
 from datetime import timezone, timedelta, datetime
 
+import coloredlogs
+import mysql.connector
 import requests
 
 from SolTokenPrice import GetSolTokenPrice
+
+# 日志目录
+LOGFILE_FIX = "smart-token-sol-"
+LOG_PATH = os.getcwd() + "/log/"
+logger = logging.getLogger(__name__)
+coloredlogs.install(level='DEBUG', logger=logger)
+# 获取当前日期和时间
+now = datetime.now()
+formatted_date = now.strftime("%Y-%m-%d")
+# 设置日志等级
+logger.setLevel(logging.DEBUG)
+# 追加写入文件a ，设置utf-8编码防止中文写入乱码
+formatted_date_log = logging.FileHandler(LOG_PATH + LOGFILE_FIX + formatted_date + '.log', 'a', encoding='utf-8')
+# 向文件输出的日志级别
+formatted_date_log.setLevel(logging.DEBUG)
+# 向文件输出的日志信息格式
+formatter = logging.Formatter('%(asctime)s - %(filename)s - line:%(lineno)d - %(levelname)s - %(message)s -%(process)s')
+formatted_date_log.setFormatter(formatter)
+# 加载文件到logger对象中
+logger.addHandler(formatted_date_log)
+# 数据库初始化
+mydb = mysql.connector.connect(host='block.chain.com', user='root', password='ute5lU7SrMPfsz', database='blockchain',
+                               port='13306')
 
 # token_dd = 'a2e2cd49e7ca093d67a4223ed32c59804965edc184697d9fc55cf7c830b7b501'
 
 token_dd = 'a9aab412b508bb619859974fc7fb202668b436574a992efc69b3aef3e14650e9'
 # 分钟
-TIME = 5
-tokenFDVMax = 500000
+TIME = 10
+tokenFDVMax = 50000
 
 beijing = timezone(timedelta(hours=8))
 print(f'1、北京时区为：{beijing}')
@@ -198,7 +225,6 @@ def request_ok():
         "x-zkdex-env": "0"
     }
     response = requests.get(url, headers=headers)
-    print("Status code:", response.status_code)
     if response.status_code == 200:
         result = response.json()
         res = result['data']['result']
@@ -241,9 +267,8 @@ def request_ok():
                         arr.append("★市值：" + format(float(tokenFDV), '.2f') + " $\n\r")
                         price = GetSolTokenPrice.get_token_price(tokenAddress)
                         arr.append("★当前价格：" + format(float(price), '.8f') + " $\n\r")
-                        arr.append(
-                            "买入时间：" + str(
-                                round((timestamp - int(tokenTradingTime) / 1000) / 60, 2)) + "分钟之前" + "\n\r")
+                        minutes_ago = str(round((timestamp - int(tokenTradingTime) / 1000) / 60, 2))
+                        arr.append("买入时间：" + minutes_ago + "分钟之前" + "\n\r")
                         arr.append("★聪明钱个数：" + str(smartMoneyBuyCount) + "个\n\r")
                         arr.append("聪明钱买入总额：" + format(float(smartMoneyBuyAmount), '.2f') + " $\n\r")
                         arr.append("聪明钱卖出总额：" + format(float(smartMoneySellAmount), '.2f') + "$\n\r")
@@ -251,17 +276,27 @@ def request_ok():
                         arr.append("5分钟交易金额：" + format(float(tradeVolume5), '.2f') + " $\n\r")
                         arr.append("1小时交易总金额：" + format(float(tradeVolume60), '.2f') + " $\n\r")
                         arr.append("看线地址：<" + "https://dexscreener.com/solana/" + tokenAddress + ">\n\r")
-                        arr.append("AI看：<" + "https://gmgn.ai/sol/token/" + tokenAddress + ">\n\r")
+                        look_line = "https://gmgn.ai/sol/token/" + tokenAddress
+                        arr.append("AI看：<" + look_line + ">\n\r")
                         arr.append(
                             "查看合约：<" + "https://www.dexlab.space/mintinglab/spl-token/" + tokenAddress + ">\n\r")
                         note_str = "".join(arr)
-                        print(r)
-                        print(note_str)
+                        # print(note_str)
+                        logger.info('本次解析的数据：\n\r {0}'.format(note_str))
                         # if is_buy:
                         send_markdown(note_str)
                         time.sleep(5)
                         send_markdown_address(tokenAddress, "BUY")
                         arr = []
+                        now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                        insert_data(tokenLogo, tokenSymbol, tokenAddress, format(float(tokenFDV), '.2f'), price,
+                                    minutes_ago, str(smartMoneyBuyCount),
+                                    format(float(smartMoneyBuyAmount), '.2f'),
+                                    format(float(smartMoneySellAmount), '.2f'),
+                                    format(float(latestOrderPrice), '.2f'), format(float(tradeVolume5), '.2f'),
+                                    format(float(tradeVolume60), '.2f'),
+                                    "", "", look_line, 501, otherStyleTime, now,
+                                    1, "SOL链")
                 else:
                     # arr, is_buy = GetPrice.get_token_info(tokenAddress, arr)
                     if not tokenLogo is None:
@@ -286,6 +321,26 @@ def request_ok():
 
         # time.sleep(60)
         # send_msg()
+
+
+# 保存数据
+def insert_data(img_url, token_symbol, token_address, token_fdv, price, minutes_ago, smart_money_buy_count,
+                smart_money_buy_amount, smart_money_sell_amount, latest_order_price, trade_volume_5, trade_volume_60,
+                wallet_address, twitter, look_line, chain_id, token_create_time, create_time, recomme_count, remark):
+    my_cursor = mydb.cursor()
+    # 保存数据库
+    sql = ("INSERT INTO block_smart_record (img_url, token_symbol, token_address, token_fdv, price, minutes_ago, "
+           "smart_money_buy_count, smart_money_buy_amount, smart_money_sell_amount, latest_order_price, "
+           "trade_volume_5, trade_volume_60, wallet_address, twitter, look_line, chain_id, token_create_time, "
+           "create_time, recomme_count, remark) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s, %s, %s, %s, %s, %s, "
+           "%s, %s, %s, %s)")
+    val = (
+        img_url, token_symbol, token_address, token_fdv, price, minutes_ago, smart_money_buy_count,
+        smart_money_buy_amount, smart_money_sell_amount, latest_order_price, trade_volume_5, trade_volume_60,
+        wallet_address, twitter, look_line, chain_id, token_create_time, create_time, recomme_count, remark)
+    my_cursor.execute(sql, val)
+    mydb.commit()
+    logger.info("布料数据保存成功条数{0},合约地址:{1}".format(my_cursor.rowcount, token_address))
 
 
 if __name__ == '__main__':
