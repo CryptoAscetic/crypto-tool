@@ -6,11 +6,13 @@ from datetime import timezone, timedelta, datetime
 
 import requests
 
+from SolTokenPrice import GetSolTokenPrice
+
 # token_dd = 'a2e2cd49e7ca093d67a4223ed32c59804965edc184697d9fc55cf7c830b7b501'
 
 token_dd = 'a9aab412b508bb619859974fc7fb202668b436574a992efc69b3aef3e14650e9'
 # 分钟
-TIME = 3
+TIME = 5
 tokenFDVMax = 500000
 
 beijing = timezone(timedelta(hours=8))
@@ -237,6 +239,8 @@ def request_ok():
                         arr.append("【SOL-买买买】合约创建时间：" + otherStyleTime + "\n\r")
                         arr.append("名称：" + tokenSymbol + "\n\r")
                         arr.append("★市值：" + format(float(tokenFDV), '.2f') + " $\n\r")
+                        price = GetSolTokenPrice.get_token_price(tokenAddress)
+                        arr.append("★当前价格：" + format(float(price), '.8f') + " $\n\r")
                         arr.append(
                             "买入时间：" + str(
                                 round((timestamp - int(tokenTradingTime) / 1000) / 60, 2)) + "分钟之前" + "\n\r")

@@ -73,35 +73,24 @@ def base58_encode(string_input):
 print()
 
 if __name__ == '__main__':
-    url = "https://api.coingecko.com/api/v3/coins/solana/contract/WENWENvqqNya429ubCdR81ZmD69brwQaaBYY6p3LCpk"
+    url = "https://price.jup.ag/v4/price?ids=6T44rfi9BDUdZbEvVddZWVfsGrpC6N1sSSKYnCsLpump"
     headers = {
-        "authority": "api.coingecko.com",
-        "accept": "*/*",
+        "authority": "price.jup.ag",
+        "accept": "application/json, text/plain, */*",
         "accept-language": "zh,zh-CN;q=0.9",
-        "if-none-match": "f02a7498213486e9fb311f2c8a4665b1",
-        "origin": "https://www.dexlab.space",
-        "referer": "https://www.dexlab.space/",
+        "cache-control": "no-cache",
+        "origin": "https://solscan.io",
+        "pragma": "no-cache",
+        "referer": "https://solscan.io/",
         "sec-ch-ua-mobile": "?0",
         "sec-ch-ua-platform": "Linux",
         "sec-fetch-dest": "empty",
         "sec-fetch-mode": "cors",
         "sec-fetch-site": "cross-site",
-        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36",
     }
     response = requests.get(url, headers=headers)
     print("Status code:", response.status_code)
     # print(response.text)
     result = response.json()
-    links = result['links']
-    community_data = result['community_data']
-    twitter_followers = community_data['twitter_followers']
-    homepage = links['homepage'][0]
-    twitter_screen_name = links['twitter_screen_name']
-    print(homepage)
-    print(twitter_screen_name)
-    print(twitter_followers)
-    tickers = result['tickers']
-    # for t in tickers:
-    #     print(t)
-    name = tickers[0]['market']['name']
-    print(name)
+    print(result)
