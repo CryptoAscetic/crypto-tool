@@ -343,5 +343,24 @@ def insert_data(img_url, token_symbol, token_address, token_fdv, price, minutes_
     logger.info("布料数据保存成功条数{0},合约地址:{1}".format(my_cursor.rowcount, token_address))
 
 
+def number_repeat_data():
+    recomme_count = 5
+    my_cursor = mydb.cursor()
+    # SELECT DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i:%s')
+    select_sql = ("SELECT count(token_symbol) AS recomme_count, token_symbol, token_address , date_format(DATE_ADD( "
+                  "create_time, INTERVAL 8 HOUR), '%Y-%m-%d') AS create_time FROM block_smart_record WHERE  "
+                  "date_format(DATE_ADD(create_time, INTERVAL 8 HOUR), '%Y-%m-%d') = DATE_FORMAT(DATE_ADD(now(),"
+                  "INTERVAL 8 HOUR),'%Y-%m-%d') AND recomme_count > "
+                  "%s GROUP BY token_symbol, token_address, date_format(DATE_ADD(create_time, INTERVAL 8 HOUR),  "
+                  "'%Y-%m-%d') ORDER BY recomme_count DESC LIMIT 10")
+    select_val = (status, recomme_count)
+    my_cursor.execute(select_sql, select_val)
+    my_result = my_cursor.fetchone()
+    if my_result is None:
+        my_result = {}
+    logger.info("本次数据库查询历史录入卷包号列表：{0}".format(my_result))
+    return my_result
+
+
 if __name__ == '__main__':
     request_ok()
