@@ -222,11 +222,33 @@ def create_simple_table1(data):
 
 
 def create_simple_table(data):
-    table = "| 推荐次数 | 合约名称 | 密码 | 时间 \n| ------- | ------- | ------- | ------- |\n"
+    table = "| 推荐次数 | 合约名称 | 密码 | 时间 \n| ----------- | ----------- | ----------- | ----------- |\n"
     for row in data:
         table += f"| {row[0]} | {row[1]} |{row[2]}|{row[3]}|\n"
     return table
 
 
+def number_repeat_data_smart():
+    my_cursor = mydb.cursor()
+    # SELECT DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i:%s')
+    select_sql = ("SELECT MAX(smart_money_buy_count) AS buyCount,token_symbol, token_address  FROM "
+                  "blockchain.block_smart_record GROUP BY token_address, token_symbol ORDER BY buyCount DESC LIMIT 20")
+    my_cursor.execute(select_sql)
+    my_result = my_cursor.fetchall()
+    markdown_table = create_simple_table_smart(my_result)
+    print(markdown_table)
+    send_markdown(markdown_table)
+    logger.info("本次执行统计结果：{0}".format(my_result))
+    return my_result
+
+
+def create_simple_table_smart(data):
+    table = "| 推荐次数 | 合约名称 | 密码 | \n| ------- | ------- | ------- |\n"
+    for row in data:
+        table += f"| {row[0]} | {row[1]} |{row[2]}|\n"
+    return table
+
+
 if __name__ == '__main__':
-    number_repeat_data();
+    number_repeat_data()
+    number_repeat_data_smart()
