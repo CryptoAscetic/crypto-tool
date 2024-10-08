@@ -261,7 +261,7 @@ def number_repeat_data_smart_less():
 
 
 def create_simple_table_smart_less(data):
-    table = "| 合约名称 | 密码 | 一般聪明钱购买次数 | \n| ------- | ------- | ------- |\n"
+    table = "| 合约名称 | 密码 | 聪明钱购买次数 | \n| ------- | ------- | ------- |\n"
     for row in data:
         table += f"| {row[0]} | {row[1]} |{row[2]}|\n"
     return table
