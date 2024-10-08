@@ -245,7 +245,30 @@ def number_repeat_data_smart():
 
 
 def create_simple_table_smart(data):
-    table = "| 推荐次数 | 合约名称 | 密码 | \n| ------- | ------- | ------- |\n"
+    table = "| 合约名称 | 密码 | 大数据汇总聪明钱购买次数 | \n| ------- | ------- | ------- |\n"
+    for row in data:
+        table += f"| {row[0]} | {row[1]} |{row[2]}|\n"
+    return table
+
+
+def number_repeat_data_smart_less():
+    my_cursor = mydb.cursor()
+    # SELECT DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i:%s')
+    select_sql = ("select * from ( select token_symbol, token_address, max(smart_money_buy_count) as buyCount from ( "
+                  "select token_symbol,token_address,smart_money_buy_count from block_smart_record where date_format( "
+                  "create_time, '%Y-%m-%d') > date_format(DATE_sub(now(), INTERVAL 2 day ), '%Y-%m-%d')) a group by "
+                  "token_address, token_symbol limit 20) b where buyCount <3")
+    my_cursor.execute(select_sql)
+    my_result = my_cursor.fetchall()
+    markdown_table = create_simple_table_smart_less(my_result)
+    print(markdown_table)
+    send_markdown(markdown_table)
+    logger.info("本次执行统计结果：{0}".format(my_result))
+    return my_result
+
+
+def create_simple_table_smart_less(data):
+    table = "| 合约名称 | 密码 | 一般聪明钱购买次数 | \n| ------- | ------- | ------- |\n"
     for row in data:
         table += f"| {row[0]} | {row[1]} |{row[2]}|\n"
     return table
@@ -254,3 +277,4 @@ def create_simple_table_smart(data):
 if __name__ == '__main__':
     number_repeat_data()
     number_repeat_data_smart()
+    number_repeat_data_smart_less()
