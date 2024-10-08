@@ -39,6 +39,9 @@ token_dd = '2fb4e8566e1348bf837cd8527798b8f4461287a2403bda7d15f9903ee8592909'
 # 分钟
 TIME = 3
 tokenFDVMax = 500000
+TIME_NOW = 8 * 60 * 60
+timeArray = time.localtime(time.time() + +TIME_NOW)
+otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
 
 beijing = timezone(timedelta(hours=8))
 print(f'1、北京时区为：{beijing}')
@@ -198,7 +201,6 @@ def send_markdown_address(address, type):
 
 def number_repeat_data():
     my_cursor = mydb.cursor()
-    # SELECT DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i:%s')
     select_sql = ("SELECT count(token_symbol) AS recomme_count, token_symbol, token_address , date_format(DATE_ADD( "
                   "create_time, INTERVAL 8 HOUR), '%Y-%m-%d') AS create_time FROM block_smart_record WHERE  "
                   "date_format(DATE_ADD(create_time, INTERVAL 8 HOUR), '%Y-%m-%d') = DATE_FORMAT(DATE_ADD(now(),"
@@ -209,16 +211,9 @@ def number_repeat_data():
     my_result = my_cursor.fetchall()
     markdown_table = create_simple_table(my_result)
     print(markdown_table)
-    send_markdown(markdown_table)
+    send_markdown(otherStyleTime + "## 统计当天推荐次数汇总\n\n" + markdown_table)
     logger.info("本次执行统计结果：{0}".format(my_result))
     return my_result
-
-
-def create_simple_table1(data):
-    table = "| Header1 | Header2 |\n| ------- | ------- |\n"
-    for row in data:
-        table += f"| {row[0]} | {row[1]} |\n"
-    return table
 
 
 def create_simple_table(data):
@@ -230,7 +225,6 @@ def create_simple_table(data):
 
 def number_repeat_data_smart():
     my_cursor = mydb.cursor()
-    # SELECT DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i:%s')
     select_sql = ("SELECT token_symbol, token_address, max(smart_money_buy_count) AS buyCount FROM ( SELECT "
                   "token_symbol, token_address, smart_money_buy_count FROM block_smart_record WHERE date_format("
                   "create_time, '%Y-%m-%d') > date_format(DATE_sub(now(), INTERVAL 2 DAY), '%Y-%m-%d') ) a GROUP BY "
@@ -239,7 +233,7 @@ def number_repeat_data_smart():
     my_result = my_cursor.fetchall()
     markdown_table = create_simple_table_smart(my_result)
     print(markdown_table)
-    send_markdown(markdown_table)
+    send_markdown(otherStyleTime + "### 统计2天内推荐次数最多 \n\n" + markdown_table)
     logger.info("本次执行统计结果：{0}".format(my_result))
     return my_result
 
@@ -253,7 +247,6 @@ def create_simple_table_smart(data):
 
 def number_repeat_data_smart_less():
     my_cursor = mydb.cursor()
-    # SELECT DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i:%s')
     select_sql = ("select * from ( select token_symbol, token_address, max(smart_money_buy_count) as buyCount from ( "
                   "select token_symbol,token_address,smart_money_buy_count from block_smart_record where date_format( "
                   "create_time, '%Y-%m-%d') > date_format(DATE_sub(now(), INTERVAL 2 day ), '%Y-%m-%d')) a group by "
@@ -262,7 +255,7 @@ def number_repeat_data_smart_less():
     my_result = my_cursor.fetchall()
     markdown_table = create_simple_table_smart_less(my_result)
     print(markdown_table)
-    send_markdown(markdown_table)
+    send_markdown(otherStyleTime + "### 统计2天内聪明钱购买次数最少\n\n" + markdown_table)
     logger.info("本次执行统计结果：{0}".format(my_result))
     return my_result
 
