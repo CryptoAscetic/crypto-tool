@@ -211,7 +211,7 @@ def number_repeat_data():
     my_result = my_cursor.fetchall()
     markdown_table = create_simple_table(my_result)
     print(markdown_table)
-    send_markdown("# 时间：" + otherStyleTime + "统计当天推荐次数汇总\n\n" + markdown_table)
+    send_markdown("### 时间：" + otherStyleTime + "-当天推荐次数排名\n\n" + markdown_table)
     logger.info("本次执行统计结果：{0}".format(my_result))
     return my_result
 
@@ -233,7 +233,7 @@ def number_repeat_data_smart():
     my_result = my_cursor.fetchall()
     markdown_table = create_simple_table_smart(my_result)
     print(markdown_table)
-    send_markdown("# 时间：" + otherStyleTime + "统计2天内推荐次数最多 \n\n" + markdown_table)
+    send_markdown("### 时间：" + otherStyleTime + "-2天内推荐次数最多 \n\n" + markdown_table)
     logger.info("本次执行统计结果：{0}".format(my_result))
     return my_result
 
@@ -255,7 +255,7 @@ def number_repeat_data_smart_less():
     my_result = my_cursor.fetchall()
     markdown_table = create_simple_table_smart_less(my_result)
     print(markdown_table)
-    send_markdown("# 时间：" + otherStyleTime + "统计2天内聪明钱购买次数最少\n\n" + markdown_table)
+    send_markdown("### 时间：" + otherStyleTime + "-2天内聪明钱购买次数最少\n\n" + markdown_table)
     logger.info("本次执行统计结果：{0}".format(my_result))
     return my_result
 
