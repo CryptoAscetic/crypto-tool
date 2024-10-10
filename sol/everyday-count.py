@@ -211,7 +211,7 @@ def number_repeat_data():
     my_result = my_cursor.fetchall()
     markdown_table = create_simple_table(my_result)
     print(markdown_table)
-    send_markdown("### 时间：" + otherStyleTime + "-当天推荐次数排名\n\n" + markdown_table)
+    send_markdown("### 时间：" + otherStyleTime + "-当天推荐次数排名\n\n" + markdown_table + "\n\n---------------------")
     logger.info("本次执行统计结果：{0}".format(my_result))
     return my_result
 
@@ -233,7 +233,8 @@ def number_repeat_data_smart():
     my_result = my_cursor.fetchall()
     markdown_table = create_simple_table_smart(my_result)
     print(markdown_table)
-    send_markdown("### 时间：" + otherStyleTime + "-2天内推荐次数最多 \n\n" + markdown_table)
+    send_markdown(
+        "### 时间：" + otherStyleTime + "-2天内推荐次数最多 \n\n" + markdown_table + "\n\n---------------------")
     logger.info("本次执行统计结果：{0}".format(my_result))
     return my_result
 
@@ -255,7 +256,8 @@ def number_repeat_data_smart_less():
     my_result = my_cursor.fetchall()
     markdown_table = create_simple_table_smart_less(my_result)
     print(markdown_table)
-    send_markdown("### 时间：" + otherStyleTime + "-2天内聪明钱购买次数最少\n\n" + markdown_table)
+    send_markdown(
+        "### 时间：" + otherStyleTime + "-2天内聪明钱购买次数最少\n\n" + markdown_table + "\n\n---------------------")
     logger.info("本次执行统计结果：{0}".format(my_result))
     return my_result
 
@@ -267,7 +269,31 @@ def create_simple_table_smart_less(data):
     return table
 
 
+def number_repeat_data_token_create_date():
+    my_cursor = mydb.cursor()
+    select_sql = "select DISTINCT token_symbol , token_address ,token_create_time from ( select token_symbol , " \
+                 "token_address , date_format(DATE_ADD(token_create_time, INTERVAL 8 HOUR), '%Y-%m-%d %H:%m') as " \
+                 "token_create_time from block_smart_record where date_format(DATE_ADD(token_create_time, INTERVAL 8 " \
+                 "HOUR), '%Y-%m-%d') = DATE_FORMAT(DATE_ADD(now(), INTERVAL 8 HOUR), '%Y-%m-%d') order by " \
+                 "token_create_time desc)a order by token_create_time desc "
+    my_cursor.execute(select_sql)
+    my_result = my_cursor.fetchall()
+    markdown_table = create_simple_table_token_create_date(my_result)
+    print(markdown_table)
+    send_markdown("### 时间：" + otherStyleTime + "-合约创建时间倒序\n\n" + markdown_table + "\n\n---------------------")
+    logger.info("本次执行统计结果：{0}".format(my_result))
+    return my_result
+
+
+def create_simple_table_token_create_date(data):
+    table = "| 合约名称 | 密码 | 购买时间 | \n| ------- | ------- | ------- |\n"
+    for row in data:
+        table += f"| {row[0]} | {row[1]} |{row[2]}|\n"
+    return table
+
+
 if __name__ == '__main__':
     number_repeat_data()
     number_repeat_data_smart()
     number_repeat_data_smart_less()
+    number_repeat_data_token_create_date()
