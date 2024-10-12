@@ -43,3 +43,7 @@
 ## 查询群组id
 
 https://api.telegram.org/bot7492697040:AAHiTquko-VvkS15tqOcdA5Sk-TLy9EDceQ/getUpdates
+
+# 查看我的信息
+
+https://api.telegram.org/bot7492697040:AAHiTquko-VvkS15tqOcdA5Sk-TLy9EDceQ/getMe
