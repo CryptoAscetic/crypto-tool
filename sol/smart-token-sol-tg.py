@@ -35,7 +35,7 @@ mydb = mysql.connector.connect(host='block.chain.com', user='root', password='ut
                                port='13306')
 
 TIME = 5
-tokenFDVMin = 300000
+tokenFDVMin = 200000
 tokenFDVMax = 1200000
 # 5分钟交易额
 tradeVolume5Max = 2000
@@ -166,6 +166,7 @@ def request_ok():
         res = result['data']['result']
         arr = []
         for r in res:  # 第二个实例
+            logger.info(r)
             transactionAction = r["transactionAction"]
             tokenAddress = r["tokenAddress"]
             tokenTradingTime = r["tokenTradingTime"]
@@ -235,7 +236,7 @@ def request_ok():
                                     format(float(smartMoneySellAmount), '.2f'),
                                     format(float(latestOrderPrice), '.2f'), format(float(tradeVolume5), '.2f'),
                                     format(float(tradeVolume60), '.2f'),
-                                    "", "", look_line, 501, otherStyleTime, now,
+                                    "", "", look_line, 501, tokenCreateTime, now,
                                     1, "SOL链")
                 else:
                     # arr, is_buy = GetPrice.get_token_info(tokenAddress, arr)
