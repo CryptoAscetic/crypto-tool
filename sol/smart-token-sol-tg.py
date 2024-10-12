@@ -34,7 +34,7 @@ logger.addHandler(formatted_date_log)
 mydb = mysql.connector.connect(host='block.chain.com', user='root', password='ute5lU7SrMPfsz', database='blockchain',
                                port='13306')
 
-TIME = 5
+TIME = 50
 tokenFDVMax = 500000
 
 beijing = timezone(timedelta(hours=8))
@@ -117,8 +117,8 @@ def send_telegram_message(message, tokenAddress):
         [
             {"text": "✅gmgn", "url": "https://gmgn.ai/sol/token/"
                                      "=" + tokenAddress},
-            {"text": "✅dexlab", "url": "https://www.dexlab.space/mintinglab/spl-token/"
-                                       "=" + tokenAddress},
+            # {"text": "✅dexlab", "url": "https://www.dexlab.space/mintinglab/spl-token/"
+            #                            "=" + tokenAddress},
             {"text": "✅buy/sell 一键买卖", "url": "https://t.me/pepeboost_sol04_bot?start"
                                                   "=" + tokenAddress},
         ]
