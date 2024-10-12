@@ -34,7 +34,7 @@ logger.addHandler(formatted_date_log)
 mydb = mysql.connector.connect(host='block.chain.com', user='root', password='ute5lU7SrMPfsz', database='blockchain',
                                port='13306')
 
-TIME = 10
+TIME = 3
 
 beijing = timezone(timedelta(hours=8))
 print(f'1、北京时区为：{beijing}')
