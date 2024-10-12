@@ -197,7 +197,7 @@ def request_ok():
             if (timestamp - int(tokenTradingTime) / 1000) <= diff:
                 if transactionAction == "BUY":
                     # 市值大于50万
-                    if tokenFDVMin < float(tokenFDV) < tokenFDVMax and float(tradeVolume5) > tradeVolume5Max:
+                    if tokenFDVMin < float(tokenFDV) < tokenFDVMax:
                         arr.append("`合约名称：" + tokenSymbol + "`\n\r")
                         arr.append("`" + tokenAddress + "`\n\r")
                         arr.append("\n\r")
