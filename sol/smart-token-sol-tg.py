@@ -34,7 +34,7 @@ logger.addHandler(formatted_date_log)
 mydb = mysql.connector.connect(host='block.chain.com', user='root', password='ute5lU7SrMPfsz', database='blockchain',
                                port='13306')
 
-TIME = 50
+TIME = 5
 tokenFDVMax = 500000
 
 beijing = timezone(timedelta(hours=8))
