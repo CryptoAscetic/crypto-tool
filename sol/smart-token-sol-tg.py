@@ -35,7 +35,8 @@ mydb = mysql.connector.connect(host='block.chain.com', user='root', password='ut
                                port='13306')
 
 TIME = 50
-tokenFDVMax = 500000
+tokenFDVMin = 100000
+tokenFDVMax = 5000000
 
 beijing = timezone(timedelta(hours=8))
 print(f'1、北京时区为：{beijing}')
@@ -191,7 +192,7 @@ def request_ok():
             if (timestamp - int(tokenTradingTime) / 1000) <= diff:
                 if transactionAction == "BUY":
                     # 市值大于50万
-                    if float(tokenFDV) > tokenFDVMax:
+                    if tokenFDVMin < float(tokenFDV) < tokenFDVMax:
                         arr.append("`名称：" + tokenSymbol + "`\n\r")
                         arr.append("`" + tokenAddress + "`\n\r")
                         arr.append("\n\r")

@@ -40,5 +40,6 @@
 | MILKBAG | 2ubuHGFS4VJVxSEpvV3kDwz6JiuXdaAoGMwrwYC87tp8 | 1       |
 | $Pot    | 4F9ynftRHYq3UndTqpTr7hPUUgpynCPiqHxJisqGtXjH | 1       |
 
+## 查询群组id
 
-
+https://api.telegram.org/bot7492697040:AAHiTquko-VvkS15tqOcdA5Sk-TLy9EDceQ/getUpdates
