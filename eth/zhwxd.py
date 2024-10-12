@@ -6,14 +6,10 @@ from datetime import timezone, timedelta, datetime
 
 import requests
 
-from getAiPrice import GetAiPrice
-
-# token_dd = 'a2e2cd49e7ca093d67a4223ed32c59804965edc184697d9fc55cf7c830b7b501'
-token_dd = 'be66323915f3254406e75448783a1af708c93ba3ce4d9ec2ebc8bf9e1c5b01dc'
+token_dd = 'fedcbd5442846473d7f4c2a08dafdd7538e29ace9f0829cb8f8af02cbd725be7'
+# token_dd = 'a9aab412b508bb619859974fc7fb202668b436574a992efc69b3aef3e14650e9'
 # 分钟
-TIME = 1
-# 胜率
-PNL = 0.5
+TIME = 180
 
 beijing = timezone(timedelta(hours=8))
 print(f'1、北京时区为：{beijing}')
@@ -109,9 +105,6 @@ def send_markdown_system():
            "9.机会是跌出来的，不是冲出来的\n\r"]
     data = {
         "msgtype": "markdown",
-        "at": {
-            "isAtAll": True
-        },
         "markdown": {
             "title": str(china_time) + "sol",
             "text": "".join(msg)
@@ -171,81 +164,32 @@ def send_markdown_address(address, type):
     print(res.text)
 
 
-# https://gmgn.ai/sol/address/82jXFTVu2XwCnG63pGqdf1yAfGMLbmXNzmBE5nupx6YF
-def request_ok():
-    arr = []
-    tokens = {
-        '82jXFTVu2XwCnG63pGqdf1yAfGMLbmXNzmBE5nupx6YF': 'xule-happy',
-        'Haee7H5bKDCnm6dXLkeR9DcWw9Puhnkwk71QBUSHcpUt': 'xule-bazinga',
-        '9cQL8n7fkzg7uBrzi9K5EXdxZwC1i11khQTyXQGDBz5A': 'billymcsmithers.eth',
-        'VWhB2S3ZzwSR95esNKsQYe5XdF78pX1vLRCQQ1J2v63': 'roxi',
+def get_hot_token():
+    url = (f"https://www.zhwxd.net/api/app/news/list?sort=is_hot&columnId=c6ce824a984111ecac7900163e2ebdc5&current"
+           f"=1&size=10")
+    headers = {
+        "accept": "*/*",
+        "accept-language": "zh,zh-CN;q=0.9",
+        "cache-control": "no-cache",
+        "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3Mjg1MzE0NDQsInVzZXJuYW1lIsisZmFuZ2tlIn0"
+                 ".73v3YFJNOOfmZEO29uZnAgJeN-wGy9BWl3_y363OCH8",
+        "pragma": "no-cache",
+        "referer": "https://www.zhwxd.net/h5/index.html",
+        "sec-ch-ua": '"Google Chrome";v="117", "Chromium";v="117", "Not A;Brand";v="99", "Microsoft Edge";v="117"',
+        "sec-ch-ua-mobile": "?0",
+        "sec-fetch-site": "same-origin",
+        "sec-fetch-user": "?1",
+        "upgrade-insecure-requests": "1",
+        "user-agent": "Mozilla/5.0 (Linux; U; Android 4.3; en-us; SM-N900T Build/JSS15J) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30",
 
     }
-
-    #     my_dict = {'a': 1, 'b': 2, 'c': 3}
-    # for key in my_dict.keys():
-    #     print(key, my_dict[key])
-    for token in tokens.keys():
-        # 获取所有的数据
-        url = (f"https://gmgn.ai/defi/quotation/v1/wallet_activity/sol?type=buy&type=sell&wallet=" + token
-               + "&limit=10&cost=10")
-
-        headers = {
-            "authority": "gmgn.ai",
-            "accept": "application/json, text/plain, */*'",
-            "accept-language": "zh,zh-CN;q=0.9",
-            "cache-control": "no-cache",
-            "cookie": "_ga=GA1.1.1538430465.1713834683; cf_clearance=vdi2icIYeA0pR.pzS47xMbAbBMfnPE5H9_2vIlkFlo4"
-                      "-1728606314-1.2.1.1-eHnu90X7ra2SYI1jS9BhKhZyeTR7YV61_pXpDnCvGbI6SM7"
-                      ".cFMvfSqhC6CIVaXe3UTgO_zdJMtXAi8IaHGy97qOHVnjUuiIRPDXk8nUgUQA9IfrPQVHeOp1K93JwH_waB_YyshoRsJMPpI7eMlNAKE0PbCjfQJ2NfH6vwQyMt9yMHSVBrHw9IEpDuFUMTvT2iq4V5DWqFcHV2vkOV6PXl8tr5i3EBpz2AYHEieSMPKbw5iuyfocP7tLKsBv7xE.hnociI95qWLE4UFDBpaybaAj3vDy7rwt9r4WH_ZoqVfQwNN7B5oKbvq9AKwqVjV7xrKKYmQlvHiQjTrpXy5GH21hiSyHJ_JHSgiUTMCTTXU5DqC2Wx.wIii5_I0bruwjAZtc.lC8I5fkEEERpXsiLk6FjtqDi4BBK1ZsjtI.XPc; _ga_0XM0LYXGC8=GS1.1.1728605831.98.1.1728606400.0.0.0; __cf_bm=OyAVK8mKtlAEmMd5vibrgKHt5VKZWK5wLqRQ1sYl0lA-1728606437-1.0.1.1-FeZE3EpqLQa7Dcrwdg6oJfzCK36ojTfb3GLSMtsIgFxUQde2sBscJHv3SGYsH6h5RNIpTjyhTLI2RlntGy5rZQ",
-            "pragma": "no-cache",
-            "referer": "https://gmgn.ai/sol/address/" + token,
-            "sec-ch-ua-platform": "Linux",
-            "sec-fetch-dest": "empty",
-            "sec-fetch-mode": "cors",
-            "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 "
-                          "Safari/537.36",
-
-        }
-        response = requests.get(url, headers=headers)
-        time.sleep(1)
-        print("Status code:", response.status_code)
-        if response.status_code == 200:
-            result = response.json()
-            activities = result['data']['activities']
-            for ac in activities:
-                wallet_timestamp = ac['timestamp']
-                # 获取当前时间
-                date = datetime.now()
-                timestamp = int(date.timestamp())
-                # 对比的时间8分钟的购买
-                diff = 60 * TIME
-                if timestamp - int(wallet_timestamp) <= diff:
-                    cost_usd = ac['cost_usd']
-                    event_type = ac['event_type']
-                    token_address = ac['token_address']
-                    price = ac['token']['price']
-                    price = str('{:.10f}'.format(price))
-
-                    arr, is_buy = GetAiPrice.get_token_info(token_address, arr)
-                    if event_type == "buy":
-                        arr.append("买就发财：" + str(event_type) + "\n\r")
-                    else:
-                        arr.append("【卖卖卖】，如果交易金额过大抄底：" + "\n\r")
-                    arr.append("交易金额：" + str(cost_usd) + "$\n\r")
-                    arr.append("购买价格：：" + str(price) + "$\n\r")
-                    arr.append("kol名字：" + str(tokens[token]) + "\n\r")
-
-                    note_str = "".join(arr)
-                    print(note_str)
-                    send_markdown(note_str)
-                    time.sleep(1)
-                    send_markdown_address(token_address, "BUY")
-                    time.sleep(1)
-                    arr = []
-                    # send_markdown_system()
-                    # time.sleep(1)
+    response = requests.get(url, headers=headers)
+    print("Status code:", response.status_code)
+    result = response.json()
+    res = result['records']
+    for i in res:
+        print(i['id'])
 
 
 if __name__ == '__main__':
-    request_ok()
+    get_hot_token()

@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*
 import datetime as dt
-import json
 import logging
 import os
 import time
@@ -35,10 +34,6 @@ logger.addHandler(formatted_date_log)
 mydb = mysql.connector.connect(host='block.chain.com', user='root', password='ute5lU7SrMPfsz', database='blockchain',
                                port='13306')
 
-# token_dd = 'a2e2cd49e7ca093d67a4223ed32c59804965edc184697d9fc55cf7c830b7b501'
-
-token_dd = 'a9aab412b508bb619859974fc7fb202668b436574a992efc69b3aef3e14650e9'
-# 分钟
 TIME = 30
 tokenFDVMax = 500000
 
@@ -101,110 +96,39 @@ def get_current_month_first_day():
     return dt.datetime.strptime(dt.datetime.now().strftime('%Y-%m') + '-01', '%Y-%m-%d')
 
 
-def send_msg():
-    """
-    通过钉钉机器人发送内容
-    @return:
-    """
-    url = 'https://oapi.dingtalk.com/robot/send?access_token=' + token_dd
-    headers = {'Content-Type': 'application/json;charset=utf-8'}
-    content_str = str(china_time) + "-【系统提醒】sol聪明钱买卖聪明钱地址，本次已经扫描完毕，系统会每20分钟检测一次！"
-    data = {
-        "msgtype": "text",
-        "text": {
-            "content": content_str
-        },
+def send_telegram_photo(photo):
+    token = '7492697040:AAHiTquko-VvkS15tqOcdA5Sk-TLy9EDceQ'
+    chat_id = '-4594318180'
+    url = f'https://api.telegram.org/bot{token}/sendPhoto'
+    payload = {
+        'chat_id': chat_id,
+        'photo': photo,
+        'caption': ''
     }
-    res = requests.post(url, data=json.dumps(data), headers=headers)  # 直接一句post就可以实现通过机器人在群聊里发消息
-    print(res.text)
+    response = requests.post(url, data=payload)
+    print(response.json())
 
 
-def send_markdown_system():
-    """
-    通过钉钉机器人发送内容
-    @param msg:
-    @return:
-    """
-    url = 'https://oapi.dingtalk.com/robot/send?access_token=' + token_dd
-    headers = {'Content-Type': 'application/json;charset=utf-8'}
-    msg = ["#### 冲狗必读：\n\r ```", "\n 1.所有项目都是土狗，千万不能贪多，不能格局;\n",
-           "2.不要在一个狗上谈恋爱，该放手就放手;\n",
-           "3.加仓要慢慢加，不能一口吃个胖子;\n", "4.看好的项目一定留一个底仓；\n",
-           "5.高倍项目10-30倍一定要出一大部分，否则跌下来就后悔了;\n",
-           "6.拿到一个Token先观察，不着急买，看一下项目方，自己做个初步判断上的仓位;\n",
-           "7.要以小博大，不能以大博小，否则你将很快出局;\n", "8.如果使用机器人冲，赚钱了立即卖，不要后悔,好狗很多;\n",
-           "9.新狗SOL链千万别过夜，赚钱就卖;\n", "10.机会是跌出来的，不是冲出来的\n\r"]
-    data = {
-        "msgtype": "markdown",
-        "markdown": {
-            "title": str(china_time) + "sol",
-            "text": "".join(msg)
-        },
-    }
-    res = requests.post(url, data=json.dumps(data), headers=headers)  # 直接一句post就可以实现通过机器人在群聊里发消息
-    print(res.text)
-
-
-def send_markdown(msg):
-    """
-    通过钉钉机器人发送内容
-    @param msg:
-    @return:
-    """
-    url = 'https://oapi.dingtalk.com/robot/send?access_token=' + token_dd
-    headers = {'Content-Type': 'application/json;charset=utf-8'}
-    data = {
-        "msgtype": "markdown",
-        "markdown": {
-            "title": str(china_time) + "sol",
-            "text": msg
-        },
-    }
-    res = requests.post(url, data=json.dumps(data), headers=headers)  # 直接一句post就可以实现通过机器人在群聊里发消息
-    print(res.text)
-
-
-def send_markdown_address(address, type):
-    """
-    通过钉钉机器人发送内容
-    @param msg:
-    @return:
-    """
-    url = 'https://oapi.dingtalk.com/robot/send?access_token=' + token_dd
-    headers = {'Content-Type': 'application/json;charset=utf-8'}
-
-    sell_data = {
-        "msgtype": "markdown",
-        "markdown": {
-            "title": str(china_time) + "sol-复制粘贴",
-            "text": address
-        },
-    }
-
-    buy_data = {
-        # "at": {
-        #     "isAtAll": True
-        # },
-        "msgtype": "markdown",
-        "markdown": {
-            "title": str(china_time) + "sol-直接复制粘贴",
-            "text": address
-        },
-    }
-    if type == "BUY":
-        res = requests.post(url, data=json.dumps(buy_data), headers=headers)  # 直接一句post就可以实现通过机器人在群聊里发消息
-    else:
-        res = requests.post(url, data=json.dumps(sell_data), headers=headers)  # 直接一句post就可以实现通过机器人在群聊里发消息
-    print(res.text)
-
-
-def send_telegram_message(message):
+def send_telegram_message(message, tokenAddress):
     token = '7492697040:AAHiTquko-VvkS15tqOcdA5Sk-TLy9EDceQ'
     chat_id = '-4594318180'
     url = f'https://api.telegram.org/bot{token}/sendMessage'
-    payload = {'chat_id': chat_id, 'text': message, 'parse_mode': 'Markdown'}
+    inline_keyboard = [
+        [
+            {"text": "✅gmgn", "url": "https://gmgn.ai/sol/token/"
+                                     "=" + tokenAddress},
+            {"text": "✅dexlab", "url": "https://www.dexlab.space/mintinglab/spl-token/"
+                                       "=" + tokenAddress},
+            {"text": "✅buy/sell 一键买卖", "url": "https://t.me/pepeboost_sol04_bot?start"
+                                                  "=" + tokenAddress},
+        ]
+    ]
+    payload = {'chat_id': chat_id, 'text': message, 'parse_mode': 'Markdown',
+               'reply_markup': {
+                   'inline_keyboard': inline_keyboard
+               }, }
 
-    response = requests.post(url, data=payload)
+    response = requests.post(url, json=payload)
     print(response.json())
 
 
@@ -269,38 +193,38 @@ def request_ok():
                 if transactionAction == "BUY":
                     # 市值大于50万
                     if float(tokenFDV) > tokenFDVMax:
-                        # arr, is_buy = GetPrice.get_token_info(tokenAddress, arr)
-                        if not tokenLogo is None:
-                            arr.append("![图片地址：](" + tokenLogo + ")\n\r")
-                        arr.append("【SOL-买买买】合约创建时间：" + otherStyleTime + "\n\r")
-                        arr.append("名称：" + tokenSymbol + "\n\r")
-                        arr.append("*市值：" + format(float(tokenFDV), '.2f') + " $\n\r")
+                        arr.append("`名称：" + tokenSymbol + "`\n\r")
+                        arr.append("`" + tokenAddress + "`\n\r")
+                        arr.append("\n\r\n\r")
+
+                        arr.append("`💵 交易：`\n\r")
+                        arr.append("|——合约创建时间：" + otherStyleTime + "\n\r")
+                        arr.append("|——市值：" + format(float(tokenFDV) / 10000, '.2f') + " W$\n\r")
                         price = GetSolTokenPrice.get_token_price(tokenAddress)
-                        arr.append("*当前价格：" + format(float(price), '.8f') + " $\n\r")
+                        arr.append("|——当前价格：" + format(float(price), '.8f') + " $\n\r")
                         minutes_ago = str(round((timestamp - int(tokenTradingTime) / 1000) / 60, 2))
-                        arr.append("买入时间：" + minutes_ago + "分钟之前" + "\n\r")
-                        arr.append("*聪明钱个数：" + str(smartMoneyBuyCount) + "个\n\r")
-                        arr.append("聪明钱买入总额：" + format(float(smartMoneyBuyAmount), '.2f') + " $\n\r")
-                        arr.append("聪明钱卖出总额：" + format(float(smartMoneySellAmount), '.2f') + "$\n\r")
-                        arr.append("*购买金额：" + format(float(latestOrderPrice), '.2f') + " $\n\r")
-                        arr.append("5分钟交易金额：" + format(float(tradeVolume5), '.2f') + " $\n\r")
-                        arr.append("1小时交易总金额：" + format(float(tradeVolume60), '.2f') + " $\n\r")
-                        arr.append("看线地址：" + "https://dexscreener.com/solana/" + tokenAddress + "\n\r")
+                        arr.append("|——买入时间：" + minutes_ago + "分钟之前" + "\n\r")
+                        arr.append("\n\r\n\r")
+
+                        arr.append("`🔥 聪明：`\n\r")
+                        arr.append("|——聪明钱个数：" + str(smartMoneyBuyCount) + "个\n\r")
+                        arr.append("|——聪明钱买入总额：" + format(float(smartMoneyBuyAmount), '.2f') + " $\n\r")
+                        arr.append("|——聪明钱卖出总额：" + format(float(smartMoneySellAmount), '.2f') + "$\n\r")
+                        arr.append("|——购买金额：" + format(float(latestOrderPrice), '.2f') + " $\n\r")
+                        arr.append("\n\r\n\r")
+
+                        arr.append("`🔔 量化：`\n\r")
+                        arr.append("|——5分钟交易金额：" + format(float(tradeVolume5), '.2f') + " $\n\r")
+                        arr.append("|——1小时交易总金额：" + format(float(tradeVolume60), '.2f') + " $\n\r")
+                        arr.append("\n\r\n\r")
+
                         look_line = "https://gmgn.ai/sol/token/" + tokenAddress
-                        arr.append("AI看：" + look_line + "\n\r")
-                        arr.append(
-                            "查看合约：" + "https://www.dexlab.space/mintinglab/spl-token/" + tokenAddress + "\n\r")
-                        arr.append(
-                            "[buy/sell：一键买卖]" + "https://t.me/pepeboost\u005fsol04\u005fbot?start=" + tokenAddress + "\n\r")
                         note_str = "".join(arr)
                         # print(note_str)
                         logger.info('本次解析的数据：\n\r {0}'.format(note_str))
                         # if is_buy:
-                        send_markdown(note_str)
-                        send_telegram_message(note_str)
-                        send_telegram_message(tokenAddress)
-                        time.sleep(5)
-                        # send_markdown_address(tokenAddress, "BUY")
+                        send_telegram_photo(tokenLogo)
+                        send_telegram_message(note_str, tokenAddress)
                         arr = []
                         now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                         insert_data(tokenLogo, tokenSymbol, tokenAddress, format(float(tokenFDV), '.2f'), price,
@@ -355,8 +279,6 @@ def insert_data(img_url, token_symbol, token_address, token_fdv, price, minutes_
     my_cursor.execute(sql, val)
     mydb.commit()
     logger.info("布料数据保存成功条数{0},合约地址:{1}".format(my_cursor.rowcount, token_address))
-
-
 
 
 if __name__ == '__main__':
