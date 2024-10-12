@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*
 import datetime as dt
+import json
 import logging
 import os
 import time
@@ -35,7 +36,7 @@ mydb = mysql.connector.connect(host='block.chain.com', user='root', password='ut
                                port='13306')
 
 TIME = 3
-
+token_dd = 'be66323915f3254406e75448783a1af708c93ba3ce4d9ec2ebc8bf9e1c5b01dc'
 beijing = timezone(timedelta(hours=8))
 print(f'1、北京时区为：{beijing}')
 
@@ -95,9 +96,103 @@ def get_current_month_first_day():
     return dt.datetime.strptime(dt.datetime.now().strftime('%Y-%m') + '-01', '%Y-%m-%d')
 
 
+def send_msg():
+    """
+    通过钉钉机器人发送内容
+    @return:
+    """
+    url = 'https://oapi.dingtalk.com/robot/send?access_token=' + token_dd
+    headers = {'Content-Type': 'application/json;charset=utf-8'}
+    content_str = str(china_time) + "-【系统提醒】sol聪明钱买卖聪明钱地址，本次已经扫描完毕，系统会每20分钟检测一次！"
+    data = {
+        "msgtype": "text",
+        "text": {
+            "content": content_str
+        },
+    }
+    res = requests.post(url, data=json.dumps(data), headers=headers)  # 直接一句post就可以实现通过机器人在群聊里发消息
+    print(res.text)
+
+
+def send_markdown_system():
+    """
+    通过钉钉机器人发送内容
+    @param msg:
+    @return:
+    """
+    url = 'https://oapi.dingtalk.com/robot/send?access_token=' + token_dd
+    headers = {'Content-Type': 'application/json;charset=utf-8'}
+    msg = ["#### 冲狗必读：\n\r ```", "\n 1.所有项目都是土狗，千万不能贪多，不能格局;\n",
+           "2.不要在一个狗上谈恋爱，该放手就放手;\n",
+           "3.加仓要慢慢加，不能一口吃个胖子;\n", "4.看好的项目一定留一个底仓；\n",
+           "5.高倍项目10-30倍一定要出一大部分，否则跌下来就后悔了;\n",
+           "6.拿到一个Token先观察，不着急买，看一下项目方，自己做个初步判断上的仓位;\n",
+           "7.要以小博大，不能以大博小，否则你将很快出局;\n", "8.如果使用机器人冲，赚钱了立即卖，不要后悔,好狗很多;\n",
+           "9.机会是跌出来的，不是冲出来的\n\r"]
+    data = {
+        "msgtype": "markdown",
+        "markdown": {
+            "title": str(china_time) + "sol",
+            "text": "".join(msg)
+        },
+    }
+    res = requests.post(url, data=json.dumps(data), headers=headers)  # 直接一句post就可以实现通过机器人在群聊里发消息
+    print(res.text)
+
+
+def send_markdown(msg):
+    """
+    通过钉钉机器人发送内容
+    @param msg:
+    @return:
+    """
+    url = 'https://oapi.dingtalk.com/robot/send?access_token=' + token_dd
+    headers = {'Content-Type': 'application/json;charset=utf-8'}
+    data = {
+        "msgtype": "markdown",
+        "markdown": {
+            "title": str(china_time) + "sol",
+            "text": msg
+        },
+    }
+    res = requests.post(url, data=json.dumps(data), headers=headers)  # 直接一句post就可以实现通过机器人在群聊里发消息
+    print(res.text)
+
+
+def send_markdown_address(address, type):
+    """
+    通过钉钉机器人发送内容
+    @param msg:
+    @return:
+    """
+    url = 'https://oapi.dingtalk.com/robot/send?access_token=' + token_dd
+    headers = {'Content-Type': 'application/json;charset=utf-8'}
+
+    sell_data = {
+        "msgtype": "markdown",
+        "markdown": {
+            "title": str(china_time) + "sol-直接复制粘贴",
+            "text": address
+        },
+    }
+
+    buy_data = {
+        "msgtype": "markdown",
+        "markdown": {
+            "title": str(china_time) + "sol-直接复制粘贴",
+            "text": address
+        },
+    }
+    if type == "BUY":
+        res = requests.post(url, data=json.dumps(buy_data), headers=headers)  # 直接一句post就可以实现通过机器人在群聊里发消息
+    else:
+        res = requests.post(url, data=json.dumps(sell_data), headers=headers)  # 直接一句post就可以实现通过机器人在群聊里发消息
+    print(res.text)
+
+
 def send_telegram_photo(photo):
     token = '7492697040:AAHiTquko-VvkS15tqOcdA5Sk-TLy9EDceQ'
-    chat_id = '-4594318180'
+    chat_id = '-4532879792'
     url = f'https://api.telegram.org/bot{token}/sendPhoto'
     payload = {
         'chat_id': chat_id,
@@ -110,7 +205,7 @@ def send_telegram_photo(photo):
 
 def send_telegram_message(message, tokenAddress):
     token = '7492697040:AAHiTquko-VvkS15tqOcdA5Sk-TLy9EDceQ'
-    chat_id = '-4594318180'
+    chat_id = '-4532879792'
     url = f'https://api.telegram.org/bot{token}/sendMessage'
     inline_keyboard = [
         [
@@ -222,15 +317,18 @@ def request_ok():
                     arr.append("\n\r")
 
                     arr.append("`🔔 量化：`\n\r")
-                    arr.append("|——卖出金额：" + format(float(solAmount), '.2f') + " Sol🟢\n\r")
-                    arr.append("|——卖出数量：" + format(float(quantity), '.2f') + " 个🟢\n\r")
-                    arr.append("|——盈利金额：" + format(float(sellProfit), '.2f') + " Sol🟢\n\r")
+                    arr.append("|——交易金额：" + format(float(solAmount) * usdRate, '.2f') + " 🟢\n\r")
+                    arr.append("|——代币数量：" + format(float(quantity), '.2f') + " 个🟢\n\r")
+                    arr.append("|——盈利金额：" + format(float(sellProfit) * usdRate, '.2f') + " 🟢\n\r")
                     arr.append("\n\r")
 
                     note_str = "".join(arr)
                     # print(note_str)
                     logger.info('本次解析的数据：\n\r {0}'.format(note_str))
                     send_telegram_message(note_str, mint)
+                    send_markdown(note_str)
+                    time.sleep(1)
+                    send_markdown_address(mint, "BUY")
                     arr = []
 
 
