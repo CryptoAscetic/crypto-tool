@@ -34,7 +34,7 @@ logger.addHandler(formatted_date_log)
 mydb = mysql.connector.connect(host='block.chain.com', user='root', password='ute5lU7SrMPfsz', database='blockchain',
                                port='13306')
 
-TIME = 30
+TIME = 50
 tokenFDVMax = 500000
 
 beijing = timezone(timedelta(hours=8))
@@ -193,48 +193,49 @@ def request_ok():
                 if transactionAction == "BUY":
                     # 市值大于50万
                     if float(tokenFDV) > tokenFDVMax:
-                        arr.append("`名称：" + tokenSymbol + "`\n\r")
-                        arr.append("`" + tokenAddress + "`\n\r")
-                        arr.append("\n\r\n\r")
+                        if float(tradeVolume5) > 1500:
+                            arr.append("`名称：" + tokenSymbol + "`\n\r")
+                            arr.append("`" + tokenAddress + "`\n\r")
+                            arr.append("\n\r\n\r")
 
-                        arr.append("`💵 交易：`\n\r")
-                        arr.append("|——合约创建时间：" + otherStyleTime + "\n\r")
-                        arr.append("|——市值：" + format(float(tokenFDV) / 10000, '.2f') + " W$\n\r")
-                        price = GetSolTokenPrice.get_token_price(tokenAddress)
-                        arr.append("|——当前价格：" + format(float(price), '.8f') + " $\n\r")
-                        minutes_ago = str(round((timestamp - int(tokenTradingTime) / 1000) / 60, 2))
-                        arr.append("|——买入时间：" + minutes_ago + "分钟之前" + "\n\r")
-                        arr.append("\n\r\n\r")
+                            arr.append("`💵 交易：`\n\r")
+                            arr.append("|——合约创建时间：" + otherStyleTime + "\n\r")
+                            arr.append("|——市值：" + format(float(tokenFDV) / 10000, '.2f') + " W💰\n\r")
+                            price = GetSolTokenPrice.get_token_price(tokenAddress)
+                            arr.append("|——当前价格：" + format(float(price), '.8f') + " 💰\n\r")
+                            minutes_ago = str(round((timestamp - int(tokenTradingTime) / 1000) / 60, 2))
+                            arr.append("|——买入时间：" + minutes_ago + "分钟之前" + "\n\r")
+                            arr.append("\n\r\n\r")
 
-                        arr.append("`🔥 聪明：`\n\r")
-                        arr.append("|——聪明钱个数：" + str(smartMoneyBuyCount) + "个\n\r")
-                        arr.append("|——聪明钱买入总额：" + format(float(smartMoneyBuyAmount), '.2f') + " $\n\r")
-                        arr.append("|——聪明钱卖出总额：" + format(float(smartMoneySellAmount), '.2f') + "$\n\r")
-                        arr.append("|——购买金额：" + format(float(latestOrderPrice), '.2f') + " $\n\r")
-                        arr.append("\n\r\n\r")
+                            arr.append("`🔥 聪明：`\n\r")
+                            arr.append("|——聪明钱个数：" + str(smartMoneyBuyCount) + "个\n\r")
+                            arr.append("|——聪明钱买入总额：" + format(float(smartMoneyBuyAmount), '.2f') + " 💰\n\r")
+                            arr.append("|——聪明钱卖出总额：" + format(float(smartMoneySellAmount), '.2f') + "💰\n\r")
+                            arr.append("|——购买金额：" + format(float(latestOrderPrice), '.2f') + " 💰\n\r")
+                            arr.append("\n\r\n\r")
 
-                        arr.append("`🔔 量化：`\n\r")
-                        arr.append("|——5分钟交易金额：" + format(float(tradeVolume5), '.2f') + " $\n\r")
-                        arr.append("|——1小时交易总金额：" + format(float(tradeVolume60), '.2f') + " $\n\r")
-                        arr.append("\n\r\n\r")
+                            arr.append("`🔔 量化：`\n\r")
+                            arr.append("|——5分钟交易金额：" + format(float(tradeVolume5), '.2f') + " 💰\n\r")
+                            arr.append("|——1小时交易总金额：" + format(float(tradeVolume60), '.2f') + " 💰\n\r")
+                            arr.append("\n\r\n\r")
 
-                        look_line = "https://gmgn.ai/sol/token/" + tokenAddress
-                        note_str = "".join(arr)
-                        # print(note_str)
-                        logger.info('本次解析的数据：\n\r {0}'.format(note_str))
-                        # if is_buy:
-                        send_telegram_photo(tokenLogo)
-                        send_telegram_message(note_str, tokenAddress)
-                        arr = []
-                        now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                        insert_data(tokenLogo, tokenSymbol, tokenAddress, format(float(tokenFDV), '.2f'), price,
-                                    minutes_ago, str(smartMoneyBuyCount),
-                                    format(float(smartMoneyBuyAmount), '.2f'),
-                                    format(float(smartMoneySellAmount), '.2f'),
-                                    format(float(latestOrderPrice), '.2f'), format(float(tradeVolume5), '.2f'),
-                                    format(float(tradeVolume60), '.2f'),
-                                    "", "", look_line, 501, otherStyleTime, now,
-                                    1, "SOL链")
+                            look_line = "https://gmgn.ai/sol/token/" + tokenAddress
+                            note_str = "".join(arr)
+                            # print(note_str)
+                            logger.info('本次解析的数据：\n\r {0}'.format(note_str))
+                            # if is_buy:
+                            send_telegram_photo(tokenLogo)
+                            send_telegram_message(note_str, tokenAddress)
+                            arr = []
+                            now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                            insert_data(tokenLogo, tokenSymbol, tokenAddress, format(float(tokenFDV), '.2f'), price,
+                                        minutes_ago, str(smartMoneyBuyCount),
+                                        format(float(smartMoneyBuyAmount), '.2f'),
+                                        format(float(smartMoneySellAmount), '.2f'),
+                                        format(float(latestOrderPrice), '.2f'), format(float(tradeVolume5), '.2f'),
+                                        format(float(tradeVolume60), '.2f'),
+                                        "", "", look_line, 501, otherStyleTime, now,
+                                        1, "SOL链")
                 else:
                     # arr, is_buy = GetPrice.get_token_info(tokenAddress, arr)
                     if not tokenLogo is None:
@@ -246,7 +247,7 @@ def request_ok():
                     arr.append(str(round((timestamp - int(tokenTradingTime) / 1000) / 60, 2)))
                     arr.append("分钟之前" + "\n\r")
                     arr.append("狗庄跑了，卖：" + str(smartMoneySellCount) + "个聪明钱卖出\n\r")
-                    arr.append("★卖出订单金额：" + latestOrderPrice + "$\n\r")
+                    arr.append("★卖出订单金额：" + latestOrderPrice + "💰\n\r")
                     note_str = "".join(arr)
                     # print(note_str)
                     # if is_buy:
