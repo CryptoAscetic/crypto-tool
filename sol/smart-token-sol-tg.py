@@ -186,6 +186,8 @@ def request_ok():
             tradeVolume5 = r['tradeVolume5']
             # 1小时交易量
             tradeVolume60 = r['tradeVolume60']
+            # 24小时交易量
+            tradeVolume1440 = r['tradeVolume1440']
 
             # 获取当前时间
             date = datetime.now()
@@ -196,29 +198,30 @@ def request_ok():
                 if transactionAction == "BUY":
                     # 市值大于50万
                     if tokenFDVMin < float(tokenFDV) < tokenFDVMax and float(tradeVolume5) > tradeVolume5Max:
-                        arr.append("`名称：" + tokenSymbol + "`\n\r")
+                        arr.append("`合约名称：" + tokenSymbol + "`\n\r")
                         arr.append("`" + tokenAddress + "`\n\r")
                         arr.append("\n\r")
 
                         arr.append("`💵 交易：`\n\r")
-                        arr.append("|——合约创建时间：" + otherStyleTime + "\n\r")
-                        arr.append("|——市值：" + format(float(tokenFDV) / 10000, '.2f') + " W💰\n\r")
+                        arr.append("|——创建时间：" + otherStyleTime + "⏰\n\r")
+                        arr.append("|——当前市值：" + format(float(tokenFDV) / 10000, '.2f') + " W\n\r")
                         price = GetSolTokenPrice.get_token_price(tokenAddress)
-                        arr.append("|——当前价格：" + format(float(price), '.8f') + " 💰\n\r")
+                        arr.append("|——当前价格：" + format(float(price), '.8f') + " \n\r")
                         minutes_ago = str(round((timestamp - int(tokenTradingTime) / 1000) / 60, 2))
-                        arr.append("|——买入时间：" + minutes_ago + "分钟之前" + "\n\r")
+                        arr.append("|——买入时间：" + minutes_ago + "分钟之前" + "⏰\n\r")
                         arr.append("\n\r")
 
                         arr.append("`🔥 聪明：`\n\r")
-                        arr.append("|——聪明钱个数：" + str(smartMoneyBuyCount) + "个\n\r")
+                        arr.append("|——聪明钱购买个数：" + str(smartMoneyBuyCount) + "个✅\n\r")
                         arr.append("|——聪明钱买入总额：" + format(float(smartMoneyBuyAmount), '.2f') + " 💰\n\r")
                         arr.append("|——聪明钱卖出总额：" + format(float(smartMoneySellAmount), '.2f') + "💰\n\r")
-                        arr.append("|——购买金额：" + format(float(latestOrderPrice), '.2f') + " 💰\n\r")
+                        arr.append("|——本次购买总金额：" + format(float(latestOrderPrice), '.2f') + " 💰\n\r")
                         arr.append("\n\r")
 
                         arr.append("`🔔 量化：`\n\r")
-                        arr.append("|——5分钟交易金额：" + format(float(tradeVolume5), '.2f') + " 💰\n\r")
-                        arr.append("|——1小时交易总金额：" + format(float(tradeVolume60), '.2f') + " 💰\n\r")
+                        arr.append("|——5分钟交易金额：" + format(float(tradeVolume5), '.2f') + " 🟢\n\r")
+                        arr.append("|——1小时交易金额：" + format(float(tradeVolume60), '.2f') + " 🟢\n\r")
+                        arr.append("|——24小时交易额：" + format(float(tradeVolume1440), '.2f') + " 🟢\n\r")
                         arr.append("\n\r")
 
                         look_line = "https://gmgn.ai/sol/token/" + tokenAddress
@@ -236,7 +239,7 @@ def request_ok():
                                     format(float(smartMoneySellAmount), '.2f'),
                                     format(float(latestOrderPrice), '.2f'), format(float(tradeVolume5), '.2f'),
                                     format(float(tradeVolume60), '.2f'),
-                                    "", "", look_line, 501, tokenCreateTime, now,
+                                    "", "", look_line, 501, otherStyleTime, now,
                                     1, "SOL链")
                 else:
                     # arr, is_buy = GetPrice.get_token_info(tokenAddress, arr)
