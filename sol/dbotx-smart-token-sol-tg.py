@@ -35,7 +35,7 @@ logger.addHandler(formatted_date_log)
 mydb = mysql.connector.connect(host='block.chain.com', user='root', password='ute5lU7SrMPfsz', database='blockchain',
                                port='13306')
 
-TIME = 3
+TIME = 20
 token_dd = 'be66323915f3254406e75448783a1af708c93ba3ce4d9ec2ebc8bf9e1c5b01dc'
 beijing = timezone(timedelta(hours=8))
 print(f'1、北京时区为：{beijing}')
@@ -272,6 +272,8 @@ def request_ok():
                 # 购买方方式
                 buyType = r["type"]
                 blockTime = r["blockTime"]
+                timeArray = time.localtime(blockTime)
+                buyAtTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
                 # 合约名称
                 mint = r["mint"]
                 # 总卖出
@@ -311,6 +313,7 @@ def request_ok():
 
                     arr.append("`💵 交易：`\n\r")
                     arr.append("|——创建时间：" + createAtTime + "⏰\n\r")
+                    arr.append("|——交易时间：" + buyAtTime + "⏰\n\r")
                     arr.append("|——交易类型：" + buyType + "\n\r")
                     price = GetSolTokenPrice.get_token_price(mint)
                     arr.append("|——当前价格：" + format(float(price), '.8f') + " \n\r")
