@@ -35,7 +35,7 @@ logger.addHandler(formatted_date_log)
 mydb = mysql.connector.connect(host='block.chain.com', user='root', password='ute5lU7SrMPfsz', database='blockchain',
                                port='13306')
 
-TIME = 20
+TIME = 15
 token_dd = 'be66323915f3254406e75448783a1af708c93ba3ce4d9ec2ebc8bf9e1c5b01dc'
 beijing = timezone(timedelta(hours=8))
 print(f'1、北京时区为：{beijing}')
@@ -272,7 +272,7 @@ def request_ok():
                 # 购买方方式
                 buyType = r["type"]
                 blockTime = r["blockTime"]
-                timeArray = time.localtime(blockTime)
+                timeArray = time.localtime(blockTime + 8 * 60 * 60)
                 buyAtTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
                 # 合约名称
                 mint = r["mint"]
@@ -285,8 +285,10 @@ def request_ok():
                     if 'sellProfit' in r.keys():
                         # 盈利sol数量
                         sellProfit = r["sellProfit"]
+                    buyStringType = "🈹🈹🈹"
                 else:
                     sellProfit = 0.0
+                    buyStringType = "💹💹💹"
 
                 tokenMeta = r["tokenMeta"]
                 if 'updateAt' in tokenMeta.keys():
@@ -306,7 +308,7 @@ def request_ok():
                 # 对比的时间8分钟的购买
                 diff = 60 * TIME
                 if (timestamp - int(blockTime)) <= diff:
-                    arr.append("聪明钱标签：" + str(tokens[token]) + "\n\r")
+                    arr.append(buyStringType + "聪明钱标签：" + str(tokens[token]) + "\n\r")
                     arr.append("`合约名称：" + symbol + "`\n\r")
                     arr.append("`" + mint + "`\n\r")
                     arr.append("\n\r")
@@ -314,7 +316,7 @@ def request_ok():
                     arr.append("`💵 交易：`\n\r")
                     arr.append("|——创建时间：" + createAtTime + "⏰\n\r")
                     arr.append("|——交易时间：" + buyAtTime + "⏰\n\r")
-                    arr.append("|——交易类型：" + buyType + "\n\r")
+                    arr.append("|——交易类型：" + buyStringType + "\n\r")
                     price = GetSolTokenPrice.get_token_price(mint)
                     arr.append("|——当前价格：" + format(float(price), '.8f') + " \n\r")
                     arr.append("\n\r")
