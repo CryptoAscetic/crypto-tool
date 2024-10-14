@@ -35,7 +35,7 @@ logger.addHandler(formatted_date_log)
 mydb = mysql.connector.connect(host='block.chain.com', user='root', password='ute5lU7SrMPfsz', database='blockchain',
                                port='13306')
 
-TIME = 15
+TIME = 50
 token_dd = 'be66323915f3254406e75448783a1af708c93ba3ce4d9ec2ebc8bf9e1c5b01dc'
 beijing = timezone(timedelta(hours=8))
 print(f'1、北京时区为：{beijing}')
@@ -209,9 +209,9 @@ def send_telegram_message(message, tokenAddress):
     url = f'https://api.telegram.org/bot{token}/sendMessage'
     inline_keyboard = [
         [
-            {"text": "✅gmgn", "url": "https://gmgn.ai/sol/token/" + tokenAddress},
-            # {"text": "✅dexlab", "url": "https://www.dexlab.space/mintinglab/spl-token/"
-            #                            "=" + tokenAddress},
+            {"text": "✅gmgn查看", "url": "https://gmgn.ai/sol/token/" + tokenAddress},
+            {"text": "✅gmai分析", "url": "https://gmgn.ai/sol/address/" + token},
+            {"text": "✅dbotx分析", "url": "https://dbotx.com/zh/smartmoney/details?_id=" + token + "&durationTime=1d"},
             {"text": "✅buy/sell 一键买卖", "url": "https://t.me/pepeboost_sol04_bot?start"
                                                   "=" + tokenAddress},
         ]
