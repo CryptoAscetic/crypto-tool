@@ -35,7 +35,7 @@ logger.addHandler(formatted_date_log)
 mydb = mysql.connector.connect(host='block.chain.com', user='root', password='ute5lU7SrMPfsz', database='blockchain',
                                port='13306')
 
-TIME = 50
+TIME = 15
 token_dd = 'be66323915f3254406e75448783a1af708c93ba3ce4d9ec2ebc8bf9e1c5b01dc'
 beijing = timezone(timedelta(hours=8))
 print(f'1、北京时区为：{beijing}')
@@ -203,15 +203,20 @@ def send_telegram_photo(photo):
     print(response.json())
 
 
-def send_telegram_message(message, tokenAddress):
+def send_telegram_message(message, tokenAddress, userToken):
     token = '7492697040:AAHiTquko-VvkS15tqOcdA5Sk-TLy9EDceQ'
     chat_id = '-4532879792'
     url = f'https://api.telegram.org/bot{token}/sendMessage'
     inline_keyboard = [
         [
-            {"text": "✅gmgn查看", "url": "https://gmgn.ai/sol/token/" + tokenAddress},
-            {"text": "✅gmai分析", "url": "https://gmgn.ai/sol/address/" + token},
-            {"text": "✅dbotx分析", "url": "https://dbotx.com/zh/smartmoney/details?_id=" + token + "&durationTime=1d"},
+            {"text": "✅gmai分析", "url": "https://gmgn.ai/sol/address/" + userToken},
+            {"text": "✅dbotx分析",
+             "url": "https://dbotx.com/zh/smartmoney/details?_id=" + userToken + "&durationTime=1d"},
+        ],
+        [
+            {"text": "✅gmgn看线", "url": "https://gmgn.ai/sol/token/" + tokenAddress},
+        ],
+        [
             {"text": "✅buy/sell 一键买卖", "url": "https://t.me/pepeboost_sol04_bot?start"
                                                   "=" + tokenAddress},
         ]
@@ -236,10 +241,10 @@ def request_ok():
         '4hBL4Z2Tvn2bCNqZniAxL82xviPJaTQeyKMdnLwsVt7L': 'happy第一人',
         '2pekTQKDsJkd7qUMVD6Z5AGdUuuQ2ZF7zGDmhKjjgVdr': "狙击001"
     }
-    for token in tokens.keys():
+    for userToken in tokens.keys():
         time.sleep(3)
         # 获取所有的数据
-        url = (f"https://servapi.dbotx.com/smart_wallet/trades/" + token)
+        url = (f"https://servapi.dbotx.com/smart_wallet/trades/" + userToken)
         params = {
             'page': '0',
             'size': '20',
@@ -308,7 +313,7 @@ def request_ok():
                 # 对比的时间8分钟的购买
                 diff = 60 * TIME
                 if (timestamp - int(blockTime)) <= diff:
-                    arr.append(buyStringType + "聪明钱标签：" + str(tokens[token]) + "\n\r")
+                    arr.append(buyStringType + "聪明钱标签：" + str(tokens[userToken]) + "\n\r")
                     arr.append("`合约名称：" + symbol + "`\n\r")
                     arr.append("`" + mint + "`\n\r")
                     arr.append("\n\r")
@@ -330,7 +335,7 @@ def request_ok():
                     note_str = "".join(arr)
                     # print(note_str)
                     logger.info('本次解析的数据：\n\r {0}'.format(note_str))
-                    send_telegram_message(note_str, mint)
+                    send_telegram_message(note_str, mint, userToken)
                     send_markdown(note_str)
                     time.sleep(1)
                     send_markdown_address(mint, "BUY")
