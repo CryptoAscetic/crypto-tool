@@ -119,11 +119,10 @@ def send_telegram_message(message, tokenAddress):
     inline_keyboard = [
         [
             {"text": "✅gmgn", "url": "https://gmgn.ai/sol/token/" + tokenAddress},
-            # {"text": "✅dexlab", "url": "https://www.dexlab.space/mintinglab/spl-token/"
-            #                            "=" + tokenAddress},
+        ], [
             {"text": "✅buy/sell 一键买卖", "url": "https://t.me/pepeboost_sol04_bot?start"
-                                                  "=" + tokenAddress},
-        ]
+                                                  "=" + tokenAddress, "callback_data": "like"},
+        ],
     ]
     payload = {'chat_id': chat_id, 'text': message, 'parse_mode': 'Markdown',
                'reply_markup': {

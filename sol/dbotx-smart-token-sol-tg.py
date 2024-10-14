@@ -218,7 +218,7 @@ def send_telegram_message(message, tokenAddress, userToken):
         ],
         [
             {"text": "✅buy/sell 一键买卖", "url": "https://t.me/pepeboost_sol04_bot?start"
-                                                  "=" + tokenAddress},
+                                                  "=" + tokenAddress, "callback_data": "like"},
         ]
     ]
     payload = {'chat_id': chat_id, 'text': message, 'parse_mode': 'Markdown',
