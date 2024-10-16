@@ -231,6 +231,7 @@ def send_telegram_message(message, tokenAddress, userToken):
 
 
 def request_ok():
+    global sellProfit
     tokens = {
         # '515FRkgdKUunk4BJGndav2FgZniEqYtkdLqcgc8nLSNV': '大帅',
         '441bsKo6VHuhyUhkDiGxYKXyoZzNuF2Ru4hbPteFiEdn': 'klöss',
