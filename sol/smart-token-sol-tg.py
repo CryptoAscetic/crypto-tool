@@ -35,10 +35,10 @@ mydb = mysql.connector.connect(host='block.chain.com', user='root', password='ut
                                port='13306')
 
 TIME = 5
-tokenFDVMin = 5000000
+tokenFDVMin = 4500000
 tokenFDVMax = 100000000
 # 5分钟交易额
-tradeVolume5Max = 10000
+tradeVolume5Max = 100000
 
 beijing = timezone(timedelta(hours=8))
 print(f'1、北京时区为：{beijing}')
@@ -112,13 +112,16 @@ def send_telegram_photo(photo):
     print(response.json())
 
 
-def send_telegram_message(message, tokenAddress):
+def send_telegram_message(message, tokenAddress, tokenSymbol):
     token = '7492697040:AAHiTquko-VvkS15tqOcdA5Sk-TLy9EDceQ'
     chat_id = '-4594318180'
     url = f'https://api.telegram.org/bot{token}/sendMessage'
     inline_keyboard = [
         [
             {"text": "✅gmgn", "url": "https://gmgn.ai/sol/token/" + tokenAddress},
+        ], [
+            {"text": "✅搜名称", "url": "https://x.com/search?q=$" + tokenSymbol + "&src=typed_query"},
+            {"text": "✅搜合约", "url": "https://x.com/search?q=$" + tokenAddress + "&src=typed_query"},
         ], [
             {"text": "✅buy/sell 一键买卖", "url": "https://t.me/pepeboost_sol04_bot?start"
                                                   "=" + tokenAddress, "callback_data": "like"},
@@ -229,7 +232,7 @@ def request_ok():
                         logger.info('本次解析的数据：\n\r {0}'.format(note_str))
                         # if is_buy:
                         send_telegram_photo(tokenLogo)
-                        send_telegram_message(note_str, tokenAddress)
+                        send_telegram_message(note_str, tokenAddress, tokenSymbol)
                         arr = []
                         now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                         insert_data(tokenLogo, tokenSymbol, tokenAddress, format(float(tokenFDV), '.2f'), price,

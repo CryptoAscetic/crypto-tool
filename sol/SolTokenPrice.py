@@ -32,4 +32,4 @@ class GetSolTokenPrice:
 
 
 if __name__ == '__main__':
-    print(GetSolTokenPrice.get_token_price("AxUx31tmanQ2r8xG3nBvW1L9miHHZNqMfALzc1ygpump"))
+    print(GetSolTokenPrice.get_token_price("FqvtZ2UFR9we82Ni4LeacC1zyTiQ77usDo31DUokpump"))
