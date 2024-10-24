@@ -34,7 +34,7 @@ logger.addHandler(formatted_date_log)
 mydb = mysql.connector.connect(host='block.chain.com', user='root', password='ute5lU7SrMPfsz', database='blockchain',
                                port='13306')
 
-TIME = 5
+TIME = 3
 tokenFDVMin = 4500000
 tokenFDVMax = 100000000
 # 5分钟交易额
@@ -199,7 +199,7 @@ def request_ok():
             if (timestamp - int(tokenTradingTime) / 1000) <= diff:
                 if transactionAction == "BUY":
                     # 市值大于50万
-                    if tokenFDVMin < float(tokenFDV) < tokenFDVMax:
+                    if tokenFDVMin < float(tokenFDV) < tokenFDVMax and tradeVolume5 > tradeVolume5Max:
                         arr.append("`合约名称：" + tokenSymbol + "`\n\r")
                         arr.append("`" + tokenAddress + "`\n\r")
                         arr.append("\n\r")
