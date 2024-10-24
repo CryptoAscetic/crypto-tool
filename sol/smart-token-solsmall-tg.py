@@ -35,10 +35,10 @@ mydb = mysql.connector.connect(host='block.chain.com', user='root', password='ut
                                port='13306')
 
 TIME = 3
-tokenFDVMin = 4500000
-tokenFDVMax = 100000000
+tokenFDVMin = 100000
+tokenFDVMax = 2000000
 # 5分钟交易额
-tradeVolume5Max = 150000
+tradeVolume5Max = 50000
 
 beijing = timezone(timedelta(hours=8))
 print(f'1、北京时区为：{beijing}')
@@ -101,7 +101,7 @@ def get_current_month_first_day():
 
 def send_telegram_photo(photo):
     token = '7492697040:AAHiTquko-VvkS15tqOcdA5Sk-TLy9EDceQ'
-    chat_id = '-4594318180'
+    chat_id = '-4516684120'
     url = f'https://api.telegram.org/bot{token}/sendPhoto'
     payload = {
         'chat_id': chat_id,
@@ -114,7 +114,7 @@ def send_telegram_photo(photo):
 
 def send_telegram_message(message, tokenAddress, tokenSymbol):
     token = '7492697040:AAHiTquko-VvkS15tqOcdA5Sk-TLy9EDceQ'
-    chat_id = '-4594318180'
+    chat_id = '-4516684120'
     url = f'https://api.telegram.org/bot{token}/sendMessage'
     inline_keyboard = [
         [
