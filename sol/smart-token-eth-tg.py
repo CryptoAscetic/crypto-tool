@@ -35,7 +35,7 @@ mydb = mysql.connector.connect(host='block.chain.com', user='root', password='ut
 TIME = 5
 
 tokenFDVMin = 100000
-tokenFDVMax = 100000000
+tokenFDVMax = 1000000
 # 5分钟交易额
 tradeVolume5Max = 5000
 
