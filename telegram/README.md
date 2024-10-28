@@ -47,3 +47,7 @@ https://api.telegram.org/bot7492697040:AAHiTquko-VvkS15tqOcdA5Sk-TLy9EDceQ/getUp
 # 查看我的信息
 
 https://api.telegram.org/bot7492697040:AAHiTquko-VvkS15tqOcdA5Sk-TLy9EDceQ/getMe
+
+# docs
+
+https://docs.google.com/document/d/1bL-Gjk56w6UE0npSy3i8e-zblwBTHBCI_L1vCYgzOZM/edit?tab=t.gpz4ldognvfr
