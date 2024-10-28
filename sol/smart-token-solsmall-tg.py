@@ -119,6 +119,7 @@ def send_telegram_message(message, tokenAddress, tokenSymbol):
     inline_keyboard = [
         [
             {"text": "✅gmgn", "url": "https://gmgn.ai/sol/token/" + tokenAddress},
+            {"text": "✅pump", "url": "https://pump.fun/" + tokenAddress},
         ], [
             {"text": "✅搜名称", "url": "https://x.com/search?q=$" + tokenSymbol + "&src=typed_query"},
             {"text": "✅搜合约", "url": "https://x.com/search?q=$" + tokenAddress + "&src=typed_query"},
