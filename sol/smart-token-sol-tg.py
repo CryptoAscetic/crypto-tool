@@ -101,7 +101,7 @@ def get_current_month_first_day():
 
 def send_telegram_photo(photo):
     token = '7492697040:AAHiTquko-VvkS15tqOcdA5Sk-TLy9EDceQ'
-    chat_id = '-4594318180'
+    chat_id = '-1002488897765'
     url = f'https://api.telegram.org/bot{token}/sendPhoto'
     payload = {
         'chat_id': chat_id,
@@ -114,7 +114,7 @@ def send_telegram_photo(photo):
 
 def send_telegram_message(message, tokenAddress, tokenSymbol):
     token = '7492697040:AAHiTquko-VvkS15tqOcdA5Sk-TLy9EDceQ'
-    chat_id = '-4594318180'
+    chat_id = '-1002488897765'
     url = f'https://api.telegram.org/bot{token}/sendMessage'
     inline_keyboard = [
         [
