@@ -38,7 +38,7 @@ TIME = 3
 tokenFDVMin = 100000
 tokenFDVMax = 2000000
 # 5分钟交易额
-tradeVolume5Max = 50000
+tradeVolume5Max = 80000
 
 beijing = timezone(timedelta(hours=8))
 print(f'1、北京时区为：{beijing}')
