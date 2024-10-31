@@ -99,6 +99,47 @@ def get_current_month_first_day():
     return dt.datetime.strptime(dt.datetime.now().strftime('%Y-%m') + '-01', '%Y-%m-%d')
 
 
+def get_pump_config():
+    headers = {
+        'authority': 'frontend-api.pump.fun',
+        'accept': '*/*',
+        'accept-language': 'zh,zh-CN;q=0.9',
+        'cache-control': 'no-cache',
+        'origin': 'https://pump.fun',
+        'pragma': 'no-cache',
+        'referer': 'https://pump.fun/',
+        'sec-ch-ua': '"Google Chrome";v="117", "Not;A=Brand";v="8", "Chromium";v="117"',
+        'sec-ch-ua-mobile': '?0',
+        'sec-ch-ua-platform': '"Linux"',
+        'sec-fetch-dest': 'empty',
+        'sec-fetch-mode': 'cors',
+        'sec-fetch-site': 'same-site',
+        'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36',
+    }
+
+    params = {
+        'limit': '1000',
+        'offset': '0',
+        'user': '4pDuLhqZ77e3mBxWb2jqfmMLufLeM6NjEP8hezTnv3Ve',
+    }
+
+    response = requests.get('https://frontend-api.pump.fun/replies/JAkWbP2ajjz89iW5MGLQyF6VXZRvu9mP7SLXp2L7vGij',
+                            params=params, headers=headers)
+    if response.status_code == 200:
+        result = response.json()
+        len(result)
+
+        return len(result)
+        # for reply in result:
+        #     # print(reply)
+        #     text = reply['text']
+        #     user_id = reply['id']
+        #     username = reply['username']
+        #     if username is None:
+        #         username = str(user_id) + '小白'
+        #     print("用户：" + str(username) + "，说的内容：" + text + "\n\r")
+
+
 def send_telegram_photo(photo):
     token = '7492697040:AAHiTquko-VvkS15tqOcdA5Sk-TLy9EDceQ'
     chat_id = '-1002475514494'
@@ -225,6 +266,17 @@ def request_ok():
                         arr.append("|——5分钟交易金额：" + format(float(tradeVolume5), '.2f') + " 🟢\n\r")
                         arr.append("|——1小时交易金额：" + format(float(tradeVolume60), '.2f') + " 🟢\n\r")
                         arr.append("|——24小时交易额：" + format(float(tradeVolume1440), '.2f') + " 🟢\n\r")
+                        rel_count = get_pump_config()
+                        arr.append("|——pump的评论数：" + str(rel_count) + " 🟢\n\r")
+                        arr.append("\n\r")
+
+                        arr.append("`🔔 复盘：`\n\r")
+                        arr.append("|——不要猛冲，不要跟风，金狗会给你机会的；" + " 🟢\n\r")
+                        arr.append("|——先查内盘dev数据，再看链上数据，再查推；" + " 🟢\n\r")
+                        arr.append("|——要以小博大，不能以大博小，否则你将很快出局；：" + " 🟢\n\r")
+                        arr.append("|——所有项目都是土狗，千万不能贪多，不能格局；" + " 🟢\n\r")
+                        arr.append("|——二段的收益是一段的十几倍，逆向思维。；" + " 🟢\n\r")
+
                         arr.append("\n\r")
 
                         look_line = "https://gmgn.ai/sol/token/" + tokenAddress
