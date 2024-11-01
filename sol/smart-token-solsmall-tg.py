@@ -99,7 +99,7 @@ def get_current_month_first_day():
     return dt.datetime.strptime(dt.datetime.now().strftime('%Y-%m') + '-01', '%Y-%m-%d')
 
 
-def get_pump_config():
+def get_pump_config(tokenAddress):
     headers = {
         'authority': 'frontend-api.pump.fun',
         'accept': '*/*',
@@ -123,7 +123,7 @@ def get_pump_config():
         'user': '4pDuLhqZ77e3mBxWb2jqfmMLufLeM6NjEP8hezTnv3Ve',
     }
 
-    response = requests.get('https://frontend-api.pump.fun/replies/JAkWbP2ajjz89iW5MGLQyF6VXZRvu9mP7SLXp2L7vGij',
+    response = requests.get('https://frontend-api.pump.fun/replies/' + tokenAddress,
                             params=params, headers=headers)
     if response.status_code == 200:
         result = response.json()
@@ -266,16 +266,12 @@ def request_ok():
                         arr.append("|——5分钟交易金额：" + format(float(tradeVolume5), '.2f') + " 🟢\n\r")
                         arr.append("|——1小时交易金额：" + format(float(tradeVolume60), '.2f') + " 🟢\n\r")
                         arr.append("|——24小时交易额：" + format(float(tradeVolume1440), '.2f') + " 🟢\n\r")
-                        rel_count = get_pump_config()
+                        rel_count = get_pump_config(tokenAddress)
                         arr.append("|——pump的评论数：" + str(rel_count) + " 🟢\n\r")
                         arr.append("\n\r")
 
                         arr.append("`🔔 复盘：`\n\r")
-                        arr.append("|——不要猛冲，不要跟风，金狗会给你机会的；" + " 🟢\n\r")
-                        arr.append("|——先查内盘dev数据，再看链上数据，再查推；" + " 🟢\n\r")
-                        arr.append("|——要以小博大，不能以大博小，否则你将很快出局；：" + " 🟢\n\r")
-                        arr.append("|——所有项目都是土狗，千万不能贪多，不能格局；" + " 🟢\n\r")
-                        arr.append("|——二段的收益是一段的十几倍，逆向思维。；" + " 🟢\n\r")
+                        arr.append("|——干二段，逆向思维。；" + " 🟢\n\r")
 
                         arr.append("\n\r")
 
