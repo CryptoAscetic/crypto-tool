@@ -127,9 +127,8 @@ def get_pump_config(tokenAddress):
                             params=params, headers=headers)
     if response.status_code == 200:
         result = response.json()
-        len(result)
 
-        return len(result)
+        return len(result['replies'])
         # for reply in result:
         #     # print(reply)
         #     text = reply['text']
@@ -280,8 +279,8 @@ def request_ok():
                         # print(note_str)
                         logger.info('本次解析的数据：\n\r {0}'.format(note_str))
                         # if is_buy:
-                        send_telegram_photo(tokenLogo)
-                        send_telegram_message(note_str, tokenAddress, tokenSymbol)
+                        # send_telegram_photo(tokenLogo)
+                        # send_telegram_message(note_str, tokenAddress, tokenSymbol)
                         arr = []
                         now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                         insert_data(tokenLogo, tokenSymbol, tokenAddress, format(float(tokenFDV), '.2f'), price,
