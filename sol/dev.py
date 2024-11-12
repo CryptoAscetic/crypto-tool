@@ -29,7 +29,7 @@ formatted_date_log.setFormatter(formatter)
 # 加载文件到logger对象中
 logger.addHandler(formatted_date_log)
 
-TIME = 30
+TIME = 3
 
 beijing = timezone(timedelta(hours=8))
 print(f'1、北京时区为：{beijing}')
