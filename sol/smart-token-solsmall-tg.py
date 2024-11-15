@@ -267,6 +267,9 @@ def request_ok():
                         arr.append("|——24小时交易额：" + format(float(tradeVolume1440), '.2f') + " 🟢\n\r")
                         rel_count = get_pump_config(tokenAddress)
                         arr.append("|——pump的评论数：" + str(rel_count) + " 🟢\n\r")
+                        # 检查是否包含
+                        if tokenAddress in "pump":
+                            arr.append("|——密码来源平台：" + "PUMP平台" + " 🟢\n\r")
                         arr.append("\n\r")
 
                         arr.append("`🔔 复盘：`\n\r")
