@@ -268,6 +268,10 @@ def request_ok():
                         arr.append("|——24小时交易额：" + format(float(tradeVolume1440), '.2f') + " 🟢\n\r")
                         rel_count = get_pump_config(tokenAddress)
                         arr.append("|——pump的评论数：" + str(rel_count) + " 🟢\n\r")
+                        if rel_count > 40:
+                            arr.append("|——系统给出结论：" + "10s给我干它，翻倍给群主发红包！" + " 🟢\n\r")
+                        else:
+                            arr.append("|——系统给出结论：" + "5s给我干它，翻倍给群主发红包！" + " 🟢\n\r")
                         # 检查是否包含
                         if tokenAddress in "pump":
                             arr.append("|——密码来源平台：" + "PUMP平台" + " 🟢\n\r")
