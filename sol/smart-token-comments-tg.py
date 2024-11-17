@@ -241,9 +241,8 @@ def request_ok():
             if (timestamp - int(tokenTradingTime) / 1000) <= diff:
                 if transactionAction == "BUY":
                     rel_count = get_pump_config(tokenAddress)
-
                     # 市值大于50万
-                    if rel_count > Rel_CountMax:
+                    if rel_count >= Rel_CountMax:
                         arr.append("`合约名称：" + tokenSymbol + "`\n\r")
                         arr.append("`" + tokenAddress + "`\n\r")
                         arr.append("\n\r")
@@ -268,7 +267,6 @@ def request_ok():
                         arr.append("|——5分钟交易金额：" + format(float(tradeVolume5), '.2f') + " 🟢\n\r")
                         arr.append("|——1小时交易金额：" + format(float(tradeVolume60), '.2f') + " 🟢\n\r")
                         arr.append("|——24小时交易额：" + format(float(tradeVolume1440), '.2f') + " 🟢\n\r")
-                        rel_count = get_pump_config(tokenAddress)
                         arr.append("|——pump的评论数：" + str(rel_count) + " 🟢\n\r")
                         if rel_count > 40:
                             arr.append("|——系统给出结论：" + "评论好多啊，多冲点！" + " 🟢\n\r")
