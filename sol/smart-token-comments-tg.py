@@ -268,7 +268,7 @@ def request_ok():
                         arr.append("|——1小时交易金额：" + format(float(tradeVolume60), '.2f') + " 🟢\n\r")
                         arr.append("|——24小时交易额：" + format(float(tradeVolume1440), '.2f') + " 🟢\n\r")
                         arr.append("|——pump的评论数：" + str(rel_count) + " 🟢\n\r")
-                        if rel_count > 40:
+                        if rel_count > Rel_CountMax:
                             arr.append("|——系统给出结论：" + "评论好多啊，多冲点！" + " 🟢\n\r")
                         else:
                             arr.append("|——系统给出结论：" + "0.1s给我干它！" + " 🟢\n\r")
