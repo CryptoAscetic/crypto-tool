@@ -26,10 +26,13 @@ class GetSolTokenPrice:
         # print(response.text)
         result = response.json()
         print(result)
-        price = result["data"][token]['price']
+        if len(result['data']) > 0:
+            price = result["data"][token]['price']
+        else:
+            price = 0.0
         print(price)
         return price
 
 
 if __name__ == '__main__':
-    print(GetSolTokenPrice.get_token_price("FqvtZ2UFR9we82Ni4LeacC1zyTiQ77usDo31DUokpump"))
+    print(GetSolTokenPrice.get_token_price("ARNVAneBRCYeQ8ymDUtZyH3DMPF2yK9EPuH2YJ4h6yUG"))
