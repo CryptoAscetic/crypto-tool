@@ -241,7 +241,7 @@ def request_ok():
                                     format(float(smartMoneySellAmount), '.2f'),
                                     format(float(latestOrderPrice), '.2f'), format(float(tradeVolume5), '.2f'),
                                     format(float(tradeVolume60), '.2f'),
-                                    "", "", look_line, 501, otherStyleTime, now,
+                                    "", "", look_line, 1, otherStyleTime, now,
                                     1, "ETH链")
                 else:
                     # arr, is_buy = GetPrice.get_token_info(tokenAddress, arr)

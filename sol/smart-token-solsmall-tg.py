@@ -39,6 +39,8 @@ tokenFDVMin = 100000
 tokenFDVMax = 2000000
 # 5分钟交易额
 tradeVolume5Max = 80000
+SMALL_CHAT_ID = "-1002488897765"
+BIG_CHAT_ID = "-1002475514494"
 
 beijing = timezone(timedelta(hours=8))
 print(f'1、北京时区为：{beijing}')
@@ -141,7 +143,7 @@ def get_pump_config(tokenAddress):
 
 def send_telegram_photo(photo):
     token = '7492697040:AAHiTquko-VvkS15tqOcdA5Sk-TLy9EDceQ'
-    chat_id = '-1002475514494'
+    chat_id = SMALL_CHAT_ID
     url = f'https://api.telegram.org/bot{token}/sendPhoto'
     payload = {
         'chat_id': chat_id,
@@ -154,7 +156,7 @@ def send_telegram_photo(photo):
 
 def send_telegram_message(message, tokenAddress, tokenSymbol):
     token = '7492697040:AAHiTquko-VvkS15tqOcdA5Sk-TLy9EDceQ'
-    chat_id = '-1002475514494'
+    chat_id = SMALL_CHAT_ID
     url = f'https://api.telegram.org/bot{token}/sendMessage'
     inline_keyboard = [
         [
