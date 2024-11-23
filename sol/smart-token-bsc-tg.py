@@ -177,7 +177,7 @@ def request_ok():
             smartMoneySellAmount = r["smartMoneySellAmount"]
             tokenLogo = r["tokenLogo"]
             tokenSymbol = r["tokenSymbol"]
-            tokenCreateTime = int(r["tokenCreateTime"]) / 1000
+            tokenCreateTime = int(r["tokenCreateTime"]) / 1000 + 8 * 60 * 60
             timeArray = time.localtime(tokenCreateTime)
             otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
             # 市值
