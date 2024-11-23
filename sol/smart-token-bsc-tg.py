@@ -198,6 +198,7 @@ def request_ok():
                 if transactionAction == "BUY":
                     # 市值大于50万
                     if tokenFDVMin < float(tokenFDV) < tokenFDVMax and float(tradeVolume5) > tradeVolume5Max:
+                        arr.append("C神-付费群：💵\n\r")
                         arr.append("`合约名称：" + tokenSymbol + "`\n\r")
                         arr.append("`" + tokenAddress + "`\n\r")
                         arr.append("\n\r")

@@ -243,6 +243,7 @@ def request_ok():
                     rel_count = get_pump_config(tokenAddress)
                     # 市值大于50万
                     if rel_count >= Rel_CountMax:
+                        arr.append("C神-付费群：💵\n\r")
                         arr.append("`合约名称：" + tokenSymbol + "`\n\r")
                         arr.append("`" + tokenAddress + "`\n\r")
                         arr.append("\n\r")
