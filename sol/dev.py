@@ -143,6 +143,10 @@ def get_dev_coin():
         'HyYNVYmnFmi87NsQqWzLJhUTPBKQUfgfhdbBa554nMFF': 'Fart-Dev',
         'Btxty83QiNskbHX5XPMWk9o54SYj9uNpKEKkbCu6gL3q': '河马-Dev',
         'Haee7H5bKDCnm6dXLkeR9DcWw9Puhnkwk71QBUSHcpUt': '徐狗Bazingame-Dev',
+        'DTQQf6xhbRFqbSUzHsQ4e1PJroCR3dVKvUnt7sj11HJc': 'tictok的宠物CHILLGUY',
+        'T5j2UBTvLYPCwDP5MVkSALN7fwuLFDL9jUXJNjjb8sc': 'Rif的dev',
+        '7HzeDxUWkpbdEe6RBwfZg4rYfu4pvwajMwh97mMobFq6': 'FATAH的dev'
+
     }
 
     headers = {
