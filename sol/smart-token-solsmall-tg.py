@@ -350,4 +350,7 @@ def insert_data(img_url, token_symbol, token_address, token_fdv, price, minutes_
 
 
 if __name__ == '__main__':
-    request_ok()
+
+    while True:
+        request_ok()  # 执行任务
+        time.sleep(180)  # 暂停180秒（3分钟）
