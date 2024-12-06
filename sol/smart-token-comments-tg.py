@@ -12,7 +12,7 @@ import requests
 from SolTokenPrice import GetSolTokenPrice
 
 # 日志目录
-LOGFILE_FIX = "smart-token-sol-"
+LOGFILE_FIX = "smart-comments-sol-"
 LOG_PATH = os.getcwd() + "/log/"
 logger = logging.getLogger(__name__)
 coloredlogs.install(level='DEBUG', logger=logger)
