@@ -32,7 +32,7 @@ formatted_date_log.setFormatter(formatter)
 # 加载文件到logger对象中
 logger.addHandler(formatted_date_log)
 # 数据库初始化
-mydb = mysql.connector.connect(host='block.chain.com', user='root', password='ute5lU7SrMPfsz', database='blockchain',
+mydb = mysql.connector.connect(host='block.chain.com', user='root', password='123456', database='blockchain',
                                port='13306')
 
 TIME = 3
