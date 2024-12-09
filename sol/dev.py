@@ -1,3 +1,4 @@
+import asyncio
 import datetime as dt
 import logging
 import os
@@ -6,6 +7,7 @@ from datetime import timezone, timedelta, datetime
 
 import coloredlogs
 import requests
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 from SolTokenPrice import GetSolTokenPrice
 
@@ -236,4 +238,19 @@ def get_dev_coin():
 
 
 if __name__ == '__main__':
-    get_dev_coin()
+
+    # 创建调度器
+    scheduler = AsyncIOScheduler()
+    # 添加任务，设置每3分钟执行一次
+    scheduler.add_job(get_dev_coin, 'interval', minutes=3)
+    # 启动调度器
+    scheduler.start()
+    # 主程序运行
+    try:
+        print("Scheduler started. Press Ctrl+C to exit.")
+        asyncio.get_event_loop().run_forever()
+    except (KeyboardInterrupt, SystemExit):
+        pass
+    finally:
+        scheduler.shutdown()
+        print("Scheduler stopped.")
