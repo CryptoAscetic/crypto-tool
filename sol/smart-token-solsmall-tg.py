@@ -13,8 +13,6 @@ import mysql.connector
 import requests
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
-from SolTokenPrice import GetSolTokenPrice
-
 # 日志目录
 LOGFILE_FIX = "smart-token-sol-"
 LOG_PATH = os.getcwd() + "/log/"
@@ -226,7 +224,7 @@ def request_ok():
             smartMoneySellAmount = r["smartMoneySellAmount"]
             tokenLogo = r["tokenLogo"]
             tokenSymbol = r["tokenSymbol"]
-            tokenCreateTime = int(r["tokenCreateTime"]) / 1000 + 8 * 60 * 60
+            tokenCreateTime = int(r["tokenCreateTime"]) / 1000
             timeArray = time.localtime(tokenCreateTime)
             otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
             # 市值
@@ -255,7 +253,7 @@ def request_ok():
                         arr.append("`💵 交易：`\n\r")
                         arr.append("|——创建时间：" + otherStyleTime + "⏰\n\r")
                         arr.append("|——当前市值：" + format(float(tokenFDV) / 10000, '.2f') + " W\n\r")
-                        price = GetSolTokenPrice.get_token_price(tokenAddress)
+                        price = 0.0  # GetSolTokenPrice.get_token_price(tokenAddress)
                         arr.append("|——当前价格：" + format(float(price), '.8f') + " \n\r")
                         minutes_ago = str(round((timestamp - int(tokenTradingTime) / 1000) / 60, 2))
                         arr.append("|——买入时间：" + minutes_ago + "分钟之前" + "⏰\n\r")
