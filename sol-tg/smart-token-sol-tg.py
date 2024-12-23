@@ -26,6 +26,7 @@ logger.setLevel(logging.DEBUG)
 formatted_date_log = logging.FileHandler(LOG_PATH + LOGFILE_FIX + formatted_date + '.log', 'a', encoding='utf-8')
 # 向文件输出的日志级别
 formatted_date_log.setLevel(logging.DEBUG)
+formatted_date_now = now.strftime("%Y-%m-%d %H:%M:%S")
 # 向文件输出的日志信息格式
 formatter = logging.Formatter('%(asctime)s - %(filename)s - line:%(lineno)d - %(levelname)s - %(message)s -%(process)s')
 formatted_date_log.setFormatter(formatter)
@@ -251,6 +252,7 @@ def request_ok():
 
                         arr.append("`💵 交易：`\n\r")
                         arr.append("|——创建时间：" + otherStyleTime + "⏰\n\r")
+                        arr.append("|——当前时间：" + formatted_date_now + "⏰\n\r")
                         arr.append("|——当前市值：" + format(float(tokenFDV) / 10000, '.2f') + " W\n\r")
                         price = 0.0  # GetSolTokenPrice.get_token_price(tokenAddress)
                         arr.append("|——当前价格：" + format(float(price), '.8f') + " \n\r")
