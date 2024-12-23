@@ -252,7 +252,7 @@ def request_ok():
 
                         arr.append("`💵 交易：`\n\r")
                         arr.append("|——创建时间：" + otherStyleTime + "⏰\n\r")
-                        arr.append("|——当前时间：" + formatted_date_now + "⏰\n\r")
+                        arr.append("|——当前时间：" + datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "⏰\n\r")
                         arr.append("|——当前市值：" + format(float(tokenFDV) / 10000, '.2f') + " W\n\r")
                         price = 0.0  # GetSolTokenPrice.get_token_price(tokenAddress)
                         arr.append("|——当前价格：" + format(float(price), '.8f') + " \n\r")

@@ -209,7 +209,7 @@ def get_dev_coin():
 
                     arr.append("`💵 交易：`\n\r")
                     arr.append("|——创建时间：" + otherStyleTime + "⏰\n\r")
-                    arr.append("|——当前时间：" + formatted_date_now + "⏰\n\r")
+                    arr.append("|——当前时间：" + datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "⏰\n\r")
                     arr.append("|——当前市值：" + format(float(usd_market_cap) / 10000, '.2f') + " W\n\r")
                     # arr.append("|——当前价格：" + format(float(price), '.8f') + " \n\r")
                     minutes_ago = str(round((timestamp - int(tokenCreateTime)) / 60, 2))
